@@ -1,0 +1,35 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.61)
+AC_INIT(configure.in)
+
+AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE(inptools, 0.2.0)
+
+# Checks for programs.
+AC_LANG_C
+AC_PROG_CC
+AC_GNU_SOURCE
+AM_PROG_CC_C_O
+AM_GNU_GETTEXT
+
+# Checks for libraries.
+AC_CHECK_LIB(m, pow)
+AC_CHECK_LIB(shp, DBFOpen)
+AC_CHECK_LIB(proj, pj_init)
+AC_CHECK_LIB(epanet2, ENopen)
+
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([toolkit.h stdlib.h string.h libshp/shapefil.h proj_api.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+AC_FUNC_STRTOD
+
+AC_OUTPUT(Makefile src/Makefile installer/Makefile installer/rpm/Makefile  po/Makefile.in\
+	installer/win32/Makefile src/InpToolsExt/Makefile po/Makefile \
+	doc/Makefile doc/en/Makefile doc/de/Makefile doc/en/figure/Makefile \
+	doc/de/figure/Makefile)

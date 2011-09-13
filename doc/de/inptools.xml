@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+ "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<book lang="de">
+	<bookinfo>
+		<title>Inptools-Handbuch</title>
+		<copyright>
+			<year>2008</year>
+			<year>2009</year>
+			<holder>Steffen Macke</holder>
+		</copyright>
+		<author>
+			<personname>
+				<firstname>Steffen</firstname>
+				<surname>Macke</surname>
+			</personname>
+			<email>sdteffen@sdteffen.de</email>
+		</author>
+		<pubdate>$Date: 2009-02-21$</pubdate>
+		<legalnotice>
+			<para> Dieses Dokument wurde unter der GNU-Lizenz für freie
+				Dokumentation veröffentlicht.</para>
+			<para>Es ist erlaubt, das Bild zu kopieren, verbreiten und/oder zu
+				modifizieren, unter den Bedingungen der GNU-Lizenz für freie
+				Dokumentation, Version 1.2 oder einer späteren Version,
+				veröffentlicht von der Free Software Foundation.</para>
+			<para>
+				Die Free Software Foundation stellt eine Kopie der Lizenz zur
+				Verfügung:
+				<ulink url="http://www.gnu.org/licenses/fdl.html">http://www.gnu.org/licenses/fdl.html
+				</ulink>
+			</para>
+		</legalnotice>
+	</bookinfo>
+	<article id="general">
+		<title>Allgemein</title>
+		<indexterm>
+			<primary>Allgemein</primary>
+		</indexterm>
+		<sect1 id="introduction">
+			<title>Einführung</title>
+			<indexterm>
+				<primary>Einführung</primary>
+			</indexterm>
+			<indexterm>
+				<primary>Lizenz</primary>
+			</indexterm>
+			<para>Inptools sind Werkzeuge, um Dateien im EPANET INP
+				Format zu bearbeiten.</para>
+			<para>
+				<citetitle>Inptools</citetitle>
+				sind erhältlich unter
+				<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+                .
+			</para>
+			<para>
+				Dieses Handbuch beschreibt die Version 0.2.2 der Inptools.
+			</para>
+			<sect2 id="news">
+				<title>Was ist Neu?</title>
+				<indexterm>
+					<primary>Neuigkeiten</primary>
+				</indexterm>
+				<para>Ein Zusammenfassung der Änderungen.</para>
+				<sect3 id="version_0_2_2">
+					<title>Version 0.2.2</title>
+					<itemizedlist>
+						<listitem>
+							<para>Das Programm inp2shp wurde ins Paket 
+								aufgenommen.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
+				<sect3 id="version_0_2_0">
+					<title>Version 0.2.0</title>
+					<itemizedlist>
+						<listitem>
+							<para>Das Kontextmü im Windows Explorer wurde um
+								die Funktionen "CSV Ergebnisdatei erstellen",
+								"binäre Ergebnisdatei erstellen" und "Hilfe"
+								erweitert.</para>
+							<para>Das Programm epanet2csv wurde ins Paket 
+								aufgenommen.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
+				<sect3 id="version_0_1_0">
+					<title>Version 0.1.0</title>
+					<itemizedlist>
+						<listitem>
+							<para>Die erste öffentliche Freigabe.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
+			</sect2>
+		</sect1>
+		<sect1 id="requirements">
+			<title>Voraussetzungen</title>
+			<indexterm>
+				<primary>Voraussetzungen</primary>
+			</indexterm>
+			<para>
+				Linux oder Windows (2000, 2003, 2008, XP oder Vista) werden
+				benötigt, um die
+				Inptools-Software zu nutzen.
+			</para>
+		</sect1>
+		<sect1 id="installation">
+			<title>Installation</title>
+			<indexterm>
+				<primary>Installation</primary>
+			</indexterm>
+			<para>
+				Wie die Inptools-Software installiert wird.
+			</para>
+			<sect2 id="windows_installation">
+				<title>Installation unter Windows</title>
+				<indexterm>
+					<primary>Installation</primary>
+					<secondary>Windows</secondary>
+				</indexterm>
+				<indexterm>
+					<primary>Windows</primary>
+				</indexterm>
+				<para>
+					Wie die
+					<citetitle>Inptools</citetitle>
+					unter Windows installiert werden.
+				</para>
+				<para>
+					Laden Sie das Installationsprogramm von
+					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					herunter und führen Sie es aus.
+				</para>
+			</sect2>
+			<sect2 id="linux_installation">
+				<title>Installation unter Linux</title>
+				<indexterm>
+					<primary>Installation</primary>
+					<secondary>Linux</secondary>
+				</indexterm>
+				<indexterm>
+					<primary>Windows</primary>
+				</indexterm>
+				<indexterm>
+					<primary>RPM</primary>
+				</indexterm>
+				<para>
+					Wie die
+					<citetitle>Inptools</citetitle>
+					unter Linux installiert werden können.
+				</para>
+				<para>
+					Laden Sie das RPM-Paket von
+					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					herunter und installieren Sie es.
+				</para>
+			</sect2>
+		</sect1>
+	</article>
+	<article id="reference">
+		<title>Referenz</title>
+		<indexterm>
+			<primary>Referenz</primary>
+		</indexterm>
+		<sect1 id="usage">
+			<title>Benutzung</title>
+			<indexterm>
+				<primary>Benutzung</primary>
+			</indexterm>
+			<para>Inptools können über ein Kontextmenü im Windows Explorer oder 
+			     über die Kommandozeile
+				genutzt werden.</para>
+			<sect2 id="explorer_integration">
+				<title>Windows Explorer Integration</title>
+				<indexterm>
+					<primary>Windows</primary>
+					<secondary>Explorer</secondary>
+				</indexterm>
+				<indexterm>
+					<primary>Explorer</primary>
+				</indexterm>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="figure/explorer_context_menu.png" format="PNG" />
+					</imageobject>
+					<caption><para>Windows Explorer Integration</para></caption>
+				</mediaobject>
+				<para>Öffnen Sie den Windows Explorer.</para>
+				<para>Navigieren Sie zu einer Datei im INP-Format.</para>
+				<para>Klicken Sie mit der <emphasis>rechten</emphasis> Maustaste
+				    auf die INP-Datei.</para>
+				<para>Wählen Sie das Inptools-Menü.</para>
+				<sect3 id="open_with_epanet">
+					<title>Mit EPANET öffnen</title>
+					<indexterm><primary>epanet2w</primary></indexterm>
+					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+						<guimenuitem>Mit EPANET öffnen</guimenuitem></menuchoice>,
+						um die gewählte INP-Datei in 
+						<command>epanet2w</command> interaktiv zu bearbeiten.</para>
+					<para>Diese Option steht nur zur Verfügung, wenn EPANET
+						installiert ist.</para>
+				</sect3>
+				<sect3 id="create_german_report">
+					<title>Deutschen Bericht erstellen</title>
+					<indexterm><primary>deutsch</primary></indexterm>
+					<indexterm><primary>Bericht</primary></indexterm>
+					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>deutschen Bericht erstellen</guimenuitem>
+					</menuchoice>, um aus der gewählten INP-Datei einen 
+					Berechnungsbericht in deutscher 
+					Sprache zu erstellen.</para>
+				</sect3>
+				<sect3 id="project_from_gk3_to_wgs84">
+					<title>Projektion von GK3 nach WGS84</title>
+					<indexterm><primary>Projektion</primary></indexterm>
+					<indexterm><primary>GK3</primary></indexterm>
+					<indexterm><primary>WGS84</primary></indexterm>
+					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>Projektion von GK3 nach WGS84</guimenuitem>
+					</menuchoice>, um die gewählte INP-Datei mit  mit Gauß-Krüger 
+					Koordinaten (GK3) in eine neue INP-Datei mit 
+					geographischen (WGS84) Koordinaten zu konvertieren 
+					(projezieren).</para>
+				</sect3>
+				<sect3 id="create_csv_result_files">
+					<title>CSV Ergebnisdateien erzeugen</title>
+					<indexterm><primary>CSV</primary></indexterm>
+					<indexterm><primary>Ergebnis</primary></indexterm>
+					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>CSV Ergebnisdateien erzeugen</guimenuitem></menuchoice>,
+					um aus der gewählten INP-Datei zwei CSV-Dateien mit den 
+					Berechnungsergebnissen zu erzeugen. Eine Datei wird
+					Knotenergebnisse enthalten, die andere Leitungsergebnisse.</para>
+				</sect3>
+				<sect3 id="create_binary_result_file">
+					<title>Binäre Ergebnisdatei erzeugen</title>
+					<indexterm><primary>binär</primary></indexterm>
+					<indexterm><primary>Bericht</primary></indexterm>
+					<indexterm><primary>epanet2csv</primary></indexterm>
+					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>binäre Ergebnisdatei erzeugen</guimenuitem></menuchoice>,
+					um aus der gewählten INP-Datei einen Berechnungsbericht und
+					eine binäre Ergebnisdatei zu erzeugen. Die binäre Ergebnisdatei
+					kann beispielsweise mit dem Kommandozeilenwerkzeug 
+					<command>epanet2csv</command> weiterverarbeitet werden.</para>
+				</sect3>
+			</sect2>
+			<sect2 id="commandline">
+				<title>Kommandozeile</title>
+				<indexterm>
+					<primary>Kommandozeile</primary>
+				</indexterm>
+				<para>Das Inptools-Paket enthält mehrere Kommandozeilenwerkzeuge.
+				</para>
+				<note>
+					<para>
+						Die Nutzung der Kommandozeilenwerkzeuge ist optional für
+						Windows-Nutzer. Falls ihnen die Kommandozeile unbekannt
+						ist, sollten sie statt dessen das Kontextmenü des
+						Windows Explorers  (
+						<xref linkend="explorer_integration" />
+						).
+					</para>
+				</note>
+				<sect3 id="inp2shp">
+					<title>inp2shp</title>
+					<indexterm><primary>inp2shp</primary></indexterm>
+					<para>Der Befehl inp2shp konvertiert eine INP-Datei in einen Satz von Shapefiles.
+					</para>
+					<sect4 id="inp2shp_synopsis">
+				       <title>Übersicht</title>
+				       <indexterm><primary>Übersicht</primary></indexterm>
+				    <synopsis>
+				      inp2shp inpfile reportfile junction_shapefile pipe_shapefile pump_shapefile reservoir_shapefile tank_shapefile valve_shapefile
+				    </synopsis>
+				    </sect4>
+				</sect3>
+				
+				<sect3 id="inpproj">
+					<title>inpproj</title>
+					<indexterm><primary>inpproj</primary></indexterm>
+					<para>Der Befehl inpproj konvertiert (projeziert) eine 
+					INP-Datei mit Gauß-Krüger Koordinaten (GK3) in eine neue 
+					INP-Datei mit geographischen (WGS84) Koordinaten.</para>
+	    <sect4 id="inpproj_synopsis">
+	       <title>Übersicht</title>
+	       <indexterm><primary>Übersicht</primary></indexterm>
+	    <synopsis>
+	      inpproj inputfile outputfile
+	    </synopsis>
+	    </sect4>
+    </sect3>
+    <sect3 id="epanet2">
+        <title>epanet2</title>
+        <indexterm><primary>epanet2</primary></indexterm>
+        <indexterm><primary>LANG</primary></indexterm>
+        <para><command>epanet2</command> ist eine modifizierte Version von
+        <command>epanet2d</command>, die es erlaubt, Berichte in deutscher Sprache
+        zu erzeugen.</para>
+        <para>Die <envar>LANG</envar>-Umgebungsvariable zur Konfiguration der
+            <command>epanet2</command>-Sprache genutzt werden.</para>
+                <sect4 id="epanet2_synopsis">
+           <title>Übersicht</title>
+           <indexterm><primary>Übersicht</primary></indexterm>
+        <synopsis>epanet2 inpdatei berichtsdatei [binäre_ergebnisdatei]</synopsis>
+        </sect4>
+    </sect3>
+    <sect3 id="epanet2csv">
+        <title>epanet2csv</title>
+        <indexterm><primary>epanet2csv</primary></indexterm>
+        <para><command>epanet2csv</command> konvertiert eine binäre 
+        EPANET-Ergebnisdatei in zwei CSV-Dateien. CSV-Dateien können von
+        Tabellenkalkulationssoftware wie OpenOffice Calc oder Excel,
+        relationalen Datenbanken wie PostgreSQL oder MySQL und GIS-Software
+        gelesen werden.</para>
+                <sect4 id="epanet2csv_synopsis">
+           <title>Übersicht</title>
+           <indexterm><primary>Übersicht</primary></indexterm>
+        <synopsis>epanet2csv binäre_ergebnisdatei knoten.csv leitungen.csv</synopsis>
+        </sect4>
+    </sect3>
+    </sect2>
+  </sect1>
+  <sect1 id="troubleshooting">
+    <title>Fehlerbehandlung und Support</title>
+    <indexterm><primary>Fehlerbehandlung</primary></indexterm>
+    <indexterm><primary>Support</primary></indexterm>
+    <indexterm><primary>Hilfe</primary></indexterm>
+    <para>Bitte berichten Sie alle Probleme über das Support-Formular auf
+        <ulink url="http://epanet.de">epanet.de</ulink>:</para>
+    <para><ulink url="http://epanet.de/en/support.php">http://epanet.de/en/support.php</ulink></para>
+  </sect1>
+<sect1 id="license">
+    <title>Licenz</title>
+    <indexterm><primary>Lizenz</primary></indexterm>
+    <indexterm><primary>GPL</primary></indexterm>
+    <para>Inptools Tools to work with EPANET INP files.</para>
+<para>Copyright (C) 2001, 2008, 2009 Steffen Macke</para>
+<para>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</para>
+<para>
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</para>
+<para>
+You should have received a copy of the GNU General Public License along with this program; if not, see <ulink url="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</ulink>.</para>
+
+  <sect2 id="license_shapelib">
+	  <title>Shapelib License</title>
+	  <indexterm><primary>license</primary></indexterm>
+	  <indexterm><primary>shapelib</primary></indexterm>
+	  <indexterm><primary>LGPL</primary></indexterm>
+	  <para>The inp2shp and shp2inp commands use <ulink url="http://shapelib.maptools.org/">shapelib</ulink> under the terms of the LGPL.</para>
+	  <para>Copyright (c) 1999, Frank Warmerdam</para>
+		  
+		  <para>This software is available under the following "MIT Style" license, or at the option of the licensee under the LGPL (see LICENSE.LGPL). This option is discussed in more detail in shapelib.html</para>
+		  
+		  <para>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</para>
+		  
+		  <para>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</para>
+		  
+<para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</para>
+  </sect2>
+  <sect2 id="license_proj">
+	  <title>PROJ.4 License</title>
+	  <indexterm><primary>license</primary></indexterm>
+	  <indexterm><primary>PROJ.4</primary></indexterm>
+	  <indexterm><primary>MIT</primary></indexterm>
+	  <para>The inpproj command use the <ulink url="http://trac.osgeo.org/proj/">PROJ.4</ulink> cartographic projections library.</para>
+	  <para> Copyright (c) 2000, Frank Warmerdam</para>
+		  
+		 <para> Permission is hereby granted, free of charge, to any person obtaining a
+		  copy of this software and associated documentation files (the "Software"),
+		  to deal in the Software without restriction, including without limitation
+		  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+		  and/or sell copies of the Software, and to permit persons to whom the
+		  Software is furnished to do so, subject to the following conditions:</para>
+		  
+		  <para>The above copyright notice and this permission notice shall be included
+		  in all copies or substantial portions of the Software.</para>
+		  
+		  <para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+		  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+		  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+		  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+		  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+		  DEALINGS IN THE SOFTWARE.</para>
+  </sect2>
+   <sect2 id="license_gettext">
+      <title>Gettext License</title>
+      <indexterm><primary>license</primary></indexterm>
+      <indexterm><primary>gettext</primary></indexterm>
+      <indexterm><primary>LGPL</primary></indexterm>
+      <para>Several Inptools commands use <ulink url="http://www.gnu.org/software/gettext/manual/gettext.html">gettext</ulink> under the terms of the LGPL.</para>
+      <para>Copyright (c) 1991 Free Software Foundation</para>
+          
+          <para>This software is available under the following "MIT Style" license, or at the option of the licensee under the LGPL (see LICENSE.LGPL). This option is discussed in more detail in shapelib.html</para>
+          
+          <para>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</para>
+          
+          <para>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</para>
+          
+<para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</para>
+  </sect2>
+</sect1>
+</article>
+<index id="index">
+  <title>Index</title>
+</index>
+</book>

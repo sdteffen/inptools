@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Inptools 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-08 18:14+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Steffen Macke <sdteffen@sdteffen.de>\n"
+"Language-Team: en <sdteffen@sdteffen.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../src/InpToolsExt\n"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:231
+msgid "About"
+msgstr "About"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:232
+msgid "Help"
+msgstr "Help"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:234
+msgid "Create binary result file"
+msgstr "Create binary result file"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:236
+msgid "Create CSV result files"
+msgstr "Create CSV result files"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:238
+msgid "Project from GK3 to WGS84"
+msgstr "Project from GK3 to WGS84"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:240
+msgid "Create report in German"
+msgstr "Create report in German"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:242
+msgid "Open with EPANET"
+msgstr "Open with EPANET"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:254
+msgid "InpTools"
+msgstr "InpTools"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:283
+msgid "This is the inptools shell extension's help."
+msgstr "This is the inptools shell extension's help."
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:339
+msgid "Could not obtain module handle"
+msgstr "Could not obtain module handle"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:340
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:349
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:365
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:703
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:719
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:735
+msgid "Inptools Shell Extension"
+msgstr "Inptools Shell Extension"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:348
+msgid "Could not obtain module path"
+msgstr "Could not obtain module path"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:364
+msgid ""
+"Inptools 0.2.1\n"
+"Copyright (c) 2008, 2009 Steffen Macke\n"
+"Portions Copyright (c) 1999, 2000 Frank Wamerdam\n"
+"\n"
+"http://inptools.epanet.de"
+msgstr ""
+"Inptools 0.2.1\n"
+"Copyright (c) 2008, 2009 Steffen Macke\n"
+"Portions Copyright (c) 1999, 2000 Frank Wamerdam\n"
+"\n"
+"http://inptools.epanet.de"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:391
+msgid "EPANET INP files (*.inp)"
+msgstr "EPANET INP files (*.inp)"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:431
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:499
+msgid "Text files (*.txt)"
+msgstr "Text files (*.txt)"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:488
+msgid "EPANET binary result files (*.epabin)"
+msgstr "EPANET binary result files (*.epabin)"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:543
+msgid "Node CSV files (*.csv)"
+msgstr "Node CSV files (*.csv)"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:550
+msgid "Save Node CSV file"
+msgstr "Save Node CSV file"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:562
+msgid "Link CSV files (*.csv)"
+msgstr "Link CSV files (*.csv)"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:569
+msgid "Save Link CSV file"
+msgstr "Save Link CSV file"
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:702
+msgid "Temp folder could not be obtained."
+msgstr "Temp folder could not be obtained."
+
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:718
+#: ../src/InpToolsExt/InpToolsShlExt.cpp:734
+msgid "Temporary file name could not be obtained."
+msgstr "Temporary file name could not be obtained."
+

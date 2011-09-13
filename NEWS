@@ -1,0 +1,16 @@
+2009-02-22 inptools 0.2.0
+
+	Additional functionality is available from the Explorer context menu.
+	epanet2csv has been added, a tool that creates two CSV files from an EPANET
+	binary result file.
+	Improved documentation.
+
+2008-09-21 inptools 0.1.0
+
+	Windows Explorer integration.
+	Windows and RPM installers have been added. Documentation has been added.
+	Build system has moved to the Autotools chain.
+	
+2007-08-24 inptools 0.0.1
+
+	The first release.

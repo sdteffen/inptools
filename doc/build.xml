@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<project name="inptools" default="usage">
+
+	<description>
+            This Ant build.xml file is used to transform DocBook XML to various
+    	    formats.
+    </description>
+	<!-- Remember to set the correct Base Directory in the Eclipse properties of this file! -->
+	<property name="docbook.xsl.dir" value="${basedir}" />
+	<property name="html.stylesheet" value="${docbook.xsl.dir}/docbook_html.xsl" />
+	<property name="fo.stylesheet" value="${docbook.xsl.dir}/docbook_pdf.xsl" />
+	<property name="chm.stylesheet" value="${docbook.xsl.dir}/docbook_chm.xsl" />
+	<property name="inptools.epanet.de.stylesheet" value="${docbook.xsl.dir}/docbook_inptools.epanet.de.xsl" />
+	<property name="xalan.lib.dir" value="${basedir}/../../../lib/xalan-j" />
+	<property name="fop.home" value="../../../lib/fop" />
+	<property name="docbook.home" value="${basedir}/../../../lib/docbook-xsl" />
+	<property name="hhc.exe" value="c:/program files/HTML Help Workshop/hhc.exe" />
+
+	<path id="xalan.classpath">
+		<fileset dir="${xalan.lib.dir}" id="xalan.fileset">
+			<include name="xalan.jar" />
+			<include name="xercesImpl.jar" />
+		</fileset>
+	</path>
+
+
+	<target name="usage" description="Prints the Ant build.xml usage">
+		<echo message="Use -projecthelp to get a list of the available targets. If you want to generate all the documentation, use build-all." />
+	</target>
+
+	<target name="clean" description="Cleans up generated files.">
+		<delete dir="${doc.dir}/html" />
+	</target>
+
+	<target name="depends">
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<target name="copy-images" description="Helper target to copy figures and docbook images.">
+		<copy todir="${output.dir}/figure" overwrite="true">
+			<fileset dir="${doc.dir}/figure" includes="*.png,*.svg,*.jpg" />
+		</copy>
+		<copy todir="${output.dir}/images" overwrite="true">
+			<fileset dir="${docbook.home}/images" includes="**/*.png,**/*.svg,**/*.jpg,**/*.gif" />
+		</copy>
+		<copy file="${basedir}/docbook.css" tofile="${output.dir}/docbook.css" overwrite="true" />
+	</target>
+
+	<target name="build-html" depends="depends" description="Generates HTML files from DocBook XML">
+
+		<antcall target="copy-images">
+			<param name="doc.dir" value="${doc.dir}" />
+			<param name="output.dir" value="${doc.dir}/html" />
+		</antcall>
+
+		<xslt style="${html.stylesheet}" extension=".html" basedir="${doc.dir}" destdir="${doc.dir}/html">
+			<include name="${ant.project.name}.xml" />
+			<classpath refid="xalan.classpath" />
+		</xslt>
+	</target>
+
+	<target name="build-pdf" depends="depends" description="Generates PDF files from DocBook XML">
+
+		<antcall target="copy-images">
+			<param name="doc.dir" value="${doc.dir}" />
+			<param name="output.dir" value="${doc.dir}/pdf" />
+		</antcall>
+
+		<xslt style="${fo.stylesheet}" extension=".fo" basedir="${doc.dir}" destdir="${doc.dir}/fo">
+			<include name="${ant.project.name}.xml" />
+			<classpath refid="xalan.classpath" />
+		</xslt>
+
+		<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
+			<classpath>
+				<fileset dir="${fop.home}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${fop.home}/build">
+					<include name="fop.jar" />
+					<include name="fop-hyph.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+
+		<fop format="application/pdf" fofile="${doc.dir}/fo/inptools.fo" outfile="${doc.dir}/${ant.project.name}.pdf" force="true" />
+	</target>
+
+	<target name="build-chm" depends="depends" description="Generates CHM files from DocBook XML">
+		<antcall target="copy-images">
+			<param name="doc.dir" value="${doc.dir}" />
+			<param name="output.dir" value="${doc.dir}/chm" />
+		</antcall>
+
+		<xslt style="${chm.stylesheet}" extension=".html" basedir="${doc.dir}" destdir="${doc.dir}/chm">
+			<include name="${ant.project.name}.xml" />
+			<classpath refid="xalan.classpath" />
+		</xslt>
+
+		<exec dir="${doc.dir}/chm" executable="${hhc.exe}">
+			<arg line="htmlhelp.hhp" />
+		</exec>
+
+		<copy tofile="${doc.dir}/${ant.project.name}.chm" file="${doc.dir}/chm/htmlhelp.chm" overwrite="true" />
+	</target>
+
+	<target name="build-inptools.epanet.de" depends="depends" description="Generates inptools.epanet.de HTML files from DocBook XML">
+
+			<antcall target="copy-images">
+				<param name="doc.dir" value="${doc.dir}" />
+				<param name="output.dir" value="${doc.dir}/inptools.epanet.de" />
+			</antcall>
+			
+			<antcall target="copy-images">
+				<param name="doc.dir" value="${doc.dir}" />
+			</antcall>
+
+			<xslt style="${inptools.epanet.de.stylesheet}" extension=".html" basedir="${doc.dir}" destdir="${doc.dir}/inptools.epanet.de">
+				<include name="${ant.project.name}.xml" />
+				<classpath refid="xalan.classpath" />
+			</xslt>
+			<copy todir="${help.dir}" overwrite="true">
+				<fileset dir="${doc.dir}/inptools.epanet.de" includes="*.html" />
+			</copy>
+	</target>	
+	
+	<target name="build-chm-html-pdf">
+		<antcall target="build-html">
+			<param name="doc.dir" value="${doc.dir}" />
+		</antcall>
+		<antcall target="build-pdf">
+			<param name="doc.dir" value="${doc.dir}" />
+		</antcall>
+		<antcall target="build-chm">
+			<param name="doc.dir" value="${doc.dir}" />
+		</antcall>
+		<antcall target="build-inptools.epanet.de">
+				<param name="doc.dir" value="${doc.dir}" />
+		</antcall>
+	</target>
+
+	<target name="build-all" depends="depends" description="Generates German and English documentation in CHM, HTML and PDF formats">
+		<antcall target="build-chm-html-pdf">
+			<param name="doc.dir" value="${basedir}/de" />
+		</antcall>
+		<antcall target="build-chm-html-pdf">
+			<param name="doc.dir" value="${basedir}/en" />
+		</antcall>
+	</target>
+
+</project>

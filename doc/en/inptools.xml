@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+ "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<book lang="en">
+	<bookinfo>
+		<title>Inptools Manual</title>
+		<copyright>
+			<year>2008</year>
+			<year>2009</year>
+			<holder>Steffen Macke</holder>
+		</copyright>
+		<author>
+			<personname>
+				<firstname>Steffen</firstname>
+				<surname>Macke</surname>
+			</personname>
+			<email>sdteffen@sdteffen.de</email>
+		</author>
+		<pubdate>$Date: 2009-05-18$</pubdate>
+		<legalnotice>
+			<para>
+				Permission is granted to copy, distribute and/or modify this
+				document under the terms of the GNU Free Documentation License,
+				Version 1.2 or any later version published by the Free Software
+				Foundation; with no Invariant Sections, no Front-Cover Texts, and no
+				Back-Cover Texts. A copy of the license is available from the Free
+				Software Foundation (
+				<ulink url="http://www.gnu.org" />
+				).
+			</para>
+		</legalnotice>
+	</bookinfo>
+	<article id="general">
+		<title>General</title>
+		<indexterm>
+			<primary>general</primary>
+		</indexterm>
+		<sect1 id="introduction">
+			<title>Introduction</title>
+			<indexterm>
+				<primary>introduction</primary>
+			</indexterm>
+			<indexterm>
+				<primary>license</primary>
+			</indexterm>
+			<para>Inptools provides functionality to process EPANET INP
+				files in various ways.</para>
+			<para>
+				<citetitle>Inptools</citetitle>
+				is available from
+				<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+				.
+			</para>
+			<para>
+				This manual describes
+				<citetitle>Inptools</citetitle>
+				version 0.2.2.
+			</para>
+			<sect2 id="news">
+				<title>What's New?</title>
+				<indexterm>
+					<primary>news</primary>
+				</indexterm>
+				<para>A summary of changes in the different Inptools versions.
+				</para>
+				<sect3 id="version_0_2_2">
+					<title>Version 0.2.2</title>
+					<itemizedlist>
+						<listitem>
+							<para>The inp2shp tool was added.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
+				<sect3 id="version_0_2_0">
+					<title>Version 0.2.0</title>
+					<itemizedlist>
+						<listitem>
+							<para>New functions have been added to the Windows 
+							Explorer context menu: "Create CSV file", 
+							"Create binary result file", "Help"</para>
+							<para>The epanet2csv tool was added.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
+				<sect3 id="version_0_1_0">
+					<title>Version 0.1.0</title>
+					<itemizedlist>
+						<listitem>
+							<para>The first public release.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
+			</sect2>
+		</sect1>
+		<sect1 id="requirements">
+			<title>Requirements</title>
+			<indexterm>
+				<primary>requirements</primary>
+			</indexterm>
+			<para>
+				Linux or Windows (2000, 2003, 2008, XP or Vista) are required in
+				order to use the
+				<citetitle>Inptools</citetitle>.		.
+			</para>
+		</sect1>
+		<sect1 id="installation">
+			<title>Installation</title>
+			<indexterm>
+				<primary>installation</primary>
+			</indexterm>
+			<para>
+				How to install
+				<citetitle>Inptools</citetitle>
+				.
+			</para>
+			<sect2 id="windows_installation">
+				<title>Windows Installation</title>
+				<indexterm>
+					<primary>installation</primary>
+					<secondary>Windows</secondary>
+				</indexterm>
+				<indexterm>
+					<primary>Windows</primary>
+				</indexterm>
+				<para>
+					How to install
+					<citetitle>Inptools</citetitle>
+					on Windows.
+				</para>
+				<para>
+					Download the installer from
+					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					and execute it.
+				</para>
+			</sect2>
+			<sect2 id="linux_installation">
+				<title>Linux Installation</title>
+				<indexterm>
+					<primary>installation</primary>
+					<secondary>Linux</secondary>
+				</indexterm>
+				<indexterm>
+					<primary>Windows</primary>
+				</indexterm>
+				<indexterm>
+					<primary>RPM</primary>
+				</indexterm>
+				<para>
+					How to install
+					<citetitle>Inptools</citetitle>
+					on computers running the Linux operating system
+				</para>
+				<para>
+					Download the RPM package from
+					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					and install it.
+				</para>
+			</sect2>
+		</sect1>
+	</article>
+	<article id="reference">
+		<title>Reference</title>
+		<indexterm>
+			<primary>reference</primary>
+		</indexterm>
+		<sect1 id="usage">
+			<title>Usage</title>
+			<indexterm>
+				<primary>usage</primary>
+			</indexterm>
+			<para>Inptools can be used in Windows Explorer or from the
+				commandline.</para>
+			<para>Inptools adds a context menu to Windows Explorer that can
+				be activated by right-clicking on <filename>*.inp</filename>
+				files.</para>
+			<sect2 id="explorer_integration">
+				<title>Windows Explorer Integration</title>
+				<indexterm>
+					<primary>Windows</primary>
+					<secondary>Explorer</secondary>
+				</indexterm>
+				<indexterm>
+					<primary>Explorer</primary>
+				</indexterm>
+				<mediaobject>
+                    <imageobject>
+                        <imagedata fileref="figure/explorer_context_menu.png" format="PNG" />
+                    </imageobject>
+                    <caption><para>Windows Explorer Integration</para></caption>
+                </mediaobject>
+				<para>To access InpTools, do the following: Open Windows 
+				Explorer.</para>
+				<para>Navigate to an INP files.</para>
+				<para>Right-click on the INP file.</para>
+				<para>Select the InpTools menu.</para>
+				<sect3 id="open_with_epanet">
+					<title>Open INP file with EPANET</title>
+					<indexterm><primary>epanet2w</primary></indexterm>
+					<para>Choosen <menuchoice><guimenu>InpTools</guimenu>
+						<guimenuitem>Open with EPANET</guimenuitem></menuchoice>
+						will open the selected INP file in 
+						<command>epanet2w</command> for interactive editing.</para> 
+					<para>This option is only available if EPANET is installed.</para>
+				</sect3>
+				<sect3 id="create_german_report">
+					<title>Create report in German</title>
+					<indexterm><primary>German</primary></indexterm>
+					<indexterm><primary>report</primary></indexterm>
+					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>Create report in German</guimenuitem></menuchoice>
+					will create a hydraulic analysis report in German language
+					from the selected INP file.</para>
+				</sect3>
+				<sect3 id="project_from_gk3_to_wgs84">
+					<title>Project from GK3 to WGS84</title>
+					<indexterm><primary>projection</primary></indexterm>
+					<indexterm><primary>GK3</primary></indexterm>
+					<indexterm><primary>WGS84</primary></indexterm>
+					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>Project from GK3 to WGS84</guimenuitem></menuchoice>
+					will convert (projects) the selected INP file with
+					Gau&szlig;-Krüger coordinates (GK3) into a new INP file 
+					with geographic (WGS84) coordinates.</para>
+				</sect3>
+				<sect3 id="create_csv_result_files">
+					<title>Create CSV result files</title>
+					<indexterm><primary>CSV</primary></indexterm>
+					<indexterm><primary>result</primary></indexterm>
+					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>Create CSV result files</guimenuitem></menuchoice>
+					will create two CSV files with hydraulic analysis results.
+					One file will contain node results and the other will contain 
+					link results.</para>
+				</sect3>
+				<sect3 id="create_binary_result_file">
+					<title>Create binary result file</title>
+					<indexterm><primary>binary</primary></indexterm>
+					<indexterm><primary>report</primary></indexterm>
+					<indexterm><primary>epanet2csv</primary></indexterm>
+					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<guimenuitem>Create binary result file</guimenuitem></menuchoice>
+					will create a hydraulic analysis report along with a binary
+					result file. This file can be further processed e.g. 
+					with the commandline tool <command>epanet2csv</command>.</para>
+				</sect3>
+			</sect2>
+			<sect2 id="commandline">
+				<title>Commandline Usage</title>
+				<indexterm>
+					<primary>commandline</primary>
+				</indexterm>
+				<para>The inptools package contains several commandline tools.
+				</para>
+				<note>
+					<para>
+						The use of the commandline tools is optional for Windows users. If
+						you are not familiar with commandline interfaces, please stick to
+						the Windows Explorer context menu (
+						<xref linkend="explorer_integration" />
+						).
+					</para>
+				</note>
+				<sect3 id="inp2shp">
+					<title>inp2shp</title>
+					<indexterm><primary>inp2shp</primary></indexterm>
+					<para>The inp2shp command converts an INP file into a set of shapefiles.
+					</para>
+					<sect4 id="inp2shp_synopsis">
+				       <title>Synopsis</title>
+				       <indexterm><primary>synopsis</primary></indexterm>
+				    <synopsis>
+				      inp2shp inpfile reportfile junction_shapefile pipe_shapefile pump_shapefile reservoir_shapefile tank_shapefile valve_shapefile
+				    </synopsis>
+				    </sect4>
+				</sect3>
+				<sect3 id="inpproj">
+					<title>inpproj</title>
+					<indexterm><primary>inppproj</primary></indexterm>
+					<para>The inpproj command converts (projects) an INP file with
+						Gau&szlig;-Krüger 
+						coordinates (GK3) into a new INP file with geographic (WGS84)
+	    coordinates.</para>
+	    <sect4 id="inpproj_synopsis">
+	       <title>Synopsis</title>
+	       <indexterm><primary>synopsis</primary></indexterm>
+	    <synopsis>
+	      inpproj inputfile outputfile
+	    </synopsis>
+	    </sect4>
+    </sect3>
+    <sect3 id="epanet2">
+        <title>epanet2</title>
+        <indexterm><primary>epanet2</primary></indexterm>
+        <para><command>epanet2</command> is a modified version of
+        <command>epanet2d</command> that allows to generate report files in German.</para>
+        <para>The <envar>LANG</envar> environment variable can be used to determine
+        in which language command should operate.</para>
+                <sect4 id="epanet2_synopsis">
+           <title>Synopsis</title>
+           <indexterm><primary>synopsis</primary></indexterm>
+        <synopsis>epanet2 inpfile reportfile [binaryresultfile]</synopsis>
+        </sect4>
+    </sect3>
+    <sect3 id="epanet2csv">
+        <title>epanet2csv</title>
+        <indexterm><primary>epanet2csv</primary></indexterm>
+        <para><command>epanet2csv</command> converts an EPANET binary result
+        file into two CSV files. CSV files can be read by spreadsheet software
+        like OpenOffice Calc or Excel, relational database software like
+        PostgreSQL or MySQL and GIS software.</para>
+                <sect4 id="epanet2csv_synopsis">
+           <title>Synopsis</title>
+           <indexterm><primary>synopsis</primary></indexterm>
+        <synopsis>epanet2csv binaryresultfile nodes.csv links.csv</synopsis>
+        </sect4>
+    </sect3>
+    </sect2>
+  </sect1>
+  <sect1 id="troubleshooting">
+    <title>Troubleshooting and Support</title>
+    <indexterm><primary>troubleshooting</primary></indexterm>
+    <indexterm><primary>support</primary></indexterm>
+    <para>Please report any problems through the <ulink url="http://epanet.de">epanet.de</ulink>
+        support form:</para>
+    <para><ulink url="http://epanet.de/en/support.php">http://epanet.de/en/support.php</ulink></para>
+  </sect1>
+  <sect1 id="development">
+  <title>Development</title>
+  <indexterm><primary>development</primary></indexterm>
+  <indexterm><primary>compiler</primary></indexterm>
+  <indexterm><primary>source</primary></indexterm>
+  <para>Most of the source code is plain C and should compile with virtually
+    any C compiler.</para>
+  <para>One exception is the Windows Explorer context menu code which was
+  developed using Visual C++ 6.0.</para>
+  <sect2 id="release_process">
+    <title>Release Process</title>
+    <indexterm><primary>release process</primary></indexterm>
+    <para>Update the version number in <filename>configure.in</filename>, 
+      <filename>installer/win32/inptools-setup.nsi</filename>,
+      <filename>doc/de/inptools.xml</filename>, the MSVC project
+      and <filename>doc/en/inptools.xml</filename>.</para>
+  </sect2>
+  <sect2 id="coding_style">
+  	<title>Coding style</title>
+  	<indexterm><primary>coding</primary></indexterm>
+  	<indexterm><primary>style</primary></indexterm>
+  	<indexterm><primary>indent</primary></indexterm>
+  	<para>K&amp;R style with 8 character indents shall be used to format the code.
+  		The <command>indent</command> command can be used to format the code:</para>
+  	<para>indent -kr -i8 epanet2csv.c</para>
+  </sect2>
+</sect1>
+<sect1 id="license">
+    <title>License</title>
+    <indexterm><primary>license</primary></indexterm>
+    <indexterm><primary>GPL</primary></indexterm>
+    <para>Inptools - Tools to work with EPANET INP files.</para>
+<para>Copyright (C) 2001, 2008, 2009 Steffen Macke</para>
+<para>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</para>
+<para>
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</para>
+<para>
+You should have received a copy of the GNU General Public License along with this program; if not, see <ulink url="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</ulink>.</para>
+
+  <sect2 id="license_shapelib">
+	  <title>Shapelib License</title>
+	  <indexterm><primary>license</primary></indexterm>
+	  <indexterm><primary>shapelib</primary></indexterm>
+	  <indexterm><primary>LGPL</primary></indexterm>
+	  <para>The inp2shp and shp2inp commands use <ulink url="http://shapelib.maptools.org/">shapelib</ulink> under the terms of the LGPL.</para>
+	  <para>Copyright (c) 1999, Frank Warmerdam</para>
+		  
+		  <para>This software is available under the following "MIT Style" license, or at the option of the licensee under the LGPL (see LICENSE.LGPL). This option is discussed in more detail in shapelib.html</para>
+		  
+		  <para>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</para>
+		  
+		  <para>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</para>
+		  
+<para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</para>
+  </sect2>
+  <sect2 id="license_proj">
+	  <title>PROJ.4 License</title>
+	  <indexterm><primary>license</primary></indexterm>
+	  <indexterm><primary>PROJ.4</primary></indexterm>
+	  <indexterm><primary>MIT</primary></indexterm>
+	  <para>The inpproj command use the <ulink url="http://trac.osgeo.org/proj/">PROJ.4</ulink> cartographic projections library.</para>
+	  <para> Copyright (c) 2000, Frank Warmerdam</para>
+		  
+		 <para> Permission is hereby granted, free of charge, to any person obtaining a
+		  copy of this software and associated documentation files (the "Software"),
+		  to deal in the Software without restriction, including without limitation
+		  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+		  and/or sell copies of the Software, and to permit persons to whom the
+		  Software is furnished to do so, subject to the following conditions:</para>
+		  
+		  <para>The above copyright notice and this permission notice shall be included
+		  in all copies or substantial portions of the Software.</para>
+		  
+		  <para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+		  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+		  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+		  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+		  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+		  DEALINGS IN THE SOFTWARE.</para>
+  </sect2>
+   <sect2 id="license_gettext">
+      <title>Gettext License</title>
+      <indexterm><primary>license</primary></indexterm>
+      <indexterm><primary>gettext</primary></indexterm>
+      <indexterm><primary>LGPL</primary></indexterm>
+      <para>Several Inptools commands use <ulink url="http://www.gnu.org/software/gettext/manual/gettext.html">gettext</ulink> under the terms of the LGPL.</para>
+      <para>Copyright (c) 1991 Free Software Foundation</para>
+          
+          <para>This software is available under the following "MIT Style" license, or at the option of the licensee under the LGPL (see LICENSE.LGPL). This option is discussed in more detail in shapelib.html</para>
+          
+          <para>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</para>
+          
+          <para>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</para>
+          
+<para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</para>
+  </sect2>
+</sect1>
+</article>
+<index id="index">
+  <title>Index</title>
+</index>
+</book>

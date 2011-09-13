@@ -1,0 +1,9 @@
+# List of source files which contain translatable strings.
+src/inp2shp.c
+src/inpproj.c
+src/shp2inp.c
+src/epanet2csv.c
+src/InpToolsExt/dlldata.c
+src/InpToolsExt/StdAfx.cpp
+src/InpToolsExt/InpToolsShlExt.cpp
+src/InpToolsExt/InpToolsExt.cpp

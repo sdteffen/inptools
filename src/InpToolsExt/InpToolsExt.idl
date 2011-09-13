@@ -1,0 +1,38 @@
+// InpToolsExt.idl : IDL source for InpToolsExt.dll
+//
+
+// Process this file with MIDL-Tool in order to create sources
+// for the type library (InpToolsExt.tlb)
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(4D3ABEDB-D313-426E-B780-35D4C9320BAF),
+	
+		helpstring("IInpToolsShlExt-Schnittstelle"),
+		pointer_default(unique)
+	]
+	interface IInpToolsShlExt : IUnknown
+	{
+	};
+
+[
+	uuid(EA4A60ED-2DAB-42EE-A903-22A580E5A5DC),
+	version(1.0),
+	helpstring("InpToolsExt 1.0 Typbibliothek")
+]
+library INPTOOLSEXTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(0025FF3C-429A-40B9-B987-4D86DC02365E),
+		helpstring("InpToolsShlExt Class")
+	]
+	coclass InpToolsShlExt
+	{
+		[default] interface IInpToolsShlExt;
+	};
+};

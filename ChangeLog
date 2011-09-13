@@ -1,0 +1,226 @@
+2009-05-19  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/inp2shp.c:
+	* src/inp2shp.dsp:
+	* src/inp2shp.h: A little bit of refactoring to make things build and run
+	on win32
+	
+2009-05-18  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/inp2shp.c:
+	* src/inp2shp.h:
+	* src/inp2shp.dsp:
+	* src/inp2shp.dsw: MSVC build file for inp2shp
+	* installer/win32/inptools-setup.nsi: Updates for the 0.2.2 release
+	
+2009-02-25  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (EXTRA_DIST): Add m4/ChangeLog.
+	* configure.in (AC_OUTPUT): Add po/Makefile.in.
+	* po/ChangeLog:
+	* po/Makevars:
+	* po/LINGUAS:
+	* po/inptools.pot: gettextize run on the project
+
+2009-02-22  Steffen Macke <sdteffen@sdteffen.de>
+
+	* README:
+	* NEWS:
+	* doc/Makefile.am:
+	* src/Makefile.am:
+	* src/InpToolsExt/Makefile.am: Updates for the 0.2.0 release
+	* doc/docbook_inptools.epanet.de.xsl:
+	* doc/build.xml: Build help pages for the website
+	* doc/en/figure/explorer_context_menu.png:
+	* doc/de/figure/explorer/context_menu.png: Updated screenshots for
+	0.2.0 release
+	* src/InpToolsExt/InpToolsShlExt.h:
+	* src/InpToolsExt/InpToolsShlExt.cpp:
+	* po/de.po:
+	* po/en.po:
+	* doc/en/inptools.xml:
+	* doc/de/inptools.xml:
+	* installer/win32/inptools-setup.nsi: Make help accessible from
+	Explorer context menu
+	
+2009-02-21  Steffen Macke <sdteffen@sdteffen.de>
+
+	* scr/epanet2csv.c: Updates for EPANET 2.0.12
+	* .project: Added eclipse project for documentation build
+	* src/InpToolsExt/InpToolsShlExt.h:
+	* src/InpToolsExt/InpToolsShlExt.cpp: Added support for CSV export
+	* doc/build.xml: Updates for new build environment
+	* po/de.po:
+	* po/en.po: Updated translations
+	* src/*.[c|h]:
+	* src/InpToolsExt/*.cpp:
+	* src/InpToolsExt/*.h: Use indent -kr -i8 consistently
+	* src/InpToolsExt.*: Support for binary result files, started
+	with CSV support
+	* doc/en/inptools.xml:
+	* doc/de/inptools.xml: Bumped version number, added epanet2csv
+	information
+	* src/epanet2csv.c: Added version, copyright to usage output
+	* installer/rpm/inptools.spec:
+	* installer/win32/inptools-setup.nsi:
+	* configure.in: Bumped version number to 0.2.0
+	
+2009-02-20  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/epanet2csv.c: Copied epanet2mysql.c from the DC Water Design 
+	Extension project
+
+2008-09-21  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/rpm/inptools.spec:
+	* configure.in: Updated for 0.1.0 release		
+    * installer/win32/inptools-setup.nsi:
+	* doc/en/figure/explorer_context_menu.png:
+    * doc/en/inptools.xml: Updated documentation
+    * doc/de/figure/explorer_context_menu.png:
+    * doc/de/figure/Makefile.am:
+    * doc/en/figure/Makefile.am:
+    * doc/build.xml:
+    * doc/docbook_chm.xsl:
+    * doc/docbook_general.xsl:
+    * doc/docbook_pdf.xsl:
+    * README:
+    * doc/docbook.css: Documentation build using Eclipse is up and running now.
+    
+2008-09-20  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/win32/inptools-setup.nsi: Only install German locale if German
+	locale is selected
+
+2008-09-19  Steffen Macke <sdteffen@sdteffen.de>
+
+	* doc/en/figure/Application-x-inptools-schematic.svg: A logo/INP filetype.
+	* doc/build.xml: Added ANT build file for the documentation
+	* doc/en/inptools.xml: Updated doctype declaration
+	* installer/win32/inptools-setup.nsi: Uninstall intl.dll 
+
+2008-09-18  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/win32/inptools-setup.nsi: Small corrections
+	* src/InpToolsExt/InpToolsExt.aps:
+	* src/InpToolsExt/InpToolsExt.rc: Version number updates
+	
+2008-09-17  Steffen Macke <sdteffen@sdteffen.de>
+
+	* doc/en/inptools.xml: Some updates, especially for the licenses; fixed
+	several syntax errors
+
+2008-09-16  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/win32/inptools-setup.nsi: Fixed typo
+	* src/InpToolsExt/InpToolsExt.h:
+	* src/InpToolsExt/InpToolsExt.cpp: Added About Dialog
+
+2008-09-15  Steffen Macke <sdteffen@sdteffen.de>
+
+	* doc/de/Makefile.am:
+	* doc/en/Makefile.am:
+	* doc/en/inptools.xml:
+	* doc/Makefile.am: Started with the documentation
+	* po/de.po:
+	* po/en.po: First translations
+	* src/InpToolsExt/InpToolsExt.h:
+	* src/InpToolsExt/InpToolsExt.cpp: Translation system is in place.
+	* installer/win32/inptools-setup.nsi: Installer updates for the translations
+	
+2008-09-13  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/InpToolsExt/InpToolsExt.h:
+	* src/InpToolsExt/InpToolsShlExt.cpp: Started work on context menu
+	localization using gettext
+	
+2008-09-10  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/InpToolsExt/InpToolsExt.h:
+	* src/InpToolsExt/InpToolsShlExt.cpp:
+	* src/InpToolsExt/InpToolsShlExt.h: New menu entry for German report,
+	not fully functional yet
+	* installer/win32/inptools-setup.nsi: Adding localized epanet2.exe build,
+	starting preparations for the 0.1.0 release
+
+2008-09-09  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/InpToolsExt/InpToolsExt.h:
+	* src/InpToolsExt/InpToolsShlExt.cpp:
+	* src/InpToolsExt/InpToolsShlExt.h: EPANET installation is now looked up
+	from the registry, context menu disabled if EPANET is not present; context
+	menu can be used to open INP files with EPANET
+	
+2008-09-04  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/InpToolsExt/InpToolsShlExt.cpp: Proper Explorer context-submenu
+	implementation
+	
+2008-08-27  Steffen Macke <sdteffen@sdteffen.de>
+
+	* AUTHORS:
+	* configure.in:
+	* src/Makefile.am:
+	* Makefile.am:
+	* NEWS:
+	* installer/win32/Makefile.am:
+	* installer/Makefile.am:
+	* installer/rpm/inptools.spec
+	* installer/rpm/Makefile.am: Standard Linux packaging, preparing for
+	build farm
+
+2008-08-26  Steffen Macke <sdteffen@sdteffen.de>
+
+	* README: Started with README file
+	* configure.in:
+	* src/inpproj.c:
+	* src/inp2shp.c:
+	* src/shp2inp.[ch]:
+	* src/Makefile.am: A little bit of progress with the Autotools 
+
+2008-08-25  Steffen Macke <sdteffen@sdteffen.de>
+
+	* configure.in:
+	* config.h.in:
+	* src/Makefile.am:
+	* Makefile.am: Started with Autotools
+	
+2008-08-24  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/win32/inptools-setup.nsi: Added uninstaller part. Ready for
+	the 0.0.1 release
+	* src/InpToolsExt/InpToolsShlExt.cpp: German texts for the time being, better
+	error reporting
+	
+2008-08-22  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/win32/inptools-setup.nsi: Include and register DLL
+	* src/inpproj.c: Small corrections
+	* src/InpToolsExt/InpToolsExt.dsp:
+	* src/InpToolsExt/InptoolsExt.h:
+	* src/InpToolsExt/InpToolsShlExt.cpp:
+	* src/InpToolsExt/InpToolsShlExt.h: First working copy of the shell extension
+	* src/inpproj.dsp:
+	* src/inpproj.dsw: MSVC 6 project files to compile inpproj on win32
+	
+2008-08-21  Steffen Macke <sdteffen@sdteffen.de>
+
+	* installer/win32/inptools-setup.nsi: Started with NSIS installer
+	* src/InpToolsExt/InpToolsShlExt.cpp: Look up the inpproj.exe location
+	from the registry, further processing
+	* src/inpproj.c: Hack to compile things on Windows using MinGW:
+	added findmatch(), match() and gettokens() from the EPANET sources
+
+2008-08-20  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/InpToolsExt/*.*: Started with inptools shell extension
+
+2008-08-19  Steffen Macke <sdteffen@sdteffen.de>
+
+	* src/inpproj.[ch]: Started with INP file reprojection tool
+
+2008-08-13  Steffen Macke <sdteffen@sdteffen.de>
+
+	* COPYING: Added GPL license text
+	* src/inp2shp.[ch]: Copied a slightly modified version from the
+	DC Water Design sources

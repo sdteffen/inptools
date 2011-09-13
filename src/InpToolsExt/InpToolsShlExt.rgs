@@ -1,0 +1,24 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {0025FF3C-429A-40B9-B987-4D86DC02365E} = s 'InpToolsShlExt Class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+
+	NoRemove txtfile
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove InpToolsShlExt = s '{0025FF3C-429A-40B9-B987-4D86DC02365E}'
+			}
+		}
+	}
+}

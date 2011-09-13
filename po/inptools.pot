@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Steffen Macke <sdteffen@sdteffen.de> 
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: inptools 0.2.0\n"
+"Report-Msgid-Bugs-To: sdteffen@sdteffen.de\n"
+"POT-Creation-Date: 2009-02-25 19:15+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:231
+msgid "About"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:232
+msgid "Help"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:234
+msgid "Create binary result file"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:236
+msgid "Create CSV result files"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:238
+msgid "Project from GK3 to WGS84"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:240
+msgid "Create report in German"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:242
+msgid "Open with EPANET"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:254
+msgid "InpTools"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:283
+msgid "This is the inptools shell extension's help."
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:338
+msgid "Could not obtain module handle"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:339
+#: src/InpToolsExt/InpToolsShlExt.cpp:348
+#: src/InpToolsExt/InpToolsShlExt.cpp:364
+#: src/InpToolsExt/InpToolsShlExt.cpp:708
+#: src/InpToolsExt/InpToolsShlExt.cpp:724
+#: src/InpToolsExt/InpToolsShlExt.cpp:740
+msgid "Inptools Shell Extension"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:347
+msgid "Could not obtain module path"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:363
+msgid ""
+"Inptools 0.2.0\n"
+"Copyright (c) 2008, 2009 Steffen Macke\n"
+"Portions Copyright (c) 1999, 2000 Frank Wamerdam\n"
+"\n"
+"http://inptools.epanet.de"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:396
+msgid "EPANET INP files (*.inp)"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:445
+#: src/InpToolsExt/InpToolsShlExt.cpp:511
+msgid "Text files (*.txt)"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:501
+msgid "EPANET binary result files (*.epabin)"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:553
+#: src/InpToolsExt/InpToolsShlExt.cpp:568
+msgid "Node CSV files (*.csv)"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:575
+msgid "Link CSV files (*.csv)"
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:707
+msgid "Temp folder could not be obtained."
+msgstr ""
+
+#: src/InpToolsExt/InpToolsShlExt.cpp:723
+#: src/InpToolsExt/InpToolsShlExt.cpp:739
+msgid "Temporary file name could not be obtained."
+msgstr ""
