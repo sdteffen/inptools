@@ -7,9 +7,9 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.2.2
+!define VERSION 0.2.3
 !define COMPANY "Steffen Macke"
-!define URL http://inptools.epanet.de
+!define URL http://epanet.de/inptools
 
 # MUI defines
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
@@ -28,7 +28,6 @@ SetCompressor lzma
 
 # Variables
 Var StartMenuGroup
-Var LibInstall
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -45,12 +44,12 @@ Var LibInstall
 !insertmacro MUI_LANGUAGE German
 
 # Installer attributes
-OutFile inptools-setup-0.2.2-1.exe
+OutFile inptools-setup-0.2.3-1.exe
 InstallDir $PROGRAMFILES\Inptools
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 0.2.2.0
+VIProductVersion 0.2.3.0
 VIAddVersionKey /LANG=${LANG_ENGLISH} ProductName Inptools
 VIAddVersionKey /LANG=${LANG_ENGLISH} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} CompanyName "${COMPANY}"
@@ -68,21 +67,16 @@ Section -Main SEC0000
 	File ..\..\src\Release\inp2shp.exe
     File ..\..\src\Release\inpproj.exe
     File ..\..\src\Release\epanet2csv.exe
-	File ..\..\..\epanet2\src\epanet2.exe
-	File ..\..\..\epanet2\src\Release\epanet2i.dll
+	File ..\..\src\Release\epanet2.exe
+	File ..\..\src\Release\epanet2i.dll
 	File "C:\gtk\bin\intl.dll"
-
-    # Installing library ..\..\src\InpToolsExt\Release\InpToolsExt.dll
-    !define LIBRARY_SHELL_EXTENSION
-    !insertmacro InstallLib REGDLL NOTSHARED REBOOT_PROTECTED ..\..\src\InpToolsExt\ReleaseMinDependency\InpToolsExt.dll $INSTDIR\bin\InpToolsExt.dll $INSTDIR
-    !undef LIBRARY_SHELL_EXTENSION
 
 	IntCmp $LANGUAGE ${LANG_GERMAN} install_german_locale no_locale_install no_locale_install
 	install_german_locale:
 	SetOutPath $INSTDIR\locale
 	SetOutPath $INSTDIR\locale\de
 	SetOutPath $INSTDIR\locale\de\LC_MESSAGES
-	File ..\..\..\locale\de\LC_MESSAGES\epanet2.mo
+	File ..\..\po\epanet2.mo
 	File /oname=inptools.mo ..\..\po\de.mo
 	SetOutPath $INSTDIR\doc\de
 	File ..\..\doc\de\inptools.chm
@@ -95,10 +89,16 @@ Section -Main SEC0000
 	File ..\..\doc\en\inptools.chm
 	File ..\..\doc\en\inptools.pdf
 
-    WriteRegStr HKEY_CLASSES_ROOT ".inp" "" "inpFile"
-    WriteRegStr HKEY_CLASSES_ROOT ".inp" "Content Type" "application/epanet"
-    WriteRegStr HKEY_CLASSES_ROOT "inpFile" "" "inpFile"
-    WriteRegStr HKEY_CLASSES_ROOT "inpFile\ShellEx\ContextMenuHandlers\InpToolsShlExt" "" "{0025FF3C-429A-40B9-B987-4D86DC02365E}"
+    WriteRegStr HKEY_CLASSES_ROOT ".inp" "" "Inptools.inp"
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp" "" ""
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "subcommands" ""
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "" "Open with EPANET"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" 'c:\program files (x86)\epanet2\epanet2w.exe "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "Open with EPANET"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" 'c:\program files (x86)\epanet2\epanet2w.exe "%1"'
   
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 SectionEnd
@@ -154,16 +154,10 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\doc\en\inptools.chm
 	Delete /REBOOTOK $INSTDIR\doc\de\inptools.chm
 	
-    # Uninstalling library $INSTDIR\bin\InpToolsExt.dll
-    !define LIBRARY_SHELL_EXTENSION
-    !insertmacro UnInstallLib REGDLL SHARED REBOOT_PROTECTED $INSTDIR\bin\InpToolsExt.dll
-    !undef LIBRARY_SHELL_EXTENSION
-    
     DeleteRegValue HKEY_CLASSES_ROOT ".inp" ""
     DeleteRegValue HKEY_CLASSES_ROOT ".inp" "Content Type"
     DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT ".inp"
     DeleteRegValue HKEY_CLASSES_ROOT "inpFile" ""
-    DeleteRegValue HKEY_CLASSES_ROOT "inpFile\ShellEx\ContextMenuHandlers\InpToolsShlExt" ""
     DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "inpFile"
 
     DeleteRegValue HKLM "${REGKEY}\Components" Main
@@ -202,12 +196,6 @@ SectionEnd
 Function .onInit
 	!insertmacro MUI_LANGDLL_DISPLAY
     InitPluginsDir
-    Push $0
-    ReadRegStr $0 HKLM "${REGKEY}" Path
-    ClearErrors
-    StrCmp $0 "" +2
-    StrCpy $LibInstall 1
-    Pop $0
 FunctionEnd
 
 # Uninstaller functions
