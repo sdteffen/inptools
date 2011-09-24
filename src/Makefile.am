@@ -27,4 +27,8 @@ noinst_HEADERS = inpproj.h inp2shp.h shp2inp.h
 
 inptools-about.exe:
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
-	i586-mingw32msvc-gcc inptools-about.c pump.o -o inptools-about.exe
+	i586-mingw32msvc-gcc -mwindows inptools-about.c pump.o -o inptools-about.exe
+
+inptools-file-dialog.exe: inptools-file-dialog.cpp
+	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
+	i586-mingw32msvc-g++ -mwindows inptools-file-dialog.cpp pump.o -o inptools-file-dialog.exe
