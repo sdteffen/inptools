@@ -30,7 +30,8 @@ AC_CHECK_HEADERS([toolkit.h stdlib.h string.h libshp/shapefil.h proj_api.h])
 # Checks for library functions.
 AC_FUNC_STRTOD
 
-AC_CONFIG_FILES([Makefile src/Makefile installer/Makefile installer/rpm/Makefile 
+AC_CONFIG_FILES([Makefile data/Makefile data/icons/Makefile \
+	src/Makefile installer/Makefile installer/rpm/Makefile \
 	po/Makefile.in installer/win32/Makefile \
 	installer/win32/locale/Makefile src/InpToolsExt/Makefile po/Makefile \
 	doc/Makefile doc/en/Makefile doc/de/Makefile doc/en/figure/Makefile \
