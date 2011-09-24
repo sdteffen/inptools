@@ -39,6 +39,8 @@ po/Makefile
 po/Makefile.in
 po/POTFILES
 po/stamp-it
+src/*.o
+src/*.exe
 src/.deps/
 src/InpToolsExt/Makefile
 src/InpToolsExt/Makefile.in

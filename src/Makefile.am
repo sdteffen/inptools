@@ -25,3 +25,6 @@ shp2inp_LDFLAGS = $(all_libraries)
 EXTRA_DIST = Makefile.in epanet2csv.dsp epanet2csv.dsw inpproj.dsw inpproj.dsp
 noinst_HEADERS = inpproj.h inp2shp.h shp2inp.h
 
+inptools-about.exe:
+	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
+	i586-mingw32msvc-gcc inptools-about.c pump.o -o inptools-about.exe
