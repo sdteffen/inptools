@@ -24,12 +24,14 @@
 #include <stdio.h>
 #include <libintl.h>
 #include <glib.h>
+#include <locale.h>
 
 #define _(String) gettext(String)
 
 int main(int argc, char *argv[])
 {
-
+  if(2 == argc)
+	setlocale(LC_ALL, argv[1]);
   bindtextdomain("inptools", "../../build/win32/locale");
   bind_textdomain_codeset("inptools", "UTF-8");
   textdomain("inptools");
@@ -40,9 +42,9 @@ int main(int argc, char *argv[])
   printf("!define INPTOOLS_PROJECT_GK3_WGS84 \"%s\"\n", g_strescape(_("Project from GK3 to WGS84"), ""));
   printf("!define INPTOOLS_CREATE_CSV \"%s\"\n", g_strescape(_("Create CSV result files"), ""));
   printf("!define INPTOOLS_CREATE_BINARY \"%s\"\n", g_strescape(_("Create binary result file"), ""));
-  printf("!define INPTOOLS_HELP \"%s\"\n", g_strescape(_("Inptools Help")), ""));
-  printf("!define INPTOOLS_EPANET_HELP \"%s\"\n", g_strescape(_("EPANET Help")), ""));
-  printf("!define INPTOOLS_ABOUT \"%s\"\n", g_strescape(_("About")), ""));
-  printf("!define INPTOOLS_UNINSTALL \"%s\"\n", g_strescape(_("Uninstall $(^Name)")):
+  printf("!define INPTOOLS_HELP \"%s\"\n", g_strescape(_("Inptools Help"), ""));
+  printf("!define INPTOOLS_EPANET_HELP \"%s\"\n", g_strescape(_("EPANET Help"), ""));
+  printf("!define INPTOOLS_ABOUT \"%s\"\n", g_strescape(_("About"), ""));
+  printf("!define INPTOOLS_UNINSTALL \"%s\"\n", g_strescape(_("Uninstall $(^Name)"), ""));
   return 0;
 }
