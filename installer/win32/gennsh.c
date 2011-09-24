@@ -30,12 +30,19 @@
 int main(int argc, char *argv[])
 {
 
-  bindtextdomain("inptools", "../../../build/win32/locale");
+  bindtextdomain("inptools", "../../build/win32/locale");
   bind_textdomain_codeset("inptools", "UTF-8");
   textdomain("inptools");
 
   /* Shell context menu entry */
   printf("!define INPTOOLS_OPEN_WITH_EPANET \"%s\"\n", g_strescape(_("Open with EPANET"), ""));
-
+  printf("!define INPTOOLS_CREATE_GERMAN_REPORT \"%s\"\n", g_strescape(_("Create report in German"), ""));
+  printf("!define INPTOOLS_PROJECT_GK3_WGS84 \"%s\"\n", g_strescape(_("Project from GK3 to WGS84"), ""));
+  printf("!define INPTOOLS_CREATE_CSV \"%s\"\n", g_strescape(_("Create CSV result files"), ""));
+  printf("!define INPTOOLS_CREATE_BINARY \"%s\"\n", g_strescape(_("Create binary result file"), ""));
+  printf("!define INPTOOLS_HELP \"%s\"\n", g_strescape(_("Inptools Help")), ""));
+  printf("!define INPTOOLS_EPANET_HELP \"%s\"\n", g_strescape(_("EPANET Help")), ""));
+  printf("!define INPTOOLS_ABOUT \"%s\"\n", g_strescape(_("About")), ""));
+  printf("!define INPTOOLS_UNINSTALL \"%s\"\n", g_strescape(_("Uninstall $(^Name)")):
   return 0;
 }

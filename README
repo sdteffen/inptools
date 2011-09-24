@@ -1,7 +1,6 @@
 Inptools allows to work with EPANET INP files.
 
-Compilation on Windows: Build the shell extension using MSVC 6
-and the Platform SDK. Build the commandline tools using MinGW.
+Compilation on Windows: Build the commandline tools using MinGW.
 
 Documentation was built using Eclipse/ANT using doc/build.xml with
 
@@ -9,4 +8,5 @@ Documentation was built using Eclipse/ANT using doc/build.xml with
 * FOP 0.95 installed to inptools/../../lib/fop
 * XALAN-J 2.7.1 installed to inptools/../../lib/xalan-j
 
+Build the installer using NSIS.
 
