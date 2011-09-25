@@ -36,6 +36,8 @@ SetCompressor lzma
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER Inptools
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
+!define MUI_FINISHPAGE_LINK	"epanet.de/inptools"
+!define MUI_FINISHPAGE_LINK_LOCATION	"http://epanet.de/inptools"
 
 # Included files
 !include Sections.nsh
@@ -59,8 +61,9 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 !insertmacro MUI_LANGUAGE German
 !define INPTOOLS_DEFAULT_LANGFILE "locale\en.nsh"
-!include "langmacros.nsh"  
+!include "langmacros.nsh"
 !insertmacro INPTOOLS_MACRO_INCLUDE_LANGFILE "GERMAN" "locale\de.nsh"
+!insertmacro INPTOOLS_MACRO_INCLUDE_LANGFILE "ENGLISH" "locale\en.nsh"
 
 
 # Installer attributes
@@ -93,6 +96,7 @@ Section -Main SEC0000
 	File ..\..\build\win32\bin\epanet2.dll
 	File ..\..\build\win32\bin\epanet2d.exe
 	File ..\..\build\win32\bin\epanet2w.exe
+	File ..\..\build\win32\bin\epanet2csvw.exe
 	File ..\..\src\Release\epanet2i.dll
 	File "C:\gtk\bin\intl.dll"
 
@@ -115,6 +119,7 @@ Section -Main SEC0000
 	File ..\..\doc\en\inptools.pdf
 	File ..\..\build\win32\doc\en\epanet2.chm
 	File ..\..\build\win32\doc\en\tutorial.chm
+	File ..\..\build\win32\doc\en\EN2manual.pdf
 
     WriteRegStr HKEY_CLASSES_ROOT ".inp" "" "Inptools.inp"
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp" "" ""
@@ -123,7 +128,7 @@ Section -Main SEC0000
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "" "$(INPTOOLS_OPEN_WITH_EPANET)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" '$INSTDIR\epanet2w.exe "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" '$INSTDIR\bin\epanet2w.exe "%1"'
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "$(INPTOOLS_CREATE_GERMAN_REPORT)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanet2.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n"'
@@ -132,7 +137,7 @@ Section -Main SEC0000
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\inpproj.exe" "%1" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n"'
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4" "" "$(INPTOOLS_CREATE_CSV)"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\inpproj.exe" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n" "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4\command" "" '"$INSTDIR\bin\epanet2csvw.exe" "$INSTDIR\bin\epanet2d.exe" "$INSTDIR\bin\epanet2csv.exe" "%1" "Node CSV files (*.csv)\n*.csv\nAll files (*.*)\n*.*\n" "Link CSV files (*.csv)\n*.csv\nAll files (*.*)\n*.*\n"'
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5" "" "$(INPTOOLS_CREATE_BINARY)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanet2d.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n" "EPANET binary result files (*.epabin)\n*.epabin\nAll files (*.*)\n*.*\n"'
@@ -159,11 +164,14 @@ Section -post SEC0001
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
 	SetOutPath $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk" $INSTDIR\uninstall-inptools.exe
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\English Documentation.lnk" $INSTDIR\doc\en\inptools.chm
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation.lnk" $INSTDIR\doc\de\inptools.chm
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\English Documentation (PDF).lnk" $INSTDIR\doc\en\inptools.pdf
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation (PDF).lnk" $INSTDIR\doc\de\inptools.pdf
+	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2.0 Help (CHM).lnk" $INSTDIR\doc\en\epanet2.chm
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET Tutorial (CHM).lnk" $INSTDIR\doc\en\tutorial.chm
+	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2.0 Help (CHM).lnk" $INSTDIR\epanet2.chm
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2 Users Manual (PDF).lnk" $INSTDIR\EN2manual.pdf
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
@@ -193,12 +201,14 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\bin\inptools-about.exe
 	Delete /REBOOTOK $INSTDIR\bin\inptools-file-dialog.exe
     Delete /REBOOTOK $INSTDIR\bin\inpproj.exe
+	Delete /REBOOTOK $INSTDIR\bin\inp2shp.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2w.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2d.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2.dll
 	Delete /REBOOTOK $INSTDIR\bin\epanet2i.dll
 	Delete /REBOOTOK $INSTDIR\bin\epanet2csv.exe
+	Delete /REBOOTOK $INSTDIR\bin\epanet2csvw.exe
 	Delete /REBOOTOK $INSTDIR\bin\intl.dll
 
 	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\epanet2.mo
@@ -208,12 +218,69 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\doc\en\inptools.pdf
 	Delete /REBOOTOK $INSTDIR\doc\en\inptools.chm
 	Delete /REBOOTOK $INSTDIR\doc\de\inptools.chm
+	Delete /REBOOTOK $INSTDIR\doc\en\epanet2.chm
+	Delete /REBOOTOK $INSTDIR\doc\en\tutorial.chm
+	Delete /REBOOTOK $INSTDIR\doc\en\EN2manual.pdf
 	
     DeleteRegValue HKEY_CLASSES_ROOT ".inp" ""
     DeleteRegValue HKEY_CLASSES_ROOT ".inp" "Content Type"
     DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT ".inp"
     DeleteRegValue HKEY_CLASSES_ROOT "inpFile" ""
     DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "inpFile"
+	
+	DeleteRegValue HKEY_CLASSES_ROOT ".inp" ""
+    DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp" ""
+    DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "subcommands"
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "Icon"
+	
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "Icon"
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" ""
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1"
+	
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" ""
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2"
+	
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3\command" ""
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3"
+	
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4\command" ""
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4"
+	
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5\command" ""
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5"
+
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "Icon"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6"
+
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7\command" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "Icon"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7"	
+	
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8"
+	
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp"
 
     DeleteRegValue HKLM "${REGKEY}\Components" Main
 SectionEnd
@@ -224,7 +291,6 @@ Section -un.post UNSEC0001
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\English Documentation.lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation (PDF).lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation.lnk"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk"
     Delete /REBOOTOK $INSTDIR\uninstall-inptools.exe
     DeleteRegValue HKLM "${REGKEY}" StartMenuGroup
     DeleteRegValue HKLM "${REGKEY}" Path
