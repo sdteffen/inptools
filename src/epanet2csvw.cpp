@@ -1,5 +1,5 @@
 /**
- * inptools-file-dialog.cpp Display file dialogs and execute a command
+ * epanet2csvw.cpp Create CSV result files from EPANET INP file
  * 
  * (c) 2008-2011 Steffen Macke <sdteffen@sdteffen.de>
  * 
@@ -30,9 +30,11 @@ using namespace std;
 
 DWORD run_process (char *szCommand, char *szArgs);
 string & str_replace_null (const string & search, string & subject);
+DWORD RunEpanet2csv(char *szBinaryFile, char *szNodesFile, char *szLinkFile);
+DWORD CreateCsvFile(char *szNodeFile, char *szLinkFile);
 
 /**
- * USAGE: inptools-file-dialog command inputfile filter1 [filter2] [filter3] [...]
+ * USAGE: epanet2csvw epanet2d epanet2csv inputfile filter1 filter2
  */
 int
 main (int argc, char *argv[])
@@ -47,11 +49,11 @@ main (int argc, char *argv[])
   int param_count;
   string pattern;
 
-  if (4 > argc)
+  if (6 != argc)
     {
       MessageBox (NULL,
-		  "USAGE: inptools-file-dialog command inputfile filter1 [filter2] [...]",
-		  "inptools-file-dialog", MB_ICONERROR);
+		  "USAGE: epanet2csvw epanet2d epanet2csv inputfile filter1 filter2",
+		  "epanet2csvw", MB_ICONERROR);
       return 1;
     }
 
@@ -59,7 +61,7 @@ main (int argc, char *argv[])
   params.append(argv[2]);
   params.append("\" ");
 
-  for(param_count = 3; param_count < argc; param_count++)
+  for(param_count = 4; param_count < argc; param_count++)
   {
 	  ZeroMemory (&ofn, sizeof (ofn));
 	  ofn.lStructSize = sizeof (ofn);
@@ -189,4 +191,81 @@ run_process (char *szCommand, char *szArgs)
 
   return uReturnCode;
 
+}
+
+DWORD
+ RunEpanet2csv(char *szBinaryFile, char *szNodesFile, char *szLinkFile)
+{
+	TCHAR szEpanet2csv[MAX_PATH];
+	TCHAR szParams[3 * MAX_PATH + 10];
+
+	wsprintf(szEpanet2csv, "\"%sepanet2csv.exe\"",
+			m_szDllPath);
+	wsprintf(szParams, "\"%s\" \"%s\" \"%s\"",
+			szBinaryFile, szNodesFile, szLinkFile);
+	return RunProcess(szEpanet2csv, szParams, TRUE);
+}
+
+DWORD
+ CreateCsvFile(char *szNodeFile, char *szLinkFile)
+{
+	DWORD dwRetVal;
+	DWORD dwBufSize=MAX_PATH;
+	TCHAR lpPathBuffer[MAX_PATH];
+	TCHAR szReportFileName[MAX_PATH];
+	TCHAR szBinaryFileName[MAX_PATH];
+	TCHAR szParams[3 * MAX_PATH + 10];
+	UINT uRetVal;
+
+    /**
+     * Find temp folder
+	 */
+    dwRetVal = GetTempPath(dwBufSize,    
+                           lpPathBuffer); 
+    if (dwRetVal > dwBufSize || (dwRetVal == 0))
+    {
+       MessageBox(m_pCmdInfo->hwnd,
+		   _("Temp folder could not be obtained."),
+		   _("Inptools Shell Extension"),
+		   MB_ICONERROR);
+        return E_FAIL;
+    }
+
+    /**
+	 * Get temporary report file.
+	 */
+    uRetVal = GetTempFileName(lpPathBuffer,
+                              TEXT("NEW"),  
+                              0,            
+                              szReportFileName);  
+    if (uRetVal == 0)
+    {
+		MessageBox(m_pCmdInfo->hwnd,
+		   _("Temporary file name could not be obtained."),
+		   _("Inptools Shell Extension"),
+		   MB_ICONERROR);
+        return E_FAIL;
+    }
+
+	/**
+	 * Get temporary binary result file.
+	 */
+    uRetVal = GetTempFileName(lpPathBuffer,
+                              TEXT("NEW"),  
+                              0,            
+                              szBinaryFileName);  
+    if (uRetVal == 0)
+    {
+		MessageBox(m_pCmdInfo->hwnd,
+		   _("Temporary file name could not be obtained."),
+		   _("Inptools Shell Extension"),
+		   MB_ICONERROR);
+        return E_FAIL;
+    }
+
+	wsprintf(szParams, "\"%s\" \"%s\" \"%s\"",
+				 m_szFile, szReportFileName,
+				 szBinaryFileName);
+	RunProcess(m_szEpanet2, szParams, TRUE);
+	return RunEpanet2csv(szBinaryFileName, szNodeFile, szLinkFile);
 }
