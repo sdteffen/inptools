@@ -33,7 +33,7 @@ AC_FUNC_STRTOD
 AC_CONFIG_FILES([Makefile data/Makefile data/icons/Makefile \
 	src/Makefile installer/Makefile installer/rpm/Makefile \
 	po/Makefile.in installer/win32/Makefile \
-	installer/win32/locale/Makefile src/InpToolsExt/Makefile po/Makefile \
+	installer/win32/locale/Makefile po/Makefile \
 	doc/Makefile doc/en/Makefile doc/de/Makefile doc/en/figure/Makefile \
 	doc/de/figure/Makefile])
 AC_OUTPUT

@@ -1,5 +1,3 @@
-SUBDIRS = InpToolsExt
-
 datadir = @datadir@
 localedir = $(datadir)/locale
 
