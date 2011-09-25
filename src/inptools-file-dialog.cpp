@@ -28,6 +28,7 @@
 
 using namespace std;
 
+DWORD run_process(char *szCommand, char *szArgs);
 string& str_replace_null(const string &search, string &subject);
 
 /**
@@ -35,12 +36,12 @@ string& str_replace_null(const string &search, string &subject);
  */
 int main(int argc, char *argv[])
 {
-	TCHAR szCommand[MAX_PATH];
-	TCHAR szParams[2 * MAX_PATH + 8];
-	WORD lwPathChars = MAX_PATH;
+	TCHAR szParams[2*MAX_PATH +4];
 	OPENFILENAME ofn;
-	char szFileName[MAX_PATH] = "";
 	char szOutFileName[MAX_PATH] = "";
+	DWORD return_value = 0;
+	char szLang[MAX_PATH] = "";
+	DWORD nEnvironmentRead = 0;
 
 	std::string pattern;	
 
@@ -59,47 +60,33 @@ int main(int argc, char *argv[])
 	pattern = argv[1];
 
 	ofn.lpstrFilter = str_replace_null("\\n", pattern).c_str();
-	//ofn.lpstrFilter = _("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0");
-	//MessageBox(NULL, ofn.lpstrFilter, "", MB_ICONERROR);
-	//MessageBox(NULL, "Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0", "", MB_ICONERROR);
-	//MessageBox(NULL, argv[1], "", MB_ICONERROR);
-			ofn.lpstrFile = szOutFileName;
+	ofn.lpstrFile = szOutFileName;
 
-			ofn.nMaxFile = MAX_PATH;
+	ofn.nMaxFile = MAX_PATH;
 
-			ofn.Flags =
-			    OFN_EXPLORER | OFN_OVERWRITEPROMPT |
-			    OFN_HIDEREADONLY;
+	ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
 
-			ofn.lpstrDefExt = "txt";
+	ofn.lpstrDefExt = "txt";
 
-			if(!GetSaveFileName(&ofn))
-				return E_INVALIDARG;
+	if(!GetSaveFileName(&ofn))
+		return 1;
 
-			wsprintf(szParams, "\"%s\" \"%s\"", argv[1],
-				 szOutFileName);
+	wsprintf(szParams, "\"%s\" \"%s\"", argv[3], szOutFileName);
 
-			char szLang[MAX_PATH] = "";
+	nEnvironmentRead =
+	    GetEnvironmentVariable("LANG", szLang, MAX_PATH);
 
-			DWORD nEnvironmentRead = 0;
+	if ((nEnvironmentRead > 0) && (nEnvironmentRead < MAX_PATH))
+		SetEnvironmentVariable("LANG", "de");
 
-			nEnvironmentRead =
-			    GetEnvironmentVariable("LANG", szLang,
-						   MAX_PATH);
+	return_value = run_process(argv[2], szParams);
 
-			if ((nEnvironmentRead > 0)
+	if ((nEnvironmentRead > 0)
 			    && (nEnvironmentRead < MAX_PATH))
 
-				SetEnvironmentVariable("LANG", "de");
+	SetEnvironmentVariable("LANG", szLang);
 
-			execl(szCommand, szParams, TRUE);
-
-			if ((nEnvironmentRead > 0)
-			    && (nEnvironmentRead < MAX_PATH))
-
-				SetEnvironmentVariable("LANG", szLang);
-
-	return 0;
+	return return_value;
 }
 
 /**
@@ -128,4 +115,63 @@ string& str_replace_null(const string &search, string &subject)
     
     subject = result;
     return subject;
+}
+
+DWORD run_process(char *szCommand, char *szArgs)
+{
+
+	STARTUPINFO si;
+
+	PROCESS_INFORMATION pi;
+
+	char szCommandLine[4096];
+
+	char *szEnvCOMSPEC = NULL;
+
+	char *szDefaultCMD = "CMD.EXE";
+
+	ULONG uReturnCode;
+
+
+	ZeroMemory(&si, sizeof(STARTUPINFO));
+
+	si.cb = sizeof(STARTUPINFO);
+
+	si.wShowWindow = SW_HIDE;
+
+	si.dwFlags = STARTF_USESHOWWINDOW;
+
+
+	szCommandLine[0] = 0;
+
+
+	strcat(szCommandLine, szCommand);
+
+	strcat(szCommandLine, " ");
+
+	strcat(szCommandLine, szArgs);
+
+	if (!CreateProcess
+	    (NULL, szCommandLine, NULL, NULL, FALSE,
+	     CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
+
+		return GetLastError();
+
+	}
+
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	if (!GetExitCodeProcess(pi.hProcess, &uReturnCode))
+
+		uReturnCode = 0;
+
+
+	CloseHandle(pi.hThread);
+
+	CloseHandle(pi.hProcess);
+
+
+	return uReturnCode;
+
 }
