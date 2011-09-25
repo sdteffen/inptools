@@ -28,150 +28,151 @@
 
 using namespace std;
 
-DWORD run_process(char *szCommand, char *szArgs);
-string& str_replace_null(const string &search, string &subject);
+DWORD run_process (char *szCommand, char *szArgs);
+string & str_replace_null (const string & search, string & subject);
 
 /**
  * USAGE: inptools-file-dialog filter command inputfile
  */
-int main(int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
-	TCHAR szParams[2*MAX_PATH +4];
-	OPENFILENAME ofn;
-	char szOutFileName[MAX_PATH] = "";
-	DWORD return_value = 0;
-	char szLang[MAX_PATH] = "";
-	DWORD nEnvironmentRead = 0;
+  TCHAR szParams[2 * MAX_PATH + 4];
+  OPENFILENAME ofn;
+  char szOutFileName[MAX_PATH] = "";
+  DWORD return_value = 0;
+  char szLang[MAX_PATH] = "";
+  DWORD nEnvironmentRead = 0;
 
-	std::string pattern;	
+  std::string pattern;
 
-	if(4 != argc)
-	{
-		MessageBox(NULL,
-			"USAGE: inptools-file-dialog filter command inputfile", 
-			"inptools-file-dialog", MB_ICONERROR);
-		return 1;
-	}
+  if (4 != argc)
+    {
+      MessageBox (NULL,
+		  "USAGE: inptools-file-dialog filter command inputfile",
+		  "inptools-file-dialog", MB_ICONERROR);
+      return 1;
+    }
 
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = NULL;
+  ZeroMemory (&ofn, sizeof (ofn));
+  ofn.lStructSize = sizeof (ofn);
+  ofn.hwndOwner = NULL;
 
-	pattern = argv[1];
+  pattern = argv[1];
 
-	ofn.lpstrFilter = str_replace_null("\\n", pattern).c_str();
-	ofn.lpstrFile = szOutFileName;
+  ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
+  ofn.lpstrFile = szOutFileName;
 
-	ofn.nMaxFile = MAX_PATH;
+  ofn.nMaxFile = MAX_PATH;
 
-	ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
+  ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
 
-	ofn.lpstrDefExt = "txt";
+  ofn.lpstrDefExt = "txt";
 
-	if(!GetSaveFileName(&ofn))
-		return 1;
+  if (!GetSaveFileName (&ofn))
+    return 1;
 
-	wsprintf(szParams, "\"%s\" \"%s\"", argv[3], szOutFileName);
+  wsprintf (szParams, "\"%s\" \"%s\"", argv[3], szOutFileName);
 
-	nEnvironmentRead =
-	    GetEnvironmentVariable("LANG", szLang, MAX_PATH);
+  nEnvironmentRead = GetEnvironmentVariable ("LANG", szLang, MAX_PATH);
 
-	if ((nEnvironmentRead > 0) && (nEnvironmentRead < MAX_PATH))
-		SetEnvironmentVariable("LANG", "de");
+  if ((nEnvironmentRead > 0) && (nEnvironmentRead < MAX_PATH))
+    SetEnvironmentVariable ("LANG", "de");
 
-	return_value = run_process(argv[2], szParams);
+  return_value = run_process (argv[2], szParams);
 
-	if ((nEnvironmentRead > 0)
-			    && (nEnvironmentRead < MAX_PATH))
+  if ((nEnvironmentRead > 0) && (nEnvironmentRead < MAX_PATH))
 
-	SetEnvironmentVariable("LANG", szLang);
+    SetEnvironmentVariable ("LANG", szLang);
 
-	return return_value;
+  return return_value;
 }
 
 /**
  * Replace \n with \0
  */
-string& str_replace_null(const string &search, string &subject)
+string & str_replace_null (const string & search, string & subject)
 {
-	string result = "";
-	int subject_length = subject.length();
-	int i = 0;
-	int j = 0;
-	
-	while(i != string::npos && i < subject_length)
+  string result = "";
+  int subject_length = subject.length ();
+  int i = 0;
+  int j = 0;
+
+  while (i != string::npos && i < subject_length)
+    {
+      j = subject.find (search, i);
+      if (string::npos == j)
+	result.append (subject.substr (i));
+      else
 	{
-		j = subject.find(search, i);
-		if(string::npos == j)
-			result.append(subject.substr(i));
-		else
-		{
-			result.append(subject.substr(i, j-i));
-			result.push_back('\0');
-			j += search.length();
-		}
-		i = j;
+	  result.append (subject.substr (i, j - i));
+	  result.push_back ('\0');
+	  j += search.length ();
 	}
-    
-    subject = result;
-    return subject;
+      i = j;
+    }
+
+  subject = result;
+  return subject;
 }
 
-DWORD run_process(char *szCommand, char *szArgs)
+DWORD
+run_process (char *szCommand, char *szArgs)
 {
 
-	STARTUPINFO si;
+  STARTUPINFO si;
 
-	PROCESS_INFORMATION pi;
+  PROCESS_INFORMATION pi;
 
-	char szCommandLine[4096];
+  char szCommandLine[4096];
 
-	char *szEnvCOMSPEC = NULL;
+  char *szEnvCOMSPEC = NULL;
 
-	char *szDefaultCMD = "CMD.EXE";
+  char *szDefaultCMD = "CMD.EXE";
 
-	ULONG uReturnCode;
-
-
-	ZeroMemory(&si, sizeof(STARTUPINFO));
-
-	si.cb = sizeof(STARTUPINFO);
-
-	si.wShowWindow = SW_HIDE;
-
-	si.dwFlags = STARTF_USESHOWWINDOW;
+  ULONG uReturnCode;
 
 
-	szCommandLine[0] = 0;
+  ZeroMemory (&si, sizeof (STARTUPINFO));
+
+  si.cb = sizeof (STARTUPINFO);
+
+  si.wShowWindow = SW_HIDE;
+
+  si.dwFlags = STARTF_USESHOWWINDOW;
 
 
-	strcat(szCommandLine, szCommand);
-
-	strcat(szCommandLine, " ");
-
-	strcat(szCommandLine, szArgs);
-
-	if (!CreateProcess
-	    (NULL, szCommandLine, NULL, NULL, FALSE,
-	     CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
-
-		return GetLastError();
-
-	}
+  szCommandLine[0] = 0;
 
 
-	WaitForSingleObject(pi.hProcess, INFINITE);
+  strcat (szCommandLine, szCommand);
 
-	if (!GetExitCodeProcess(pi.hProcess, &uReturnCode))
+  strcat (szCommandLine, " ");
 
-		uReturnCode = 0;
+  strcat (szCommandLine, szArgs);
+
+  if (!CreateProcess
+      (NULL, szCommandLine, NULL, NULL, FALSE,
+       CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+    {
+
+      return GetLastError ();
+
+    }
 
 
-	CloseHandle(pi.hThread);
+  WaitForSingleObject (pi.hProcess, INFINITE);
 
-	CloseHandle(pi.hProcess);
+  if (!GetExitCodeProcess (pi.hProcess, &uReturnCode))
+
+    uReturnCode = 0;
 
 
-	return uReturnCode;
+  CloseHandle (pi.hThread);
+
+  CloseHandle (pi.hProcess);
+
+
+  return uReturnCode;
 
 }

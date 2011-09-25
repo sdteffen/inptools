@@ -20,8 +20,11 @@
 
 #include <windows.h>
 
-int main(int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
-	MessageBox(NULL, "Inptools 0.2.3\nCopyright (c) 2008 - 2011 Steffen Macke\nPortions Copyright (c) 1999, 2000 Frank Wamerdam\n\nhttp://epanet.de/inptools", "Inptools", MB_OK);
-	return 0;
+  MessageBox (NULL,
+	      "Inptools 0.2.3\nCopyright (c) 2008 - 2011 Steffen Macke\nPortions Copyright (c) 1999, 2000 Frank Wamerdam\n\nhttp://epanet.de/inptools",
+	      "Inptools", MB_OK);
+  return 0;
 }
