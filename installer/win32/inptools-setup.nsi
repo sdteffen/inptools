@@ -113,6 +113,8 @@ Section -Main SEC0000
 	SetOutPath $INSTDIR\doc\en
 	File ..\..\doc\en\inptools.chm
 	File ..\..\doc\en\inptools.pdf
+	File ..\..\build\win32\doc\en\epanet2.chm
+	File ..\..\build\win32\doc\en\tutorial.chm
 
     WriteRegStr HKEY_CLASSES_ROOT ".inp" "" "Inptools.inp"
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp" "" ""
@@ -124,10 +126,24 @@ Section -Main SEC0000
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" '$INSTDIR\epanet2w.exe "%1"'
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "$(INPTOOLS_CREATE_GERMAN_REPORT)"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n" "$INSTDIR\bin\epanet2.exe" "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanet2.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n"'
 	
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "$(INPTOOLS_PROJECT_GK3_WGS84)"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n" "$INSTDIR\bin\inpproj.exe" "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3" "" "$(INPTOOLS_PROJECT_GK3_WGS84)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\inpproj.exe" "%1" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n"'
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4" "" "$(INPTOOLS_CREATE_CSV)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd4\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\inpproj.exe" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n" "%1"'
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5" "" "$(INPTOOLS_CREATE_BINARY)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanet2d.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n" "EPANET binary result files (*.epabin)\n*.epabin\nAll files (*.*)\n*.*\n"'
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "" "$(INPTOOLS_EPANET_HELP)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\epanet2.chm"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "Icon" "$WINDIR\hh.exe,0"
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "" "$(INPTOOLS_HELP)"	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\inptools.chm"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "Icon" "$WINDIR\hh.exe,0"
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "" "$(INPTOOLS_ABOUT)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
