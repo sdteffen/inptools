@@ -55,38 +55,38 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  params.append("\"");
-  params.append(argv[2]);
-  params.append("\" ");
+  params.append ("\"");
+  params.append (argv[2]);
+  params.append ("\" ");
 
-  for(param_count = 3; param_count < argc; param_count++)
-  {
-	  ZeroMemory (&ofn, sizeof (ofn));
-	  ofn.lStructSize = sizeof (ofn);
-	  ofn.hwndOwner = NULL;
+  for (param_count = 3; param_count < argc; param_count++)
+    {
+      ZeroMemory (&ofn, sizeof (ofn));
+      ofn.lStructSize = sizeof (ofn);
+      ofn.hwndOwner = NULL;
 
-	  pattern = argv[param_count];
+      pattern = argv[param_count];
 
-	  ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
-	  ofn.lpstrFile = szOutFileName;
+      ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
+      ofn.lpstrFile = szOutFileName;
 
-	  ofn.nMaxFile = MAX_PATH;
+      ofn.nMaxFile = MAX_PATH;
 
-	  ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
+      ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
 
 	  /**
            * @todo Extract from pattern
            */
-	  ofn.lpstrDefExt = "txt";
+      ofn.lpstrDefExt = "txt";
 
-	  if (!GetSaveFileName (&ofn))
-	    return 1;
+      if (!GetSaveFileName (&ofn))
+	return 1;
 
-	  params.append("\"");
-	  params.append(szOutFileName);
-	  params.append("\" ");
-  }
-  szArgs = (char *)params.c_str();
+      params.append ("\"");
+      params.append (szOutFileName);
+      params.append ("\" ");
+    }
+  szArgs = (char *) params.c_str ();
 
   nEnvironmentRead = GetEnvironmentVariable ("LANG", szLang, MAX_PATH);
 

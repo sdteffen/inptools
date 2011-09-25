@@ -30,8 +30,8 @@ using namespace std;
 
 DWORD run_process (char *szCommand, char *szArgs);
 string & str_replace_null (const string & search, string & subject);
-DWORD RunEpanet2csv(char *szBinaryFile, char *szNodesFile, char *szLinkFile);
-DWORD CreateCsvFile(char *szNodeFile, char *szLinkFile);
+DWORD RunEpanet2csv (char *szBinaryFile, char *szNodesFile, char *szLinkFile);
+DWORD CreateCsvFile (char *szNodeFile, char *szLinkFile);
 
 /**
  * USAGE: epanet2csvw epanet2d epanet2csv inputfile filter1 filter2
@@ -43,11 +43,14 @@ main (int argc, char *argv[])
   OPENFILENAME ofn;
   char szOutFileName[MAX_PATH] = "";
   DWORD return_value = 0;
-  char szLang[MAX_PATH] = "";
+  DWORD dwBufSize = MAX_PATH;
   char *szArgs;
-  DWORD nEnvironmentRead = 0;
+  TCHAR szReportFileName[MAX_PATH];
+  TCHAR szBinaryFileName[MAX_PATH];
+  TCHAR lpPathBuffer[MAX_PATH];
   int param_count;
   string pattern;
+  UINT uRetVal;
 
   if (6 != argc)
     {
@@ -57,49 +60,87 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  params.append("\"");
-  params.append(argv[2]);
-  params.append("\" ");
+ /**
+  * Find temp folder
+  */
+  return_value = GetTempPath (dwBufSize, lpPathBuffer);
+  if (return_value > dwBufSize || (return_value == 0))
+    {
+      MessageBox (NULL,
+		  _("Temp folder could not be obtained."),
+		  _("Inptools Shell Extension"), MB_ICONERROR);
+      return 1;
+    }
 
-  for(param_count = 4; param_count < argc; param_count++)
-  {
-	  ZeroMemory (&ofn, sizeof (ofn));
-	  ofn.lStructSize = sizeof (ofn);
-	  ofn.hwndOwner = NULL;
+    /**
+     * Get temporary report file.
+     */
+  uRetVal = GetTempFileName (lpPathBuffer, TEXT ("NEW"), 0, szReportFileName);
+  if (uRetVal == 0)
+    {
+      MessageBox (NULL,
+		  _("Temporary file name could not be obtained."),
+		  _("Inptools Shell Extension"), MB_ICONERROR);
+      return 1;
+    }
 
-	  pattern = argv[param_count];
+    /**
+     * Get temporary binary result file.
+     */
+  uRetVal = GetTempFileName (lpPathBuffer, TEXT ("NEW"), 0, szBinaryFileName);
+  if (uRetVal == 0)
+    {
+      MessageBox (NULL,
+		  _("Temporary file name could not be obtained."),
+		  _("Inptools Shell Extension"), MB_ICONERROR);
+      return 1;
+    }
 
-	  ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
-	  ofn.lpstrFile = szOutFileName;
+  params = "\"";
+  params.append (argv[3]);
+  params.append ("\" \"");
+  params.append (szReportFileName);
+  params.append ("\" ");
+  params.append (szBinaryFileName);
+  params.append ("\" ");
+  szArgs = (char *) params.c_str ();
+  run_process (argv[1], szArgs);
 
-	  ofn.nMaxFile = MAX_PATH;
+  /**
+   * Run epanet2csv
+   */
+  params = "\"";
+  params.append (szBinaryFileName);
+  params.append ("\" ");
+  for (param_count = 4; param_count < argc; param_count++)
+    {
+      ZeroMemory (&ofn, sizeof (ofn));
+      ofn.lStructSize = sizeof (ofn);
+      ofn.hwndOwner = NULL;
 
-	  ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
+      pattern = argv[param_count];
+
+      ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
+      ofn.lpstrFile = szOutFileName;
+
+      ofn.nMaxFile = MAX_PATH;
+
+      ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
 
 	  /**
            * @todo Extract from pattern
            */
-	  ofn.lpstrDefExt = "txt";
+      ofn.lpstrDefExt = "txt";
 
-	  if (!GetSaveFileName (&ofn))
-	    return 1;
+      if (!GetSaveFileName (&ofn))
+	return 1;
 
-	  params.append("\"");
-	  params.append(szOutFileName);
-	  params.append("\" ");
-  }
-  szArgs = (char *)params.c_str();
-
-  nEnvironmentRead = GetEnvironmentVariable ("LANG", szLang, MAX_PATH);
-
-  if ((nEnvironmentRead > 0) && (nEnvironmentRead < MAX_PATH))
-    SetEnvironmentVariable ("LANG", "de");
-
-  return_value = run_process (argv[1], szArgs);
-
-  if ((nEnvironmentRead > 0) && (nEnvironmentRead < MAX_PATH))
-
-    SetEnvironmentVariable ("LANG", szLang);
+      params.append ("\"");
+      params.append (szOutFileName);
+      params.append ("\" ");
+    }
+  szArgs = (char *) params.c_str ();
+  return_value = run_process (argv[2], szArgs);
 
   return return_value;
 }
@@ -148,7 +189,6 @@ run_process (char *szCommand, char *szArgs)
 
   ULONG uReturnCode;
 
-
   ZeroMemory (&si, sizeof (STARTUPINFO));
 
   si.cb = sizeof (STARTUPINFO);
@@ -191,81 +231,4 @@ run_process (char *szCommand, char *szArgs)
 
   return uReturnCode;
 
-}
-
-DWORD
- RunEpanet2csv(char *szBinaryFile, char *szNodesFile, char *szLinkFile)
-{
-	TCHAR szEpanet2csv[MAX_PATH];
-	TCHAR szParams[3 * MAX_PATH + 10];
-
-	wsprintf(szEpanet2csv, "\"%sepanet2csv.exe\"",
-			m_szDllPath);
-	wsprintf(szParams, "\"%s\" \"%s\" \"%s\"",
-			szBinaryFile, szNodesFile, szLinkFile);
-	return RunProcess(szEpanet2csv, szParams, TRUE);
-}
-
-DWORD
- CreateCsvFile(char *szNodeFile, char *szLinkFile)
-{
-	DWORD dwRetVal;
-	DWORD dwBufSize=MAX_PATH;
-	TCHAR lpPathBuffer[MAX_PATH];
-	TCHAR szReportFileName[MAX_PATH];
-	TCHAR szBinaryFileName[MAX_PATH];
-	TCHAR szParams[3 * MAX_PATH + 10];
-	UINT uRetVal;
-
-    /**
-     * Find temp folder
-	 */
-    dwRetVal = GetTempPath(dwBufSize,    
-                           lpPathBuffer); 
-    if (dwRetVal > dwBufSize || (dwRetVal == 0))
-    {
-       MessageBox(m_pCmdInfo->hwnd,
-		   _("Temp folder could not be obtained."),
-		   _("Inptools Shell Extension"),
-		   MB_ICONERROR);
-        return E_FAIL;
-    }
-
-    /**
-	 * Get temporary report file.
-	 */
-    uRetVal = GetTempFileName(lpPathBuffer,
-                              TEXT("NEW"),  
-                              0,            
-                              szReportFileName);  
-    if (uRetVal == 0)
-    {
-		MessageBox(m_pCmdInfo->hwnd,
-		   _("Temporary file name could not be obtained."),
-		   _("Inptools Shell Extension"),
-		   MB_ICONERROR);
-        return E_FAIL;
-    }
-
-	/**
-	 * Get temporary binary result file.
-	 */
-    uRetVal = GetTempFileName(lpPathBuffer,
-                              TEXT("NEW"),  
-                              0,            
-                              szBinaryFileName);  
-    if (uRetVal == 0)
-    {
-		MessageBox(m_pCmdInfo->hwnd,
-		   _("Temporary file name could not be obtained."),
-		   _("Inptools Shell Extension"),
-		   MB_ICONERROR);
-        return E_FAIL;
-    }
-
-	wsprintf(szParams, "\"%s\" \"%s\" \"%s\"",
-				 m_szFile, szReportFileName,
-				 szBinaryFileName);
-	RunProcess(m_szEpanet2, szParams, TRUE);
-	return RunEpanet2csv(szBinaryFileName, szNodeFile, szLinkFile);
 }

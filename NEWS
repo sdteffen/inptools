@@ -1,3 +1,9 @@
+2011-09-27 inptools 0.2.3
+
+	The Windows version requires Windows 7.
+	Rewritten and extended Windows Explorer integration.
+	EPANET binaries and documentation have been added to the Windows installer.
+
 2009-02-22 inptools 0.2.0
 
 	Additional functionality is available from the Explorer context menu.

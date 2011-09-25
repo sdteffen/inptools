@@ -22,7 +22,8 @@ shp2inp_SOURCES = shp2inp.c
 shp2inpi_CFLAGS = $(AM_CFLAGS)
 shp2inp_LDFLAGS = $(all_libraries)
 
-EXTRA_DIST = Makefile.in epanet2csv.dsp epanet2csv.dsw inpproj.dsw inpproj.dsp
+EXTRA_DIST = epanet2csvw.cpp inptools-about.c inptools-file-dialog.cpp \
+	Makefile.in epanet2csv.dsp epanet2csv.dsw inpproj.dsw inpproj.dsp
 noinst_HEADERS = inpproj.h inp2shp.h shp2inp.h
 
 epanet2csvw.exe: epanet2csvw.cpp
