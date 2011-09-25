@@ -1,9 +1,7 @@
 # List of source files which contain translatable strings.
+installer/win32/gennsh.c
 src/inp2shp.c
 src/inpproj.c
+src/inptools-about.c
 src/shp2inp.c
 src/epanet2csv.c
-src/InpToolsExt/dlldata.c
-src/InpToolsExt/StdAfx.cpp
-src/InpToolsExt/InpToolsShlExt.cpp
-src/InpToolsExt/InpToolsExt.cpp

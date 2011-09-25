@@ -45,6 +45,6 @@ int main(int argc, char *argv[])
   printf("!define INPTOOLS_HELP \"%s\"\n", g_strescape(_("Inptools Help"), ""));
   printf("!define INPTOOLS_EPANET_HELP \"%s\"\n", g_strescape(_("EPANET Help"), ""));
   printf("!define INPTOOLS_ABOUT \"%s\"\n", g_strescape(_("About"), ""));
-  printf("!define INPTOOLS_UNINSTALL \"%s\"\n", g_strescape(_("Uninstall $(^Name)"), ""));
+  printf("!define ^UninstallLink \"%s\"\n", g_strescape(_("Uninstall $(^Name)"), ""));
   return 0;
 }

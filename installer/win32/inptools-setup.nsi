@@ -58,6 +58,10 @@ Var StartMenuGroup
 # Installer languages
 !insertmacro MUI_LANGUAGE English
 !insertmacro MUI_LANGUAGE German
+!define INPTOOLS_DEFAULT_LANGFILE "locale\en.nsh"
+!include "langmacros.nsh"  
+!insertmacro INPTOOLS_MACRO_INCLUDE_LANGFILE "GERMAN" "locale\de.nsh"
+
 
 # Installer attributes
 OutFile inptools-setup-0.2.3-1.exe
@@ -80,10 +84,15 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR\bin
     SetOverwrite on
+	File ..\..\build\win32\bin\inptools-about.exe
+	File ..\..\build\win32\bin\inptools-file-dialog.exe
 	File ..\..\src\Release\inp2shp.exe
     File ..\..\src\Release\inpproj.exe
     File ..\..\src\Release\epanet2csv.exe
 	File ..\..\src\Release\epanet2.exe
+	File ..\..\build\win32\bin\epanet2.dll
+	File ..\..\build\win32\bin\epanet2d.exe
+	File ..\..\build\win32\bin\epanet2w.exe
 	File ..\..\src\Release\epanet2i.dll
 	File "C:\gtk\bin\intl.dll"
 
@@ -108,13 +117,21 @@ Section -Main SEC0000
     WriteRegStr HKEY_CLASSES_ROOT ".inp" "" "Inptools.inp"
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp" "" ""
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "subcommands" ""
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "" "Open with EPANET"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "" "$(INPTOOLS_OPEN_WITH_EPANET)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" 'c:\program files (x86)\epanet2\epanet2w.exe "%1"'
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "Open with EPANET"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "Icon" "c:\program files (x86)\EPANET2\EPANET2W.EXE,0"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" 'c:\program files (x86)\epanet2\epanet2w.exe "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" '$INSTDIR\epanet2w.exe "%1"'
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "$(INPTOOLS_CREATE_GERMAN_REPORT)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n" "$INSTDIR\bin\epanet2.exe" "%1"'
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "$(INPTOOLS_PROJECT_GK3_WGS84)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n" "$INSTDIR\bin\inpproj.exe" "%1"'
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "" "$(INPTOOLS_ABOUT)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command" "" '$INSTDIR\bin\inptools-about.exe'
   
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 SectionEnd
@@ -157,8 +174,14 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
+	Delete /REBOOTOK $INSTDIR\bin\inptools-about.exe
+	Delete /REBOOTOK $INSTDIR\bin\inptools-file-dialog.exe
     Delete /REBOOTOK $INSTDIR\bin\inpproj.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2.exe
+	Delete /REBOOTOK $INSTDIR\bin\epanet2w.exe
+	Delete /REBOOTOK $INSTDIR\bin\epanet2d.exe
+	Delete /REBOOTOK $INSTDIR\bin\epanet2.dll
+	Delete /REBOOTOK $INSTDIR\bin\epanet2i.dll
 	Delete /REBOOTOK $INSTDIR\bin\epanet2csv.exe
 	Delete /REBOOTOK $INSTDIR\bin\intl.dll
 
@@ -221,15 +244,3 @@ Function un.onInit
     !insertmacro SELECT_UNSECTION Main ${UNSEC0000}
 FunctionEnd
 
-# Installer Language Strings
-
-LangString ^UninstallLink ${LANG_ENGLISH} "Uninstall $(^Name)"
-LangString ^UninstallLink ${LANG_GERMAN} "$(^Name) deinstallieren"
-
-!insertmacro MUI_LANGUAGE "English"
-!insertmacro MUI_LANGUAGE "German"
-!define DIA_DEFAULT_LANGFILE "locale\en.nsh"
-
-!include "langmacros.nsh"
-  
-!insertmacro DIA_MACRO_INCLUDE_LANGFILE "GERMAN" "locale\de.nsh"
