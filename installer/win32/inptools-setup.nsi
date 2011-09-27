@@ -43,6 +43,7 @@ SetCompressor lzma
 !include Sections.nsh
 !include MUI.nsh
 !include Library.nsh
+!include WinVer.nsh
 
 # Variables
 Var StartMenuGroup
@@ -67,7 +68,7 @@ Var StartMenuGroup
 
 
 # Installer attributes
-OutFile inptools-setup-0.2.3-1.exe
+OutFile epanet-inptools-setup-0.2.3-1.exe
 InstallDir $PROGRAMFILES\Inptools
 CRCCheck on
 XPStyle on
@@ -317,6 +318,11 @@ SectionEnd
 Function .onInit
 	!insertmacro MUI_LANGDLL_DISPLAY
     InitPluginsDir
+	${If} ${AtLeastWin7}
+	${Else}
+		MessageBox MB_OK "Windows 7 or higher is required for this Inptools version. Please use Inptools 0.2.2 instead. It is available from http://epanet.de/inptools"
+		Abort "Windows 7 or higher is required for this Inptools version. Please use Inptools 0.2.2 instead. It is available from http://epanet.de/inptools"
+	${EndIf}
 FunctionEnd
 
 # Uninstaller functions
