@@ -1,5 +1,5 @@
 Name: inptools
-Version: 0.2.0
+Version: 1.0.0
 Release: 1
 Vendor: epanet.de
 License: GPL

@@ -7,6 +7,7 @@
 		<copyright>
 			<year>2008</year>
 			<year>2009</year>
+			<year>2011</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -16,7 +17,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date: 2009-05-18$</pubdate>
+		<pubdate>$Date: 2011-10-03$</pubdate>
 		<legalnotice>
 			<para>
 				Permission is granted to copy, distribute and/or modify this
@@ -48,21 +49,37 @@
 			<para>
 				<citetitle>Inptools</citetitle>
 				is available from
-				<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+				<ulink url="http://epanet.de/inptools">epanet.de/inptools</ulink>
 				.
 			</para>
 			<para>
 				This manual describes
 				<citetitle>Inptools</citetitle>
-				version 0.2.2.
+				version 1.0.0.
 			</para>
 			<sect2 id="news">
 				<title>What's New?</title>
 				<indexterm>
 					<primary>news</primary>
 				</indexterm>
-				<para>A summary of changes in the different Inptools versions.
+				<para>A summary of changes.
 				</para>
+				<sect3 id="version_1_0_0">
+					<title>Version 1.0.0</title>
+					<itemizedlist>
+						<listitem>
+							<para>EPANET 2.0.0.12 along with the documentation
+							were added to the Windows installer.</para>
+						</listitem>
+						<listitem>
+							<para>The Windows version requires Windows 7 or
+							higher.</para>
+						</listitem>
+						<listitem>	
+							<para>Improved Windows explorer integration.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
 				<sect3 id="version_0_2_2">
 					<title>Version 0.2.2</title>
 					<itemizedlist>
@@ -98,10 +115,12 @@
 				<primary>requirements</primary>
 			</indexterm>
 			<para>
-				Linux or Windows (2000, 2003, 2008, XP or Vista) are required in
+				Linux or Windows (7 or higher) are required in
 				order to use the
 				<citetitle>Inptools</citetitle>.		.
 			</para>
+			<para>Inptools 0.2.3 is the last version that supports earlier
+				Windows versions.</para>
 		</sect1>
 		<sect1 id="installation">
 			<title>Installation</title>
@@ -129,7 +148,7 @@
 				</para>
 				<para>
 					Download the installer from
-					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					<ulink url="http://epanet.de/inptools">epanet.de/inptools</ulink>
 					and execute it.
 				</para>
 			</sect2>
@@ -152,7 +171,7 @@
 				</para>
 				<para>
 					Download the RPM package from
-					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					<ulink url="http://epanet.de/inptools">epanet.de/inptools</ulink>
 					and install it.
 				</para>
 			</sect2>
@@ -188,15 +207,15 @@
                     </imageobject>
                     <caption><para>Windows Explorer Integration</para></caption>
                 </mediaobject>
-				<para>To access InpTools, do the following: Open Windows 
+				<para>To access Inptools, do the following: Open Windows 
 				Explorer.</para>
 				<para>Navigate to an INP files.</para>
 				<para>Right-click on the INP file.</para>
-				<para>Select the InpTools menu.</para>
+				<para>Select the Inptools menu.</para>
 				<sect3 id="open_with_epanet">
 					<title>Open INP file with EPANET</title>
 					<indexterm><primary>epanet2w</primary></indexterm>
-					<para>Choosen <menuchoice><guimenu>InpTools</guimenu>
+					<para>Choosen <menuchoice><guimenu>Inptools</guimenu>
 						<guimenuitem>Open with EPANET</guimenuitem></menuchoice>
 						will open the selected INP file in 
 						<command>epanet2w</command> for interactive editing.</para> 
@@ -206,7 +225,7 @@
 					<title>Create report in German</title>
 					<indexterm><primary>German</primary></indexterm>
 					<indexterm><primary>report</primary></indexterm>
-					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<para>Choosing <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>Create report in German</guimenuitem></menuchoice>
 					will create a hydraulic analysis report in German language
 					from the selected INP file.</para>
@@ -216,7 +235,7 @@
 					<indexterm><primary>projection</primary></indexterm>
 					<indexterm><primary>GK3</primary></indexterm>
 					<indexterm><primary>WGS84</primary></indexterm>
-					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<para>Choosing <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>Project from GK3 to WGS84</guimenuitem></menuchoice>
 					will convert (projects) the selected INP file with
 					Gau&szlig;-Krüger coordinates (GK3) into a new INP file 
@@ -226,7 +245,7 @@
 					<title>Create CSV result files</title>
 					<indexterm><primary>CSV</primary></indexterm>
 					<indexterm><primary>result</primary></indexterm>
-					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<para>Choosing <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>Create CSV result files</guimenuitem></menuchoice>
 					will create two CSV files with hydraulic analysis results.
 					One file will contain node results and the other will contain 
@@ -237,7 +256,7 @@
 					<indexterm><primary>binary</primary></indexterm>
 					<indexterm><primary>report</primary></indexterm>
 					<indexterm><primary>epanet2csv</primary></indexterm>
-					<para>Choosing <menuchoice><guimenu>InpTools</guimenu>
+					<para>Choosing <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>Create binary result file</guimenuitem></menuchoice>
 					will create a hydraulic analysis report along with a binary
 					result file. This file can be further processed e.g. 
@@ -268,8 +287,7 @@
 					<sect4 id="inp2shp_synopsis">
 				       <title>Synopsis</title>
 				       <indexterm><primary>synopsis</primary></indexterm>
-				    <synopsis>
-				      inp2shp inpfile reportfile junction_shapefile pipe_shapefile pump_shapefile reservoir_shapefile tank_shapefile valve_shapefile
+				    <synopsis>inp2shp inpfile reportfile junction_shapefile pipe_shapefile pump_shapefile reservoir_shapefile tank_shapefile valve_shapefile
 				    </synopsis>
 				    </sect4>
 				</sect3>
@@ -283,8 +301,7 @@
 	    <sect4 id="inpproj_synopsis">
 	       <title>Synopsis</title>
 	       <indexterm><primary>synopsis</primary></indexterm>
-	    <synopsis>
-	      inpproj inputfile outputfile
+	    <synopsis>inpproj inputfile outputfile
 	    </synopsis>
 	    </sect4>
     </sect3>
@@ -331,8 +348,7 @@
   <indexterm><primary>source</primary></indexterm>
   <para>Most of the source code is plain C and should compile with virtually
     any C compiler.</para>
-  <para>One exception is the Windows Explorer context menu code which was
-  developed using Visual C++ 6.0.</para>
+  <para>The C++ code can be compiled using MinGW.</para>
   <sect2 id="release_process">
     <title>Release Process</title>
     <indexterm><primary>release process</primary></indexterm>
@@ -356,7 +372,7 @@
     <indexterm><primary>license</primary></indexterm>
     <indexterm><primary>GPL</primary></indexterm>
     <para>Inptools - Tools to work with EPANET INP files.</para>
-<para>Copyright (C) 2001, 2008, 2009 Steffen Macke</para>
+<para>Copyright (C) 2001, 2008, 2009, 2011 Steffen Macke</para>
 <para>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</para>
 <para>
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</para>

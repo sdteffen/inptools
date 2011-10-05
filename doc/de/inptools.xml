@@ -7,6 +7,7 @@
 		<copyright>
 			<year>2008</year>
 			<year>2009</year>
+			<year>2011</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -16,7 +17,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date: 2009-02-21$</pubdate>
+		<pubdate>$Date 2011-10-03$</pubdate>
 		<legalnotice>
 			<para> Dieses Dokument wurde unter der GNU-Lizenz für freie
 				Dokumentation veröffentlicht.</para>
@@ -50,11 +51,11 @@
 			<para>
 				<citetitle>Inptools</citetitle>
 				sind erhältlich unter
-				<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+				<ulink url="http://epanet.de/inptools">epanet.de/inptools</ulink>
                 .
 			</para>
 			<para>
-				Dieses Handbuch beschreibt die Version 0.2.2 der Inptools.
+				Dieses Handbuch beschreibt die Version 1.0.0 der Inptools.
 			</para>
 			<sect2 id="news">
 				<title>Was ist Neu?</title>
@@ -62,6 +63,21 @@
 					<primary>Neuigkeiten</primary>
 				</indexterm>
 				<para>Ein Zusammenfassung der Änderungen.</para>
+				<sect3 id="version_1_0_0>
+					<title>Version 1.0.0</title>
+					<itemizedlist>
+						<listitem>
+							<para>EPANET 2.0.0.12 wurde zusammen mit der 
+							Dokumentation zum Installationsprogramm hinzugefügt.</para>
+						</listitem>
+						<listitem>
+							<para>Die Windows-Version erfordert mindestens Windows 7.</para>
+						</listitem>
+						<listitem>
+							<para>Verbesserte Windows-Explorer-Integration</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
 				<sect3 id="version_0_2_2">
 					<title>Version 0.2.2</title>
 					<itemizedlist>
@@ -100,10 +116,12 @@
 				<primary>Voraussetzungen</primary>
 			</indexterm>
 			<para>
-				Linux oder Windows (2000, 2003, 2008, XP oder Vista) werden
+				Linux oder Windows (7 oder besser) werden
 				benötigt, um die
 				Inptools-Software zu nutzen.
 			</para>
+			<para>Inptools 0.2.3 ist die letzte Version, die ältere Windows-Versionen
+				unterstützt.</para>
 		</sect1>
 		<sect1 id="installation">
 			<title>Installation</title>
@@ -129,7 +147,7 @@
 				</para>
 				<para>
 					Laden Sie das Installationsprogramm von
-					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					<ulink url="http://epanet.de/inptools">epanet.de/inptools</ulink>
 					herunter und führen Sie es aus.
 				</para>
 			</sect2>
@@ -152,7 +170,7 @@
 				</para>
 				<para>
 					Laden Sie das RPM-Paket von
-					<ulink url="http://inptools.epanet.de">inptools.epanet.de</ulink>
+					<ulink url="http://epanet.de/inptools">epanet.de/inptools</ulink>
 					herunter und installieren Sie es.
 				</para>
 			</sect2>
@@ -194,7 +212,7 @@
 				<sect3 id="open_with_epanet">
 					<title>Mit EPANET öffnen</title>
 					<indexterm><primary>epanet2w</primary></indexterm>
-					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
 						<guimenuitem>Mit EPANET öffnen</guimenuitem></menuchoice>,
 						um die gewählte INP-Datei in 
 						<command>epanet2w</command> interaktiv zu bearbeiten.</para>
@@ -205,7 +223,7 @@
 					<title>Deutschen Bericht erstellen</title>
 					<indexterm><primary>deutsch</primary></indexterm>
 					<indexterm><primary>Bericht</primary></indexterm>
-					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>deutschen Bericht erstellen</guimenuitem>
 					</menuchoice>, um aus der gewählten INP-Datei einen 
 					Berechnungsbericht in deutscher 
@@ -216,7 +234,7 @@
 					<indexterm><primary>Projektion</primary></indexterm>
 					<indexterm><primary>GK3</primary></indexterm>
 					<indexterm><primary>WGS84</primary></indexterm>
-					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>Projektion von GK3 nach WGS84</guimenuitem>
 					</menuchoice>, um die gewählte INP-Datei mit  mit Gauß-Krüger 
 					Koordinaten (GK3) in eine neue INP-Datei mit 
@@ -227,7 +245,7 @@
 					<title>CSV Ergebnisdateien erzeugen</title>
 					<indexterm><primary>CSV</primary></indexterm>
 					<indexterm><primary>Ergebnis</primary></indexterm>
-					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>CSV Ergebnisdateien erzeugen</guimenuitem></menuchoice>,
 					um aus der gewählten INP-Datei zwei CSV-Dateien mit den 
 					Berechnungsergebnissen zu erzeugen. Eine Datei wird
@@ -238,7 +256,7 @@
 					<indexterm><primary>binär</primary></indexterm>
 					<indexterm><primary>Bericht</primary></indexterm>
 					<indexterm><primary>epanet2csv</primary></indexterm>
-					<para>Wählen Sie <menuchoice><guimenu>InpTools</guimenu>
+					<para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
 					<guimenuitem>binäre Ergebnisdatei erzeugen</guimenuitem></menuchoice>,
 					um aus der gewählten INP-Datei einen Berechnungsbericht und
 					eine binäre Ergebnisdatei zu erzeugen. Die binäre Ergebnisdatei
@@ -336,7 +354,7 @@
     <indexterm><primary>Lizenz</primary></indexterm>
     <indexterm><primary>GPL</primary></indexterm>
     <para>Inptools Tools to work with EPANET INP files.</para>
-<para>Copyright (C) 2001, 2008, 2009 Steffen Macke</para>
+<para>Copyright (C) 2001, 2008, 2009, 2011 Steffen Macke</para>
 <para>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</para>
 <para>
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</para>

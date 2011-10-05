@@ -23,7 +23,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.2.3
+!define VERSION 1.0.0
 !define COMPANY "Steffen Macke"
 !define URL http://epanet.de/inptools
 
