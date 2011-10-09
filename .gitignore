@@ -1,3 +1,5 @@
+m4
+*.xz
 Makefile
 Makefile.in
 aclocal.m4

@@ -1,2 +1,2 @@
-EXTRA_DIST = pipe.ico pipe.rc
+EXTRA_DIST = pump.ico pump.rc
 
