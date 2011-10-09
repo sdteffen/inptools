@@ -68,12 +68,12 @@ Var StartMenuGroup
 
 
 # Installer attributes
-OutFile epanet-inptools-setup-0.2.3-1.exe
+OutFile epanet-inptools-setup-1.0.0-1.exe
 InstallDir $PROGRAMFILES\Inptools
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 0.2.3.0
+VIProductVersion 1.0.0.0
 VIAddVersionKey /LANG=${LANG_ENGLISH} ProductName Inptools
 VIAddVersionKey /LANG=${LANG_ENGLISH} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} CompanyName "${COMPANY}"
@@ -93,20 +93,20 @@ Section -Main SEC0000
 	File ..\..\src\Release\inp2shp.exe
     File ..\..\src\Release\inpproj.exe
     File ..\..\src\Release\epanet2csv.exe
-	File ..\..\src\Release\epanet2.exe
+	File ..\..\build\win32\bin\epanetl.exe
+	File ..\..\build\win32\bin\intl.dll
 	File ..\..\build\win32\bin\epanet2.dll
 	File ..\..\build\win32\bin\epanet2d.exe
 	File ..\..\build\win32\bin\epanet2w.exe
 	File ..\..\build\win32\bin\epanet2csvw.exe
 	File ..\..\src\Release\epanet2i.dll
-	File "C:\gtk\bin\intl.dll"
 
 	IntCmp $LANGUAGE ${LANG_GERMAN} install_german_locale no_locale_install no_locale_install
 	install_german_locale:
 	SetOutPath $INSTDIR\locale
 	SetOutPath $INSTDIR\locale\de
 	SetOutPath $INSTDIR\locale\de\LC_MESSAGES
-	File ..\..\po\epanet2.mo
+	File ..\..\build\win32\locale\de\LC_MESSAGES\epanetl.mo
 	File /oname=inptools.mo ..\..\po\de.mo
 	SetOutPath $INSTDIR\doc\de
 	File ..\..\doc\de\inptools.chm
@@ -136,7 +136,7 @@ Section -Main SEC0000
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd1\command" "" '$INSTDIR\bin\epanet2w.exe "%1"'
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2" "" "$(INPTOOLS_CREATE_GERMAN_REPORT)"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanet2.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd2\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanetl.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n"'
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3" "" "$(INPTOOLS_PROJECT_GK3_WGS84)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd3\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\inpproj.exe" "%1" "EPANET INP files (*.inp)\n*.inp\nAll files (*.*)\n*.*\n"'
@@ -221,7 +221,7 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\bin\epanet2csvw.exe
 	Delete /REBOOTOK $INSTDIR\bin\intl.dll
 
-	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\epanet2.mo
+	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\epanetl.mo
 	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\inptools.mo
 
 	Delete /REBOOTOK $INSTDIR\doc\de\inptools.pdf
