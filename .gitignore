@@ -36,11 +36,13 @@ installer/win32/locale/Makefile
 installer/win32/locale/Makefile.in
 installer/win32/locale/de.nsh
 installer/win32/messages.mo
+installer/win32/*.exe
 missing
 po/Makefile
 po/Makefile.in
 po/POTFILES
 po/stamp-it
+po/*.mo
 src/*~
 src/*.o
 src/*.exe
