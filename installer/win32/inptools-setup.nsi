@@ -124,6 +124,10 @@ Section -Main SEC0000
 
     WriteRegStr HKEY_CLASSES_ROOT ".inp" "" "Inptools.inp"
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp" "" ""
+    
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\open\command" "" '"$INSTDIR\bin\epanet2w.exe" "%1"'
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\DefaultIcon" "" "$INSTDIR\bin\epanet2w.exe,0"
+    
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "subcommands" ""
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
 	
@@ -154,7 +158,13 @@ Section -Main SEC0000
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "" "$(INPTOOLS_ABOUT)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command" "" '$INSTDIR\bin\inptools-about.exe'
-  
+
+    WriteRegStr HKEY_CLASSES_ROOT ".net" "" "Inptools.net"
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.net" "" ""
+    
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.net\Shell\open\command" "" '"$INSTDIR\bin\epanet2w.exe" "%1"'
+    WriteRegStr HKEY_CLASSES_ROOT "Inptools.net\DefaultIcon" "" "$INSTDIR\bin\epanet2w.exe,0"
+
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 SectionEnd
 
@@ -171,7 +181,6 @@ Section -post SEC0001
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation (PDF).lnk" $INSTDIR\doc\de\inptools.pdf
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2.0 Help (CHM).lnk" $INSTDIR\doc\en\epanet2.chm
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET Tutorial (CHM).lnk" $INSTDIR\doc\en\tutorial.chm
-	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2.0 Help (CHM).lnk" $INSTDIR\epanet2.chm
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2 Users Manual (PDF).lnk" $INSTDIR\EN2manual.pdf
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
@@ -222,7 +231,15 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\doc\en\epanet2.chm
 	Delete /REBOOTOK $INSTDIR\doc\en\tutorial.chm
 	Delete /REBOOTOK $INSTDIR\doc\en\EN2manual.pdf
-	
+
+    DeleteRegValue HKEY_CLASSES_ROOT ".net" ""
+    DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT ".net"
+    
+    DeleteRegValue HKEY_CLASSES_ROOT "Inptools.net" ""    
+    DeleteRegValue HKEY_CLASSES_ROOT "Inptools.net\Shell\open\command" ""
+    DeleteRegValue HKEY_CLASSES_ROOT "Inptools.net\DefaultIcon" ""
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.net"
+
     DeleteRegValue HKEY_CLASSES_ROOT ".inp" ""
     DeleteRegValue HKEY_CLASSES_ROOT ".inp" "Content Type"
     DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT ".inp"
@@ -292,6 +309,9 @@ Section -un.post UNSEC0001
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\English Documentation.lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation (PDF).lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation.lnk"
+	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\EPANET 2.0 Help (CHM).lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\EPANET Tutorial (CHM).lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\EPANET 2 Users Manual (PDF).lnk"
     Delete /REBOOTOK $INSTDIR\uninstall-inptools.exe
     DeleteRegValue HKLM "${REGKEY}" StartMenuGroup
     DeleteRegValue HKLM "${REGKEY}" Path
@@ -331,4 +351,3 @@ Function un.onInit
     !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuGroup
     !insertmacro SELECT_UNSECTION Main ${UNSEC0000}
 FunctionEnd
-

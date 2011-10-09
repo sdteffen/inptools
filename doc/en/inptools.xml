@@ -17,7 +17,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date: 2011-10-03$</pubdate>
+		<pubdate>$Date: 2011-10-08$</pubdate>
 		<legalnotice>
 			<para>
 				Permission is granted to copy, distribute and/or modify this
@@ -76,7 +76,9 @@
 							higher.</para>
 						</listitem>
 						<listitem>	
-							<para>Improved Windows explorer integration.</para>
+							<para>Improved Windows explorer integration. Double
+							click on *.net and *.inp files opens them in
+							epanet2w.</para>
 						</listitem>
 					</itemizedlist>
 				</sect3>
@@ -305,17 +307,17 @@
 	    </synopsis>
 	    </sect4>
     </sect3>
-    <sect3 id="epanet2">
-        <title>epanet2</title>
-        <indexterm><primary>epanet2</primary></indexterm>
-        <para><command>epanet2</command> is a modified version of
+    <sect3 id="epanet2l">
+        <title>epanet2l</title>
+        <indexterm><primary>epanet2l</primary></indexterm>
+        <para><command>epanet2l</command> is a modified (localized) version of
         <command>epanet2d</command> that allows to generate report files in German.</para>
         <para>The <envar>LANG</envar> environment variable can be used to determine
         in which language command should operate.</para>
-                <sect4 id="epanet2_synopsis">
+                <sect4 id="epanet2l_synopsis">
            <title>Synopsis</title>
            <indexterm><primary>synopsis</primary></indexterm>
-        <synopsis>epanet2 inpfile reportfile [binaryresultfile]</synopsis>
+        <synopsis>epanet2l inpfile reportfile [binaryresultfile]</synopsis>
         </sect4>
     </sect3>
     <sect3 id="epanet2csv">

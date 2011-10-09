@@ -17,7 +17,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date 2011-10-03$</pubdate>
+		<pubdate>$Date 2011-10-08$</pubdate>
 		<legalnotice>
 			<para> Dieses Dokument wurde unter der GNU-Lizenz für freie
 				Dokumentation veröffentlicht.</para>
@@ -74,7 +74,9 @@
 							<para>Die Windows-Version erfordert mindestens Windows 7.</para>
 						</listitem>
 						<listitem>
-							<para>Verbesserte Windows-Explorer-Integration</para>
+							<para>Verbesserte Windows-Explorer-Integration: Ein 
+							Doppelklick auf *.net und *.inp-Dateien öffnet
+							diese in epanet2w.</para>
 						</listitem>
 					</itemizedlist>
 				</sect3>
@@ -309,19 +311,19 @@
 	    </synopsis>
 	    </sect4>
     </sect3>
-    <sect3 id="epanet2">
-        <title>epanet2</title>
-        <indexterm><primary>epanet2</primary></indexterm>
+    <sect3 id="epanet2l">
+        <title>epanet2l</title>
+        <indexterm><primary>epanet2l</primary></indexterm>
         <indexterm><primary>LANG</primary></indexterm>
-        <para><command>epanet2</command> ist eine modifizierte Version von
+        <para><command>epanet2l</command> ist eine modifizierte (lokalisierte) Version von
         <command>epanet2d</command>, die es erlaubt, Berichte in deutscher Sprache
         zu erzeugen.</para>
         <para>Die <envar>LANG</envar>-Umgebungsvariable zur Konfiguration der
-            <command>epanet2</command>-Sprache genutzt werden.</para>
-                <sect4 id="epanet2_synopsis">
+            <command>epanet2l</command>-Sprache genutzt werden.</para>
+                <sect4 id="epanet2l_synopsis">
            <title>Übersicht</title>
            <indexterm><primary>Übersicht</primary></indexterm>
-        <synopsis>epanet2 inpdatei berichtsdatei [binäre_ergebnisdatei]</synopsis>
+        <synopsis>epanet2l inpdatei berichtsdatei [binäre_ergebnisdatei]</synopsis>
         </sect4>
     </sect3>
     <sect3 id="epanet2csv">
