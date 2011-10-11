@@ -68,7 +68,7 @@ Var StartMenuGroup
 
 
 # Installer attributes
-OutFile epanet-inptools-setup-1.0.0-1.exe
+OutFile epanet-inptools-setup-1.0.0-2.exe
 InstallDir $PROGRAMFILES\Inptools
 CRCCheck on
 XPStyle on
@@ -171,18 +171,17 @@ SectionEnd
 Section -post SEC0001
     WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
     SetOutPath $INSTDIR
-    WriteUninstaller $INSTDIR\uninstall-inptools.exe
-    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-    
+    WriteUninstaller $INSTDIR\uninstall-inptools.exe 
 	SetOutPath $SMPROGRAMS\$StartMenuGroup
+	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET.lnk" $INSTDIR\bin\epanet2w.exe
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\English Documentation.lnk" $INSTDIR\doc\en\inptools.chm
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation.lnk" $INSTDIR\doc\de\inptools.chm
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\English Documentation (PDF).lnk" $INSTDIR\doc\en\inptools.pdf
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation (PDF).lnk" $INSTDIR\doc\de\inptools.pdf
 	CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2.0 Help (CHM).lnk" $INSTDIR\doc\en\epanet2.chm
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET Tutorial (CHM).lnk" $INSTDIR\doc\en\tutorial.chm
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2 Users Manual (PDF).lnk" $INSTDIR\EN2manual.pdf
-    !insertmacro MUI_STARTMENU_WRITE_END
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\EPANET 2 Users Manual (PDF).lnk" $INSTDIR\doc\enEN2manual.pdf
+
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" Publisher "${COMPANY}"
@@ -305,6 +304,7 @@ SectionEnd
 
 Section -un.post UNSEC0001
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
+	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\EPANET.lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\English Documentation (PDF).lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\English Documentation.lnk"
 	Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Deutsche Dokumentation (PDF).lnk"

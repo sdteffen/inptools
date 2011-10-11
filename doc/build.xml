@@ -14,7 +14,7 @@
 	<property name="xalan.lib.dir" value="${basedir}/../../../lib/xalan-j" />
 	<property name="fop.home" value="../../../lib/fop" />
 	<property name="docbook.home" value="${basedir}/../../../lib/docbook-xsl" />
-	<property name="hhc.exe" value="c:/program files/HTML Help Workshop/hhc.exe" />
+	<property name="hhc.exe" value="c:/program files (x86)/HTML Help Workshop/hhc.exe" />
 
 	<path id="xalan.classpath">
 		<fileset dir="${xalan.lib.dir}" id="xalan.fileset">
