@@ -261,7 +261,8 @@
 					<guimenuitem>Create CSV result files</guimenuitem></menuchoice>
 					will create two CSV files with hydraulic analysis results.
 					One file will contain node results and the other will contain 
-					link results.</para>
+					link results. When generating CSV files, make sure that you use different
+                    file names for nodes and links.</para>
 				</sect3>
 				<sect3 id="create_binary_result_file">
 					<title>Create binary result file</title>
@@ -272,9 +273,7 @@
 					<guimenuitem>Create binary result file</guimenuitem></menuchoice>
 					will create a hydraulic analysis report along with a binary
 					result file. This file can be further processed e.g. 
-					with the commandline tool <command>epanet2csv</command>.
-					When generating CSV files, make sure that you use different
-					file names for nodes and links.</para>
+					with the commandline tool <command>epanet2csv</command>.</para>
 				</sect3>
 			</sect2>
 			<sect2 id="commandline">
