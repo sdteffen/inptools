@@ -1,6 +1,6 @@
 # Inptools - work with EPANET INP files
 #
-# Copyright (C) 2009-2011 Steffen Macke <sdteffen@sdteffen.de>
+# Copyright (C) 2009-2012 Steffen Macke <sdteffen@sdteffen.de>
 #  
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 1.0.0
+!define VERSION 1.0.1
 !define COMPANY "Steffen Macke"
 !define URL http://epanet.de/inptools
 
@@ -68,12 +68,12 @@ Var StartMenuGroup
 
 
 # Installer attributes
-OutFile epanet-inptools-setup-1.0.0-2.exe
+OutFile epanet-inptools-setup-1.0.1-2.exe
 InstallDir $PROGRAMFILES\Inptools
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 1.0.0.0
+VIProductVersion 1.0.1.0
 VIAddVersionKey /LANG=${LANG_ENGLISH} ProductName Inptools
 VIAddVersionKey /LANG=${LANG_ENGLISH} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} CompanyName "${COMPANY}"

@@ -1,3 +1,8 @@
+2012-03-06 inptools 1.0.1
+
+	Bugfix release: Windows Explorer CSV export offered node.csv as default
+	for link file
+
 2011-10-03 inptools 1.0.0
 
 	The Windows version requires Windows 7.

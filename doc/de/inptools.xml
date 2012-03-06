@@ -8,6 +8,7 @@
 			<year>2008</year>
 			<year>2009</year>
 			<year>2011</year>
+			<year>2012</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -17,7 +18,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date 2011-10-08$</pubdate>
+		<pubdate>$Date 2012-03-06$</pubdate>
 		<legalnotice>
 			<para> Dieses Dokument wurde unter der GNU-Lizenz für freie
 				Dokumentation veröffentlicht.</para>
@@ -55,7 +56,7 @@
                 .
 			</para>
 			<para>
-				Dieses Handbuch beschreibt die Version 1.0.0 der Inptools.
+				Dieses Handbuch beschreibt die Version 1.0.1 der Inptools.
 			</para>
 			<sect2 id="news">
 				<title>Was ist Neu?</title>
@@ -63,6 +64,16 @@
 					<primary>Neuigkeiten</primary>
 				</indexterm>
 				<para>Ein Zusammenfassung der Änderungen.</para>
+				<sect3 id="version_1_0_1">
+					<title>Version 1.0.1</title>
+					<itemizedlist>
+						<listitem>
+							<para>Fehlerkorrektur bei der Erzeugung von CSV-Dateien:
+								Der Dateiname "node.csv" wurde für Leitungsdaten
+								angeboten.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
 				<sect3 id="version_1_0_0">
 					<title>Version 1.0.0</title>
 					<itemizedlist>

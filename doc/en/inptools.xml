@@ -8,6 +8,7 @@
 			<year>2008</year>
 			<year>2009</year>
 			<year>2011</year>
+	  		<year>2012</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -17,7 +18,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date: 2011-10-08$</pubdate>
+		<pubdate>$Date: 2012-03-06$</pubdate>
 		<legalnotice>
 			<para>
 				Permission is granted to copy, distribute and/or modify this
@@ -55,7 +56,7 @@
 			<para>
 				This manual describes
 				<citetitle>Inptools</citetitle>
-				version 1.0.0.
+				version 1.0.1.
 			</para>
 			<sect2 id="news">
 				<title>What's New?</title>
@@ -64,6 +65,15 @@
 				</indexterm>
 				<para>A summary of changes.
 				</para>
+				<sect3 id="version_1_0_1">
+					<title>Version 1.0.1</title>
+					<itemizedlist>
+						<listitem>
+							<para>Fixed bug in CSV file generation: Link CSV file 
+							was named "node.csv" by default.</para>
+						</listitem>
+					</itemizedlist>
+				</sect3>
 				<sect3 id="version_1_0_0">
 					<title>Version 1.0.0</title>
 					<itemizedlist>
@@ -262,7 +272,9 @@
 					<guimenuitem>Create binary result file</guimenuitem></menuchoice>
 					will create a hydraulic analysis report along with a binary
 					result file. This file can be further processed e.g. 
-					with the commandline tool <command>epanet2csv</command>.</para>
+					with the commandline tool <command>epanet2csv</command>.
+					When generating CSV files, make sure that you use different
+					file names for nodes and links.</para>
 				</sect3>
 			</sect2>
 			<sect2 id="commandline">

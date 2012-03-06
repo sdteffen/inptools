@@ -1,7 +1,7 @@
 /**
  * epanet2csvw.cpp Create CSV result files from EPANET INP file
  * 
- * (c) 2008-2011 Steffen Macke <sdteffen@sdteffen.de>
+ * (c) 2008-2012 Steffen Macke <sdteffen@sdteffen.de>
  * 
  * http://epanet.de/inptools
  *
@@ -41,7 +41,8 @@ main (int argc, char *argv[])
 {
   string params;
   OPENFILENAME ofn;
-  char szOutFileName[MAX_PATH] = "";
+  char szOutFileNode[MAX_PATH] = "nodes.csv";
+  char szOutFileLink[MAX_PATH] = "links.csv";
   DWORD return_value = 0;
   DWORD dwBufSize = MAX_PATH;
   char *szArgs;
@@ -121,7 +122,10 @@ main (int argc, char *argv[])
       pattern = argv[param_count];
 
       ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
-      ofn.lpstrFile = szOutFileName;
+      if(4 == param_count)
+        ofn.lpstrFile = szOutFileNode;
+      else
+	ofn.lpstrFile = szOutFileLink;
 
       ofn.nMaxFile = MAX_PATH;
 
@@ -136,7 +140,10 @@ main (int argc, char *argv[])
 	return 1;
 
       params.append ("\"");
-      params.append (szOutFileName);
+      if(4 == param_count)
+	params.append (szOutFileNode);
+      else
+	params.append (szOutFileLink);
       params.append ("\" ");
     }
   szArgs = (char *) params.c_str ();
