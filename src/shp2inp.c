@@ -1,7 +1,7 @@
 /**
  * shp2inp.c convert a set of shapefiles into an EPANET INP file
  * 
- * Copyright (c) 2008 Steffen Macke <sdteffen@sdteffen.de>
+ * Copyright (c) 2008,2012 Steffen Macke <sdteffen@sdteffen.de>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
  */
 
-#include <libshp/shapefil.h>
+#include <shapefil.h>
 #include <stdlib.h>
 #include <string.h>
 #include "shp2inp.h"

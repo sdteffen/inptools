@@ -1,12 +1,12 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.67])
+AC_PREREQ([2.68])
 AC_INIT
 AC_CONFIG_SRCDIR([configure.in])
 
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE(inptools, 1.0.1)
+AM_INIT_AUTOMAKE(inptools, 1.0.2)
 
 # Checks for programs.
 AC_LANG([C])
@@ -16,16 +16,21 @@ AM_PROG_CC_C_O
 IT_PROG_INTLTOOL
 
 # Checks for libraries.
-AC_CHECK_LIB(m, pow)
-AC_CHECK_LIB(shp, DBFOpen)
-AC_CHECK_LIB(proj, pj_init)
-AC_CHECK_LIB(epanet2, ENopen)
+AC_CHECK_LIB(m, pow, [], [AC_MSG_ERROR([unable to find function pow()])])
+AC_CHECK_LIB(shp, DBFOpen, [], \
+  [AC_MSG_ERROR([unable to find function DBFOpen(). Please install libshp])])
+AC_CHECK_LIB(proj, pj_init, [], \
+  [AC_MSG_ERROR([unable to find function pj_init(). Please install libproj])])
+AC_CHECK_LIB(epanet2, ENopen, [], \
+  [AC_MSG_ERROR([unable to find function ENopen(). Please install epanet2])])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([toolkit.h stdlib.h string.h libshp/shapefil.h proj_api.h])
-
-# Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADERS([toolkit.h], [], [AC_MSG_ERROR([unable to find toolkit.h])]) 
+AC_CHECK_HEADERS([stdlib.h], [], [AC_MSG_ERROR([unable to find stdlib.h])])
+AC_CHECK_HEADERS([string.h], [], [AC_MSG_ERROR([unable to find string.h])]) 
+AC_CHECK_HEADERS([shapefil.h], [], [AC_MSG_ERROR([unable to find shapefil.h])])
+AC_CHECK_HEADERS([proj_api.h], [], [AC_MSG_ERROR([unable to find proj_api.h])])
 
 # Checks for library functions.
 AC_FUNC_STRTOD

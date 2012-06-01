@@ -3,7 +3,7 @@
  * 
  * (c) 2002, 2005 DORSCH Consult
  * (c) 2006 DC Water and Environment
- * (c) 2008, 2009 Steffen Macke <sdteffen@sdteffen.de>
+ * (c) 2008, 2009, 2012 Steffen Macke <sdteffen@sdteffen.de>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
  */
 
 #include <toolkit.h>
-#include <libshp/shapefil.h>
+#include <shapefil.h>
 #include <stdlib.h>
 #include <string.h>
 #include "inp2shp.h"
