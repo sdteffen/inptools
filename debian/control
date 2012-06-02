@@ -1,0 +1,20 @@
+Source: inptools
+Section: science
+Priority: extra
+Maintainer: Steffen Macke <sdteffen@sdteffen.de>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev, intltool
+Standards-Version: 3.9.2
+Homepage: http://epanet.de/inptools
+#Vcs-Git: git://ghydraulic.git.sourceforge.net/gitroot/ghydraulic/inptools
+#Vcs-Browser: http://ghydraulic.git.sourceforge.net/git/gitweb.cgi?p=ghydraulic/inptools;a=summary
+
+Package: inptools
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Tools to work with EPANET INP files
+ Convert and project EPANET INP files
+
+Package: inptools-doc
+Architecture: all
+Description: documentation for inptools
+ Convert and project EPANET INP files

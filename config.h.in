@@ -3,9 +3,6 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `epanet2' library (-lepanet2). */
-#undef HAVE_LIBEPANET2
-
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM
 
@@ -15,14 +12,14 @@
 /* Define to 1 if you have the `shp' library (-lshp). */
 #undef HAVE_LIBSHP
 
-/* Define to 1 if you have the <libshp/shapefil.h> header file. */
-#undef HAVE_LIBSHP_SHAPEFIL_H
-
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
 /* Define to 1 if you have the <proj_api.h> header file. */
 #undef HAVE_PROJ_API_H
+
+/* Define to 1 if you have the <shapefil.h> header file. */
+#undef HAVE_SHAPEFIL_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H

@@ -1,5 +1,8 @@
 m4
+*.bz2
+*.gz
 *.xz
+*~
 Makefile
 Makefile.in
 aclocal.m4
@@ -43,6 +46,7 @@ po/Makefile.in
 po/POTFILES
 po/stamp-it
 po/*.mo
+po/*.gmo
 src/*~
 src/*.o
 src/*.exe
@@ -51,4 +55,8 @@ src/InpToolsExt/Makefile
 src/InpToolsExt/Makefile.in
 src/Makefile
 src/Makefile.in
+src/epanet2csv
+src/inp2shp
+src/inpproj
+src/shp2inp
 stamp-h1
