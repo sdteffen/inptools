@@ -2,7 +2,7 @@ Source: inptools
 Section: science
 Priority: extra
 Maintainer: Steffen Macke <sdteffen@sdteffen.de>
-Build-Depends: debhelper (>= 8.0.0), autotools-dev, intltool
+Build-Depends: debhelper (>= 8.0.0), autotools-dev, intltool, libshp-dev, libproj-dev, epanetl
 Standards-Version: 3.9.2
 Homepage: http://epanet.de/inptools
 #Vcs-Git: git://ghydraulic.git.sourceforge.net/gitroot/ghydraulic/inptools
