@@ -2,7 +2,13 @@ Inptools allows to work with EPANET INP files.
 
 See http://epanet.de/inptools for additional information.
 
-Compilation on Windows: Build the commandline tools using MinGW.
+Compilation
+
+inp2shp and inpproj require the EPANET Toolkit. Linux users
+can install e.g. epanet2 or epanetl for this. Windows users can use
+the toolkit.h and DLL from
+http://www.epa.gov/nrmrl/wswrd/dw/epanet/EN2toolkit.zip
+One option to compile on Windows: Build the commandline tools using MinGW.
 
 Documentation was built using Eclipse/ANT using doc/build.xml with
 
