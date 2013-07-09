@@ -9,6 +9,7 @@
 			<year>2009</year>
 			<year>2011</year>
 	  		<year>2012</year>
+                        <year>2013</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -18,7 +19,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date: 2012-03-06$</pubdate>
+		<pubdate>2013-06-10</pubdate>
 		<legalnotice>
 			<para>
 				Permission is granted to copy, distribute and/or modify this
@@ -292,6 +293,56 @@
 						).
 					</para>
 				</note>
+                                
+    <sect3 id="epanet2csv">
+        <title>epanet2csv</title>
+        <indexterm><primary>epanet2csv</primary></indexterm>
+        <indexterm><primary>binary result file</primary></indexterm>
+        <para><command>epanet2csv</command> converts an EPANET binary result
+        file into two CSV files. CSV files can be read by spreadsheet software
+        like OpenOffice Calc or Excel, relational database software like
+        PostgreSQL or MySQL and GIS software.</para>
+        <para>Binary result files can be created e.g. using epanet2d or epanet2l
+        (<xref linkend="epanet2d" />, <xref linkend="epanet2l" />).
+        </para>
+                <sect4 id="epanet2csv_synopsis">
+           <title>Synopsis</title>
+           <indexterm><primary>synopsis</primary></indexterm>
+        <synopsis>epanet2csv binaryresultfile nodes.csv links.csv</synopsis>
+        </sect4>
+    </sect3>
+    <sect3 id="epanet2d">
+        <title>epanet2d</title>
+        <indexterm><primary>epanet2d</primary></indexterm>
+        <indexterm><primary>binary result file</primary></indexterm>
+        <para><command>epanet2d</command> is part of the standard EPANET distribution.
+            It's documented here because it's part of the Windows Inptools package 
+            and one option to create a binary result file that can be
+            processed by epanet2csv.
+        </para>
+         <sect4 id="epanet2d_synopsis">
+           <title>Synopsis</title>
+           <indexterm><primary>synopsis</primary></indexterm>
+        <synopsis>epanet2d inpfile reportfile [binaryresultfile]</synopsis>
+        <para>The binaryresultfile parameter is optional. Provide a path or
+        filename in order to create a binary result file.</para>
+        </sect4>
+    </sect3>
+    <sect3 id="epanet2l">
+        <title>epanet2l</title>
+        <indexterm><primary>epanet2l</primary></indexterm>
+        <para><command>epanet2l</command> is a modified (localized) version of
+        <command>epanet2d</command> that allows to generate report files in German.</para>
+        <para>The <envar>LANG</envar> environment variable can be used to determine
+        in which language the command should operate (E.g. "en" or "de").</para>
+                <sect4 id="epanet2l_synopsis">
+           <title>Synopsis</title>
+           <indexterm><primary>synopsis</primary></indexterm>
+        <synopsis>epanet2l inpfile reportfile [binaryresultfile]</synopsis>
+        <para>The binaryresultfile parameter is optional. Provide a path or
+        filename in order to create a binary result file.</para>
+        </sect4>
+    </sect3>
 				<sect3 id="inp2shp">
 					<title>inp2shp</title>
 					<indexterm><primary>inp2shp</primary></indexterm>
@@ -318,32 +369,6 @@
 	    </synopsis>
 	    </sect4>
     </sect3>
-    <sect3 id="epanet2l">
-        <title>epanet2l</title>
-        <indexterm><primary>epanet2l</primary></indexterm>
-        <para><command>epanet2l</command> is a modified (localized) version of
-        <command>epanet2d</command> that allows to generate report files in German.</para>
-        <para>The <envar>LANG</envar> environment variable can be used to determine
-        in which language command should operate.</para>
-                <sect4 id="epanet2l_synopsis">
-           <title>Synopsis</title>
-           <indexterm><primary>synopsis</primary></indexterm>
-        <synopsis>epanet2l inpfile reportfile [binaryresultfile]</synopsis>
-        </sect4>
-    </sect3>
-    <sect3 id="epanet2csv">
-        <title>epanet2csv</title>
-        <indexterm><primary>epanet2csv</primary></indexterm>
-        <para><command>epanet2csv</command> converts an EPANET binary result
-        file into two CSV files. CSV files can be read by spreadsheet software
-        like OpenOffice Calc or Excel, relational database software like
-        PostgreSQL or MySQL and GIS software.</para>
-                <sect4 id="epanet2csv_synopsis">
-           <title>Synopsis</title>
-           <indexterm><primary>synopsis</primary></indexterm>
-        <synopsis>epanet2csv binaryresultfile nodes.csv links.csv</synopsis>
-        </sect4>
-    </sect3>
     </sect2>
   </sect1>
   <sect1 id="troubleshooting">
@@ -361,6 +386,19 @@
   <indexterm><primary>source</primary></indexterm>
   <para>Most of the source code is plain C and should compile with virtually
     any C compiler.</para>
+  <para>Users on Linux or with a Linux-like build system should be able to
+  use the standard
+  <programlisting>./configure
+make
+make install</programlisting>
+  in order to build and install.</para>
+  <para>The epanet2csv command does not have any external depencendies.</para>
+  <para>The inp2shp command depends on the EPANET toolkit and shapelib libraries.
+  Please add the respective header files to your include path and link against
+  the libraries</para>
+  <para>The inpproj command depends on the EPANET toolkit and PROJ.4 libraries.
+  Please add the respective header files to your include path and link against
+  the libraries.</para>
   <para>The C++ code can be compiled using MinGW.</para>
   <sect2 id="release_process">
     <title>Release Process</title>
