@@ -86,6 +86,8 @@ ShowUninstDetails show
 
 # Installer sections
 Section -Main SEC0000
+    SetOutPath $INSTDIR
+        File ..\..\COPYING
     SetOutPath $INSTDIR\bin
     SetOverwrite on
 	File ..\..\build\win32\bin\inptools-about.exe
