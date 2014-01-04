@@ -22,9 +22,11 @@ AC_CHECK_LIB(shp, DBFOpen, [], \
 AC_CHECK_LIB(proj, pj_init, [], \
   [AC_MSG_ERROR([unable to find function pj_init(). Please install libproj])])
 AC_SEARCH_LIBS(ENopen, [epanet2 epanetl], 
-  [LIBS="$LIBS $ac_cv_search"],
+  [],
   AC_MSG_ERROR(
   [unable to find function ENopen(). Install epanetl or epanet2.]))
+AC_SEARCH_LIBS(ENgetpumptype, [epanet2 epanetl], [],AC_MSG_ERROR(
+  [unable to find function ENgetpumptype(). Use patch from http://epanet.de/developer/]))
 
 # Checks for header files.
 AC_HEADER_STDC
