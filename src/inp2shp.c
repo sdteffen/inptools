@@ -3,7 +3,7 @@
  * 
  * (c) 2002, 2005 DORSCH Consult
  * (c) 2006 DC Water and Environment
- * (c) 2008, 2009, 2012 Steffen Macke <sdteffen@sdteffen.de>
+ * (c) 2008, 2009, 2012, 2014 Steffen Macke <sdteffen@sdteffen.de>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -466,8 +466,6 @@ void handle_virtual_line_nodes()
 					MAXNUMNODES);
 				exit_inp2shp(1);
 			}
-			node_x[to_node] = node_x[from_node];
-			node_y[to_node] = node_y[from_node];
 			break;
 		}
 	}
@@ -550,8 +548,8 @@ int write_pump(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	x = node_x[from_node];
-	y = node_y[from_node];
+	x = (node_x[from_node]+node_x[to_node])/2;
+	y = (node_y[from_node]+node_y[to_node])/2;
 	shape = SHPCreateSimpleObject(SHPT_POINT, 1, &x, &y, NULL);
 	error = SHPWriteObject(hPumpSHP, -1, shape);
 	SHPDestroyObject(shape);
@@ -643,8 +641,8 @@ int write_valve(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	x = node_x[from_node];
-	y = node_y[from_node];
+	x = (node_x[from_node]+node_x[to_node])/2;
+	y = (node_y[from_node]+node_y[to_node])/2;
 	shape = SHPCreateSimpleObject(SHPT_POINT, 1, &x, &y, NULL);
 	error = SHPWriteObject(hValveSHP, -1, shape);
 	SHPDestroyObject(shape);
@@ -754,7 +752,7 @@ int write_node()
 			Tok[0], error);
 		exit_inp2shp(1);
 	}
-	if (index == (int) NULL) {
+	if (0 == index) {
 		fprintf(stderr,
 			"ERROR: Node \"%s\" referenced in [COORDINATES] was not found.\n",
 			Tok[0]);
@@ -769,35 +767,7 @@ int write_node()
 	node_x[index] = atof(Tok[1]);
 	node_y[index] = atof(Tok[2]);
 
-  /**
-   * Drop nodes that are part of a virtual line.
-   */
-	for (linkindex = 1; linkindex <= linkcount; linkindex++) {
-		error = ENgetlinktype(linkindex, &linktype);
-		if (0 != error) {
-			fprintf(stderr,
-				"FATAL ERROR: ENgetlinktype(%d) returned error %d in write_node().\n",
-				linkindex, error);
-			exit_inp2shp(1);
-		}
-		if (linktype != EN_PIPE) {
-			error =
-			    ENgetlinknodes(linkindex, &fromnode, &tonode);
-			if (0 != error) {
-				fprintf(stderr,
-					"FATAL ERROR: ENgetlinknodes(%d) returned error %d in write_node().\n",
-					linkindex, error);
-				exit_inp2shp(1);
-			}
-			if ((index == fromnode) || (index == tonode)) {
-#ifdef DEBUG
-				printf("Dropping virtual line node %s\n",
-				       Tok[0]);
-#endif
-				return 1;
-			}
-		}
-	}
+
 
 	error = ENgetnodetype(index, &nodetype);
 	if (0 != error) {
@@ -1135,7 +1105,7 @@ int write_reservoir(int index)
 #ifdef DEBUG
 		fprintf(stderr,
 			"DBFWriteStringAttribute(%d, 10, \"%s\") returned %d in write_reservoir()\n",
-			num_junctions, string, returnvalue);
+			num_junctions, string, error);
 #endif
 	}
 	num_reservoirs++;
