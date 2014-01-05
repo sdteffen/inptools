@@ -1,7 +1,7 @@
 /* inp2shp.h convert EPANET INP files to Shapefiles
   
   (c) 2002, 2005 DORSCH Consult 
- (c) 2009 Steffen Macke
+  (c) 2009, 2014 Steffen Macke
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -33,6 +33,7 @@ void write_remaining_pipe_shapes();
 void handle_virtual_line_nodes();
 void print_statistics();
 int write_virtual_lines();
+int write_virtual_line_parts(int index);
 int write_pump(int index);
 int write_valve(int index);
 int write_node();
@@ -53,3 +54,21 @@ int match(char *str, char *substr);
 int  en_findmatch(char *line, char *keyword[]);
 int  en_gettokens(char *s);
 int  en_match(char *str, char *substr);
+
+enum pipe_fields {
+	PI_DC_ID,
+	PI_INSTALLATI,
+	PI_ABANDON_DA,
+	PI_DCSUBTYPE,
+	PI_BITCODEZON,
+	PI_DIAMETER,
+	PI_NODE1,
+	PI_NODE2,
+	PI_ROUGHNESS,
+	PI_MINORLOSS,
+	PI_STATUS,
+	PI_RESULT_FLO,
+	PI_RESULT_VEL,
+	PI_RESULT_HEA,
+	PI_LENGTH
+};

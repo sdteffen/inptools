@@ -81,7 +81,8 @@ char *Tok[MAXTOKS];
  */
 int num_junctions = 0;
 /**
- * Number of pipes in the generated shapefile.
+ * Number of pipes in the generated shapefile,
+ * maybe higher than the number of EPANET pipes.
  */
 int num_pipes = 0;
 int num_tanks = 0;
@@ -171,7 +172,7 @@ int main(int argc, char **argv)
 						(!str_is_shp
 						 (argv[8]))))))))) {
 		printf
-		    ("inp2shp 0.2.3 (c) 2002 - 2006 DC Water and Environment, (c) 2009 Steffen Macke\n");
+		    ("inp2shp 0.3.0\nCopyright (c) 2002-2006 DC Water and Environment, (c) 2009-2014 Steffen Macke\n");
 		printf
 		    ("usage: inp2shp inpfile reportfile junction_shapefile\
  pipe_shapefile pump_shapefile reservoir_shapefile tank_shapefile\
@@ -509,14 +510,168 @@ int write_virtual_lines()
 			break;
 		case EN_PUMP:
 			write_pump(i + 1);
+			write_virtual_line_parts(i +1);
 			break;
 		default:
 			write_valve(i + 1);
+			write_virtual_line_parts(i +1);
 			break;
 		}
 	}
 	return 0;
 }
+
+/**
+ * Write two dummy pipes replacing the virtual line.
+ * @param index int is the index of virtual line in the list of links.
+ * @return 0 of there is no error.
+ */
+int write_virtual_line_parts(int index)
+{
+	SHPObject *shape;
+	double x[2], y[2];
+	float d;
+	int to_node, from_node;
+	char string[16];
+	int type;
+	int error;
+
+#ifdef DEBUG
+	fprintf(stderr, "write_virtual_line_parts()\n");
+#endif
+
+	error = ENgetlinkid(index, string);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinkid(%d) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	error = ENgetlinknodes(index, &from_node, &to_node);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinknodes(%d) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_DC_ID, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_DC_ID, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_NODE1, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_NODE2, string);
+	error = ENgetlinkvalue(index, EN_DIAMETER, &d);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinkvalue(%d, EN_DIAMETER) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes, PI_DIAMETER, (int) d);
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes+1, PI_DIAMETER, (int) d);
+	error = ENgetlinkvalue(index, EN_LENGTH, &d);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinkvalue(%d, EN_LENGTH) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes, PI_LENGTH, (int) d/2);
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes+1, PI_LENGTH, (int) d/2);
+	error = ENgetlinknodes(index, &from_node, &to_node);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinknodes(%d) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+
+	find_from_node(from_node, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_NODE1, string);
+	error = ENgetnodeid(to_node, string);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetnodeid(%d) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_NODE2, string);
+
+	error = ENgetlinkvalue(index, EN_ROUGHNESS, &d);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinkvalue(%d, EN_ROUGHNESS) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes, PI_ROUGHNESS, (double) d);
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes+1, PI_ROUGHNESS, (double) d);
+
+	error = ENgetlinkvalue(index, EN_MINORLOSS, &d);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinkvalue(%d, EN_MINORLOSS) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes, PI_MINORLOSS, (double) d);
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes+1, PI_MINORLOSS, (double) d);
+
+	error = ENgetlinkvalue(index, EN_INITSTATUS, &d);
+	if (0 != error) {
+		fprintf(stderr,
+			"FATAL ERROR: ENgetlinkvalue(%d, EN_INITSTATUS) returned error %d in write_virtual_line_parts().\n",
+			index, error);
+		exit_inp2shp(1);
+	}
+	if (d == 1) {
+		DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_STATUS,
+					"OPEN");
+		DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_STATUS,
+							"OPEN");
+	} else {
+		DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_STATUS,
+					"CLOSED");
+
+		DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_STATUS,
+					"CLOSED");
+	}
+	/**
+	 * Write first shape.
+	 */
+	x[0] = node_x[from_node];
+	y[0] = node_y[from_node];
+	x[1] = (node_x[to_node] + node_x[from_node])/2;
+	y[1] = (node_y[to_node] + node_y[from_node])/2;
+	shape =
+	    SHPCreateSimpleObject(SHPT_ARC, 2, x, y, NULL);
+	if (-1 == SHPWriteObject(hPipeSHP, -1, shape)) {
+		SHPDestroyObject(shape);
+		fprintf(stderr,
+			"FATAL ERROR: SHPWriteObject failed in write_virtual_line_parts().\n");
+		exit_inp2shp(1);
+	}
+	SHPDestroyObject(shape);
+	/**
+	 * Write second shape.
+	 */
+	x[0] = x[1];
+	y[0] = y[1];
+	x[1] = node_x[to_node];
+	y[1] = node_y[to_node];
+	shape =
+	    SHPCreateSimpleObject(SHPT_ARC, 2, x, y, NULL);
+	if (-1 == SHPWriteObject(hPipeSHP, -1, shape)) {
+		SHPDestroyObject(shape);
+		fprintf(stderr,
+			"FATAL ERROR: SHPWriteObject failed in write_virtual_line_parts().\n");
+		exit_inp2shp(1);
+	}
+	SHPDestroyObject(shape);
+
+	num_pipes += 2;
+	return 0;	
+}
+
 
 /**
  * Write a pump
