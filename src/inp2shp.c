@@ -1274,16 +1274,10 @@ int write_reservoir(int index)
  * @param nodeid is a pointer to a string that should be filled with the from
  * node id.
  * @return 1 if everything is ok, 0 in case there's an error.
- * \todo Handle return values.
  * \todo Use 0 as "ok" return value (EPANET standard).
  */
 int find_from_node(int nodeindex, char *nodeid)
 {
-	int i = 1;
-	int from_node;
-	int to_node;
-	int link_type;
-	int returnvalue;
 	int error;
 
 	error = ENgetnodeid(nodeindex, nodeid);
@@ -1293,39 +1287,6 @@ int find_from_node(int nodeindex, char *nodeid)
 			nodeindex, error);
 		exit_inp2shp(1);
 	}
-
-	do {
-		returnvalue = ENgetlinknodes(i, &from_node, &to_node);
-		if (to_node == nodeindex) {
-			error = ENgetlinktype(i, &link_type);
-			if (0 != error) {
-				fprintf(stderr,
-					"FATAL ERROR: ENgetlinktype(%d) returned error %d in find_from_node().\n",
-					i, error);
-				exit_inp2shp(1);
-			}
-
-			if (link_type == -1) {
-				fprintf(stderr,
-					"ERROR: Unknown link type in find_from_node(%d, \"%s\")\n",
-					nodeindex, nodeid);
-				return 0;
-			}
-			if (link_type != EN_PIPE) {
-				error = ENgetnodeid(from_node, nodeid);
-				if (0 != error) {
-					fprintf(stderr,
-						"FATAL ERROR: ENgetnodeid(%d) returned error %d in find_from_node().\n",
-						from_node, error);
-					exit_inp2shp(1);
-				}
-
-				return 1;
-			}
-		}
-		i++;
-	}
-	while (returnvalue != 204);
 	return 1;
 }
 
@@ -1381,7 +1342,7 @@ int write_null_pipe()
 	}
 
 	find_from_node(from_node, string);
-	DBFWriteStringAttribute(hPipeDBF, num_pipes, 6, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_NODE1, string);
 	error = ENgetnodeid(to_node, string);
 	if (0 != error) {
 		fprintf(stderr,
