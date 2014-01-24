@@ -685,7 +685,7 @@ int write_pump(int index)
 	int from_node, to_node;
 	char string[16];
 	float d;
-	float power;
+	float power, pattern;
 	int type;
 	int error;
 
@@ -738,26 +738,45 @@ int write_pump(int index)
 	}
 	strcpy(Tok[0], "");
 	switch (type) {
-	case EN_CONST_HP:
-		error = ENgetlinkvalue(index, EN_MINORLOSS, &power);
+		case EN_CONST_HP:
+			error = ENgetlinkvalue(index, EN_MINORLOSS, &power);
+			if (0 != error) {
+				fprintf(stderr,
+					"FATAL ERROR: ENgetlinkvalue(%d, EN_MINORLOSS) returned error %d in write_pump().\n",
+					index, error);
+				exit_inp2shp(1);
+			}
+			sprintf(Tok[0], "POWER %f SPEED %f", power, d);
+			break;
+		case EN_POWER_FUNC:
+		case EN_CUSTOM:
+			error = ENgetheadcurve(index, string);
+			if (0 != error) {
+				fprintf(stderr,
+					"FATAL ERROR: ENgetheadcurve(%d) returned error %d in write_pump().\n",
+					index, error);
+				exit_inp2shp(1);
+			}
+			sprintf(Tok[0], "HEAD %s SPEED %f", string, d);
+			break;
+	}
+
+	error = ENgetlinkvalue(index, EN_LINKPATTERN, &pattern);
+	if (0 != error) {
+		fprintf(stderr,
+				"FATAL ERROR: ENgetlinkvalue(%d, EN_LINKPATTERN returned error %d in write_pump().\n",
+				index, error);
+		exit_inp2shp(1);
+	}
+	if (0.0 < pattern)
+	{
+		error = ENgetpatternid((int)pattern, string);
 		if (0 != error) {
 			fprintf(stderr,
-				"FATAL ERROR: ENgetlinkvalue(%d, EN_MINORLOSS) returned error %d in write_pump().\n",
-				index, error);
+					"FATAL ERROR: ENgetpatternid(%d) returned error %d in write_pump().\n", (int)pattern, error);
 			exit_inp2shp(1);
 		}
-		sprintf(Tok[0], "POWER %f SPEED %f", power, d);
-		break;
-	case EN_CUSTOM:
-		error = ENgetheadcurve(index, string);
-		if (0 != error) {
-			fprintf(stderr,
-				"FATAL ERROR: ENgetheadcurve(%d) returned error %d in write_pump().\n",
-				index, error);
-			exit_inp2shp(1);
-		}
-		sprintf(Tok[0], "HEAD %s SPEED %f", string, d);
-		break;
+		sprintf(Tok[strlen(Tok[0])], " PATTERN %s", string);
 	}
 
 	DBFWriteStringAttribute(hPumpDBF, num_pumps, 11, Tok[0]);
