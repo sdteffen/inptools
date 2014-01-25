@@ -21,12 +21,17 @@ shp2inpi_CFLAGS = $(AM_CFLAGS)
 shp2inp_LDFLAGS = $(all_libraries)
 
 EXTRA_DIST = epanet2csvw.cpp inptools-about.c inptools-file-dialog.cpp \
-	Makefile.in epanet2csv.dsp epanet2csv.dsw inpproj.dsw inpproj.dsp
+	Makefile.in epanet2csv.dsp epanet2csv.dsw inpproj.dsw inpproj.dsp \
+	inp2shp2.cpp
 noinst_HEADERS = inpproj.h inp2shp.h shp2inp.h
 
 epanet2csvw.exe: epanet2csvw.cpp
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
 	i586-mingw32msvc-g++ -mwindows epanet2csvw.cpp pump.o -o epanet2csvw.exe
+	
+inp2shpw.exe: inp2shpw.cpp
+	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
+	i586-mingw32msvc-g++ -mwindows inp2shpw.cpp pump.o -o inp2shpw.exe -lshell32 -lole32
 
 inptools-about.exe: inptools-about.c
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
