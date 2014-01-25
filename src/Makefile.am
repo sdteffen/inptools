@@ -28,6 +28,10 @@ noinst_HEADERS = inpproj.h inp2shp.h shp2inp.h
 epanet2csvw.exe: epanet2csvw.cpp
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
 	i586-mingw32msvc-g++ -mwindows epanet2csvw.cpp pump.o -o epanet2csvw.exe
+
+inp2shp.exe: inp2shp.c
+	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
+	i586-mingw32msvc-gcc -mwindows pump.o @EPANET_SRC@/epanet.c -o inp2shpw.exe
 	
 inp2shpw.exe: inp2shpw.cpp
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
