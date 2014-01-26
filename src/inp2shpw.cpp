@@ -45,9 +45,7 @@ main (int argc, char *argv[])
   DWORD dwBufSize = MAX_PATH;
   char *szArgs;
   TCHAR szReportFileName[MAX_PATH];
-  TCHAR szBinaryFileName[MAX_PATH];
   TCHAR lpPathBuffer[MAX_PATH];
-  TCHAR szOutputFolder[MAX_PATH];
   int param_count;
   string pattern;
   UINT uRetVal;
@@ -55,12 +53,21 @@ main (int argc, char *argv[])
   LPITEMIDLIST pidl     = NULL;
   BROWSEINFO   bi       = { 0 };
   BOOL         bResult  = FALSE;
+  TCHAR szDir[MAX_PATH];
+  char *szTitle = _("inp2shpw");
+
+  /**
+   * The shapefiles that will be generated.
+   */
+  char *shapefiles[] = { "junctions", "pipes", "pumps", "reservoirs", "tanks",
+  	"valves", NULL
+  };
 
   if (3 != argc)
     {
       MessageBox (NULL,
-		  "USAGE: inp2shpw inp2shp inputfile",
-		  "inp2shpw", MB_ICONERROR);
+		  _("USAGE: inp2shpw inp2shp inputfile"),
+		  szTitle, MB_ICONERROR);
       return 1;
     }
 
@@ -72,7 +79,7 @@ main (int argc, char *argv[])
     {
       MessageBox (NULL,
 		  _("Temp folder could not be obtained."),
-		  _("inp2shpw"), MB_ICONERROR);
+		  szTitle, MB_ICONERROR);
       return 1;
     }
 
@@ -84,42 +91,57 @@ main (int argc, char *argv[])
     {
       MessageBox (NULL,
 		  _("Temporary file name could not be obtained."),
-		  _("inp2shpw"), MB_ICONERROR);
+		  szTitle, MB_ICONERROR);
       return 1;
     }
 
-    CoInitialize(NULL);
+    if(S_OK != CoInitialize(NULL))
+    {
+    	MessageBox (NULL, _("CoInitialize() failed."),
+    			szTitle, MB_ICONERROR);
+    	return 1;
+    }
 
   	bi.hwndOwner      = NULL;
-  	bi.pszDisplayName = _("inp2shp2w");
+  	bi.pszDisplayName = szDir;
   	bi.pidlRoot       = NULL;
-  	bi.lpszTitle      = _("Please select a folder.");
+  	bi.lpszTitle      = _("Please select a folder to store the shape files.");
   	bi.ulFlags        = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+  	bi.ulFlags = 0;
+  	bi.lpfn = NULL;
+  	bi.lParam = 0;
+  	bi.iImage = -1;
 
+  	/**
+  	 * TODO: Replace with IFileDialog
+  	 */
   	if ((pidl = SHBrowseForFolder(&bi)) != NULL)
   	{
-  		return return_value;
-  		bResult = SHGetPathFromIDList(pidl, szOutputFolder);
+  		bResult = SHGetPathFromIDList(pidl, szDir);
   		CoTaskMemFree(pidl);
   	}
-
+  	else
+  	{
+  		CoUninitialize();
+  		return 0;
+  	}
   	CoUninitialize();
 
-  	return return_value;
-
   params = "\"";
-  params.append (argv[3]);
+  params.append (argv[1]);
+  params.append ("\" \"");
+  params.append (argv[2]);
   params.append ("\" \"");
   params.append (szReportFileName);
-  params.append ("\" ");
+  params.append ("\" \"");
+  params.append(szDir);
+  MessageBox(NULL, params.c_str(), "", MB_ICONERROR);
   szArgs = (char *) params.c_str ();
   run_process (argv[1], szArgs);
 
   /**
    * Run inp2shp
    */
-  params = "\"";
-  params.append (szBinaryFileName);
   params.append ("\" ");
   for (param_count = 4; param_count < argc; param_count++)
     {
