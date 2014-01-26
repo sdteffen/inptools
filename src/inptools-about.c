@@ -1,7 +1,7 @@
 /**
  * inptools-about.c Display Inptools about dialog
  * 
- * (c) 2011,2012 Steffen Macke <sdteffen@sdteffen.de>
+ * (c) 2011,2012,2014 Steffen Macke <sdteffen@sdteffen.de>
  *
  * http://epanet.de/inptools
  *
@@ -26,7 +26,7 @@ int
 main (int argc, char *argv[])
 {
   MessageBox (NULL,
-	      "Inptools 1.0.1\nCopyright (c) 2008 - 2012 Steffen Macke\nPortions Copyright (c) 1999, 2000 Frank Wamerdam\n\nhttp://epanet.de/inptools",
+	      "Inptools 2.0.12.1\nCopyright (c) 2008 - 2014 Steffen Macke\nPortions Copyright (c) 1999 - 2012 Frank Wamerdam\n\nhttp://epanet.de/inptools",
 	      "Inptools", MB_OK);
   return 0;
 }

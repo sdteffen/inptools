@@ -22,8 +22,27 @@ shp2inp_LDFLAGS = $(all_libraries)
 
 EXTRA_DIST = epanet2csvw.cpp inptools-about.c inptools-file-dialog.cpp \
 	Makefile.in epanet2csv.dsp epanet2csv.dsw inpproj.dsw inpproj.dsp \
-	inp2shp2.cpp
+	inp2shpw.cpp
 noinst_HEADERS = inpproj.h inp2shp.h shp2inp.h
+
+EPANET_SOURCES = @EPANET_SRC@/epanet.c \
+	@EPANET_SRC@/hash.c \
+	@EPANET_SRC@/hydraul.c \
+	@EPANET_SRC@/inpfile.c \
+	@EPANET_SRC@/input1.c \
+	@EPANET_SRC@/input2.c \
+	@EPANET_SRC@/input3.c \
+	@EPANET_SRC@/mempool.c \
+	@EPANET_SRC@/output.c \
+	@EPANET_SRC@/quality.c \
+	@EPANET_SRC@/report.c \
+	@EPANET_SRC@/rules.c \
+	@EPANET_SRC@/smatrix.c
+	
+SHAPELIB_SOURCES = @SHAPELIB_SRC@/shpopen.c \
+	@SHAPELIB_SRC@/dbfopen.c \
+	@SHAPELIB_SRC@/shptree.c \
+	@SHAPELIB_SRC@/safileio.c
 
 epanet2csvw.exe: epanet2csvw.cpp
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
@@ -31,7 +50,7 @@ epanet2csvw.exe: epanet2csvw.cpp
 
 inp2shp.exe: inp2shp.c
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o
-	i586-mingw32msvc-gcc -mwindows pump.o @EPANET_SRC@/epanet.c -o inp2shpw.exe
+	i586-mingw32msvc-gcc -I@EPANET_SRC@ -I@SHAPELIB_SRC@ pump.o inp2shp.c $(EPANET_SOURCES) $(SHAPELIB_SOURCES) -o inp2shp.exe
 	
 inp2shpw.exe: inp2shpw.cpp
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o

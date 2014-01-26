@@ -88,7 +88,6 @@ main (int argc, char *argv[])
       return 1;
     }
 
-
     CoInitialize(NULL);
 
   	bi.hwndOwner      = NULL;
@@ -99,11 +98,14 @@ main (int argc, char *argv[])
 
   	if ((pidl = SHBrowseForFolder(&bi)) != NULL)
   	{
+  		return return_value;
   		bResult = SHGetPathFromIDList(pidl, szOutputFolder);
   		CoTaskMemFree(pidl);
   	}
 
   	CoUninitialize();
+
+  	return return_value;
 
   params = "\"";
   params.append (argv[3]);

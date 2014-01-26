@@ -6,7 +6,7 @@ AC_INIT
 AC_CONFIG_SRCDIR([configure.in])
 
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE(inptools, 1.0.3)
+AM_INIT_AUTOMAKE(inptools, 2.0.12.1)
 
 # Checks for programs.
 AC_LANG([C])
