@@ -25,6 +25,7 @@
 #include <process.h>
 #include <shlobj.h>
 #include <objbase.h>
+#include <string.h>
 
 #define _(String) (String)
 
@@ -79,6 +80,19 @@ main (int argc, char *argv[])
 		  title.c_str(), MB_ICONERROR);
       return 1;
     }
+
+  for (param_count = 1; param_count < 3; param_count++)
+  {
+	  if (!file_exists(argv[param_count]))
+	  {
+		  question = "File not found: \"";
+		  question.append(argv[param_count]);
+		  question.append("\"");
+		  MessageBox (NULL,
+				  question.c_str(), title.c_str(), MB_ICONERROR);
+		  return 1;
+	  }
+  }
 
  /**
   * Find temp folder
@@ -157,15 +171,30 @@ main (int argc, char *argv[])
 		  shapefilepath.append(shapefiles[param_count]);
 		  shapefilepath.append(".");
 		  shapefilepath.append(shapeparts[partCount]);
-		  if (file_exists(TEXT(shapefilepath.c_str()))) {
+		  if (file_exists((TCHAR *)(shapefilepath.c_str()))) {
 			  question = "Do you want to overwrite \"";
 			  question.append(shapefilepath);
 			  question.append("\"?");
-			  if (IDYES == MessageBox(NULL, question.c_str(), MB_ICONQUESTION, MB_YESNO))
+			  if (IDYES == MessageBox(NULL, question.c_str(), title.c_str(), MB_ICONQUESTION | MB_YESNO))
 				  break;
+			  shapefilepath.erase(shapefilepath.end()-3,shapefilepath.end());
+			  shapefilepath.append("shp");
+			  strncpy(lpPathBuffer, shapefilepath.c_str(), shapefilepath.length());
+			  ZeroMemory (&ofn, sizeof (ofn));
+			   ofn.lStructSize = sizeof (ofn);
+			   ofn.hwndOwner = NULL;
+			   ofn.lpstrFilter = "Shapefiles (*.shp)\0*.shp\0\0";
+			   ofn.lpstrFile = lpPathBuffer;
+			   ofn.nMaxFile = MAX_PATH;
+			   ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
+			   ofn.lpstrDefExt = "shp";
+
+			   if (!GetSaveFileName (&ofn))
+				   return 1;
+			   shapefilepath = lpPathBuffer;
 		  }
 	  }
-	  shapefilepath.erase(shapefilepath.end()-3);
+	  shapefilepath.erase(shapefilepath.end()-3,shapefilepath.end());
 	  shapefilepath.append("shp");
 
 	  params.append(" \"");
@@ -179,72 +208,10 @@ main (int argc, char *argv[])
   /**
    * Run inp2shp
    */
-  params.append ("\" ");
-  for (param_count = 4; param_count < argc; param_count++)
-    {
-      ZeroMemory (&ofn, sizeof (ofn));
-      ofn.lStructSize = sizeof (ofn);
-      ofn.hwndOwner = NULL;
-
-      pattern = argv[param_count];
-
-      ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
-      if(4 == param_count)
-        ofn.lpstrFile = szReportFileName;
-      else
-        ofn.lpstrFile = szReportFileName;
-
-      ofn.nMaxFile = MAX_PATH;
-
-      ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
-
-	  /**
-           * @todo Extract from pattern
-           */
-      ofn.lpstrDefExt = "txt";
-
-      if (!GetSaveFileName (&ofn))
-	return 1;
-
-      params.append ("\"");
-      if(4 == param_count)
-	params.append (szReportFileName);
-      else
-	params.append (szReportFileName);
-      params.append ("\" ");
-    }
   szArgs = (char *) params.c_str ();
   return_value = run_process (argv[2], szArgs);
 
   return return_value;
-}
-
-/**
- * Replace \n with \0
- */
-string & str_replace_null (const string & search, string & subject)
-{
-  string result = "";
-  int subject_length = subject.length ();
-  int i = 0;
-  int j = 0;
-
-  while (i != string::npos && i < subject_length)
-    {
-      j = subject.find (search, i);
-      if (string::npos == j)
-	result.append (subject.substr (i));
-      else
-	{
-	  result.append (subject.substr (i, j - i));
-	  result.push_back ('\0');
-	  j += search.length ();
-	}
-      i = j;
-    }
-
-  subject = result;
-  return subject;
 }
 
 DWORD
