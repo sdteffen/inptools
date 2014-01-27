@@ -1,6 +1,6 @@
 # Inptools - work with EPANET INP files
 #
-# Copyright (C) 2009-2012 Steffen Macke <sdteffen@sdteffen.de>
+# Copyright (C) 2009-2014 Steffen Macke <sdteffen@sdteffen.de>
 #  
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 1.0.1
+!define VERSION 2.0.12.1
 !define COMPANY "Steffen Macke"
 !define URL http://epanet.de/inptools
 
@@ -68,7 +68,7 @@ Var StartMenuGroup
 
 
 # Installer attributes
-OutFile epanet-inptools-setup-1.0.1-2.exe
+OutFile epanet-inptools-setup-2.0.12.1-1.exe
 InstallDir $PROGRAMFILES\Inptools
 CRCCheck on
 XPStyle on
@@ -93,6 +93,7 @@ Section -Main SEC0000
 	File ..\..\build\win32\bin\inptools-about.exe
 	File ..\..\build\win32\bin\inptools-file-dialog.exe
 	File ..\..\src\Release\inp2shp.exe
+	File ..\..\src\Release\inp2shpw.exe
     File ..\..\src\Release\inpproj.exe
     File ..\..\src\Release\epanet2csv.exe
 	File ..\..\build\win32\bin\epanetl.exe
@@ -149,17 +150,20 @@ Section -Main SEC0000
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5" "" "$(INPTOOLS_CREATE_BINARY)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd5\command" "" '"$INSTDIR\bin\inptools-file-dialog.exe" "$INSTDIR\bin\epanet2d.exe" "%1" "Text files (*.txt)\n*.txt\nAll files (*.*)\n*.*\n" "EPANET binary result files (*.epabin)\n*.epabin\nAll files (*.*)\n*.*\n"'
 	
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "" "$(INPTOOLS_EPANET_HELP)"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\epanet2.chm"'
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "Icon" "$WINDIR\hh.exe,0"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "" "$(INPTOOLS_CREATE_SHAPEFILES)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" "" '"$INSTDIR\bin\inp2shpw.exe" "$INSTDIR\bin\inp2shp.exe" "%1"'
 	
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "" "$(INPTOOLS_HELP)"	
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\inptools.chm"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "" "$(INPTOOLS_EPANET_HELP)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\epanet2.chm"'
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "Icon" "$WINDIR\hh.exe,0"
 	
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "" "$(INPTOOLS_ABOUT)"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
-	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command" "" '$INSTDIR\bin\inptools-about.exe'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "" "$(INPTOOLS_HELP)"	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\inptools.chm"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon" "$WINDIR\hh.exe,0"
+	
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9" "" "$(INPTOOLS_ABOUT)"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9" "Icon" "$INSTDIR\bin\inptools-about.exe,0"
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9\command" "" '$INSTDIR\bin\inptools-about.exe'
 
     WriteRegStr HKEY_CLASSES_ROOT ".net" "" "Inptools.net"
     WriteRegStr HKEY_CLASSES_ROOT "Inptools.net" "" ""
@@ -213,6 +217,7 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\bin\inptools-file-dialog.exe
     Delete /REBOOTOK $INSTDIR\bin\inpproj.exe
 	Delete /REBOOTOK $INSTDIR\bin\inp2shp.exe
+	Delete /REBOOTOK $INSTDIR\bin\inp2shpw.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2w.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2d.exe
@@ -280,7 +285,6 @@ Section /o -un.Main UNSEC0000
 
 	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" ""
 	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" ""
-	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "Icon"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6"
 
@@ -295,6 +299,12 @@ Section /o -un.Main UNSEC0000
 	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8" "Icon"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8\command"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd8"
+
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9\command" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9" "Icon"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9\command"
+	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd9"
 	
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools"

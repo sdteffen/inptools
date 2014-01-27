@@ -1,6 +1,6 @@
 /** 
  * Inptools - work with EPANET INP files
- * Copyright (C) 2011 Steffen Macke <sdteffen@sdteffen.de>
+ * Copyright (C) 2011, 2014 Steffen Macke <sdteffen@sdteffen.de>
  *
  * gennsh.c
  *
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
   printf("!define INPTOOLS_PROJECT_GK3_WGS84 \"%s\"\n", g_strescape(_("Project from GK3 to WGS84"), ""));
   printf("!define INPTOOLS_CREATE_CSV \"%s\"\n", g_strescape(_("Create CSV result files"), ""));
   printf("!define INPTOOLS_CREATE_BINARY \"%s\"\n", g_strescape(_("Create binary result file"), ""));
+  printf("!define INPTOOLS_CREATE_SHAPEFILES \"%s\"\n", g_strescape(_("Create shapefiles"), ""));
   printf("!define INPTOOLS_HELP \"%s\"\n", g_strescape(_("Inptools Help"), ""));
   printf("!define INPTOOLS_EPANET_HELP \"%s\"\n", g_strescape(_("EPANET Help"), ""));
   printf("!define INPTOOLS_ABOUT \"%s\"\n", g_strescape(_("About"), ""));
