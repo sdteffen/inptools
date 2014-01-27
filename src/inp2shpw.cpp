@@ -35,6 +35,10 @@ int file_exists(TCHAR * file);
 DWORD run_process (char *szCommand, char *szArgs);
 string & str_replace_null (const string & search, string & subject);
 
+HANDLE g_hStdOutRd = NULL;
+HANDLE g_hStdOutWr = NULL;
+string title = _("inp2shpw");
+
 /**
  * USAGE: inp2shpw inp2shp inputfile
  */
@@ -45,7 +49,6 @@ main (int argc, char *argv[])
   OPENFILENAME ofn;
   DWORD return_value = 0;
   DWORD dwBufSize = MAX_PATH;
-  char *szArgs;
   TCHAR szReportFileName[MAX_PATH];
   TCHAR lpPathBuffer[MAX_PATH];
   int param_count, partCount;
@@ -56,7 +59,6 @@ main (int argc, char *argv[])
   BROWSEINFO   bi       = { 0 };
   BOOL         bResult  = FALSE;
   TCHAR szDir[MAX_PATH];
-  string title = _("inp2shpw");
   string shapefilepath, question;
 
   /**
@@ -152,8 +154,6 @@ main (int argc, char *argv[])
    * Build the inp2shp command line.
    */
   params = "\"";
-  params.append (argv[1]);
-  params.append ("\" \"");
   params.append (argv[2]);
   params.append ("\" \"");
   params.append (szReportFileName);
@@ -201,42 +201,54 @@ main (int argc, char *argv[])
 	  params.append(shapefilepath);
 	  params.append("\"");
   }
-  MessageBox(NULL, params.c_str(), title.c_str(), MB_ICONERROR);
-  szArgs = (char *) params.c_str ();
-  run_process (argv[1], szArgs);
-
   /**
    * Run inp2shp
    */
-  szArgs = (char *) params.c_str ();
-  return_value = run_process (argv[2], szArgs);
-
-  return return_value;
+  return run_process (argv[1], (char *)params.c_str());
 }
 
 DWORD
 run_process (char *szCommand, char *szArgs)
 {
-
   STARTUPINFO si;
-
   PROCESS_INFORMATION pi;
-
   char szCommandLine[4096];
-
   char *szEnvCOMSPEC = NULL;
-
   char szDefaultCMD[] = "CMD.EXE";
-
   ULONG uReturnCode;
+  SECURITY_ATTRIBUTES saAttr;
+  const int BUFSIZE = 4096;
+  CHAR chBuf[BUFSIZE];
+  DWORD dwRead;
+
+  saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+  saAttr.bInheritHandle = TRUE;
+  saAttr.lpSecurityDescriptor = NULL;
+
+  if (!CreatePipe(&g_hStdOutRd, &g_hStdOutWr, &saAttr, 0))
+  {
+	  MessageBox(NULL,
+			  _("CreatePipe() failed."), title.c_str(), MB_ICONERROR);
+      exit(1);
+  }
+
+  if (!SetHandleInformation(g_hStdOutRd, HANDLE_FLAG_INHERIT, 0))
+  {
+	  MessageBox(NULL,
+			  _("SetHandleInformation() failed."),
+			  title.c_str(), MB_ICONERROR);
+	  exit(1);
+  }
 
   ZeroMemory (&si, sizeof (STARTUPINFO));
 
   si.cb = sizeof (STARTUPINFO);
 
-  si.wShowWindow = SW_HIDE;
+  si.wShowWindow = SW_SHOW;
 
-  si.dwFlags = STARTF_USESHOWWINDOW;
+  si.dwFlags = STARTF_USESHOWWINDOW|STARTF_USESTDHANDLES;
+  si.hStdOutput = g_hStdOutWr;
+  si.hStdError = g_hStdOutWr;
 
 
   szCommandLine[0] = 0;
@@ -249,8 +261,8 @@ run_process (char *szCommand, char *szArgs)
   strcat (szCommandLine, szArgs);
 
   if (!CreateProcess
-      (NULL, szCommandLine, NULL, NULL, FALSE,
-       CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+      (NULL, szCommandLine, NULL, NULL, TRUE,
+       0, NULL, NULL, &si, &pi))
     {
 
       return GetLastError ();
@@ -264,11 +276,13 @@ run_process (char *szCommand, char *szArgs)
 
     uReturnCode = 0;
 
-
   CloseHandle (pi.hThread);
 
   CloseHandle (pi.hProcess);
 
+  if(ReadFile(g_hStdOutRd, chBuf, BUFSIZE, &dwRead, NULL))
+	  MessageBox (NULL,
+			  chBuf, title.c_str(), MB_ICONINFORMATION);
 
   return uReturnCode;
 
