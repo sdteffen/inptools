@@ -298,7 +298,7 @@
 				    <title>Shapefile erzeugens</title>
 				    <indexterm><primary>Shapefile</primary></indexterm>
 				    <indexterm><primary>inp2shp</primary></indexterm>
-				    <indexterm><primary>GHydraulics</primary</indexterm>
+				    <indexterm><primary>GHydraulics</primary></indexterm>
 				    <para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
 				    <guimenuitem>Shapefiles erzeugen</guimenuitem></menuchoice>,
 				    um aus der gewählten INP-Datei mehrere Shapefiles (Knoten,

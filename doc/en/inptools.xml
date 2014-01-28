@@ -298,7 +298,7 @@
 				    <title>Create Shapefiles</title>
 				    <indexterm><primary>Shapefile</primary></indexterm>
 				    <indexterm><primary>inp2shp</primary></indexterm>
-				    <indexterm><primary>GHydraulics</primary</indexterm>
+				    <indexterm><primary>GHydraulics</primary></indexterm>
 				    <para>Choosing <menuchoice><guimenu>Inptools</guimenu>
 				    <guimenuitem>Create Shapefiles</guimenuitem></menuchoice>
 				    will create several shapefiles (junctions, pipes, pumps, tanks,
