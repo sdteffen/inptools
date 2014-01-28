@@ -239,7 +239,7 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\bin\InpToolsExt.dll
 	
 	Delete /REBOOTOK $INSTDIR\Examples\Net1.inp
-	Delete /REBOOTOK $INSTDIR\win32\Examples\Net1.net
+	Delete /REBOOTOK $INSTDIR\Examples\Net1.net
 	Delete /REBOOTOK $INSTDIR\Examples\Net2.net
 	Delete /REBOOTOK $INSTDIR\Examples\Net3.net
 	Delete /REBOOTOK $INSTDIR\Examples\Net2-FL.dat
