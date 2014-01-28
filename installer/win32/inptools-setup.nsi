@@ -152,6 +152,7 @@ Section -Main SEC0000
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "" "$(INPTOOLS_CREATE_SHAPEFILES)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" "" '"$INSTDIR\bin\inp2shpw.exe" "$INSTDIR\bin\inp2shp.exe" "%1"'
+	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "Icon" "$INSTDIR\bin\inp2shpw.exe,0"
 	
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7" "" "$(INPTOOLS_EPANET_HELP)"
 	WriteRegStr HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd7\command" "" '"$WINDIR\hh.exe" "$INSTDIR\doc\en\epanet2.chm"'
@@ -285,6 +286,7 @@ Section /o -un.Main UNSEC0000
 
 	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" ""
 	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command" ""
+	DeleteRegValue HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6" "Icon"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6\command"
 	DeleteRegKey /IfEmpty HKEY_CLASSES_ROOT "Inptools.inp\Shell\Inptools\Shell\cmd6"
 
