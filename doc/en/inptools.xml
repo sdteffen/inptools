@@ -82,7 +82,8 @@
 				           <para>First three digits of the version number now
 				           match version number of EPANET version included
 				           in Windows installer.</para>
-				        </listitem>    
+				        </listitem>
+				    </itemizedlist> 
 				</sect3>
 				<sect3 id="version_1_0_1">
 					<title>Version 1.0.1</title>

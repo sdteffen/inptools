@@ -79,7 +79,8 @@
 				        <listitem>
 				           <para>Die ersten drei Zahlen der Versionsnummer entsprechen jetzt denen
 				           der im Windows-Installationspaket enthaltenen EPANET-Version.</para>
-				        </listitem>    
+				        </listitem>
+				    </itemizedlist>    
 				</sect3>
 				<sect3 id="version_1_0_1">
 					<title>Version 1.0.1</title>
