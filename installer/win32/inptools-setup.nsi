@@ -103,6 +103,13 @@ Section -Main SEC0000
 	File ..\..\build\win32\bin\epanet2w.exe
 	File ..\..\build\win32\bin\epanet2csvw.exe
 	File ..\..\build\win32\bin\epanet2i.dll
+	
+	SetOutPath $INSTDIR\Examples
+	File ..\..\build\win32\Examples\Net1.inp
+	File ..\..\build\win32\Examples\Net1.net
+	File ..\..\build\win32\Examples\Net2.net
+	File ..\..\build\win32\Examples\Net3.net
+	File ..\..\build\win32\Examples\Net2-FL.dat
 
 	IntCmp $LANGUAGE ${LANG_GERMAN} install_german_locale no_locale_install no_locale_install
 	install_german_locale:
@@ -230,6 +237,12 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\bin\intl.dll
 	Delete /REBOOTOK $INSTDIR\bin\epanetl.exe
 	Delete /REBOOTOK $INSTDIR\bin\InpToolsExt.dll
+	
+	Delete /REBOOTOK $INSTDIR\Examples\Net1.inp
+	Delete /REBOOTOK $INSTDIR\win32\Examples\Net1.net
+	Delete /REBOOTOK $INSTDIR\Examples\Net2.net
+	Delete /REBOOTOK $INSTDIR\Examples\Net3.net
+	Delete /REBOOTOK $INSTDIR\Examples\Net2-FL.dat
 
 	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\epanetl.mo
 	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\inptools.mo
@@ -341,6 +354,7 @@ Section -un.post UNSEC0001
 	RmDir /REBOOTOK $INSTDIR\locale\de
 	RmDir /REBOOTOK $INSTDIR\locale
     RmDir /REBOOTOK $SMPROGRAMS\$StartMenuGroup
+    RmDir /REBOOTOK $INSTDIR\Examples
     RmDir /REBOOTOK $INSTDIR\bin
     RmDir /REBOOTOK $INSTDIR
 	
