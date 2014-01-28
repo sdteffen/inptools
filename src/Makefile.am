@@ -43,6 +43,13 @@ SHAPELIB_SOURCES = @SHAPELIB_SRC@/shpopen.c \
 	@SHAPELIB_SRC@/dbfopen.c \
 	@SHAPELIB_SRC@/shptree.c \
 	@SHAPELIB_SRC@/safileio.c
+	
+ALL_SOURCES = $(epanet2csv_SOURCES) $(inpproj_SOURCES) $(inp2shp_SOURCES) \
+	$(shp2inp_SOURCES) epanet2csvw.cpp inp2shpw.cpp inptools-about.c \
+	inptools-file-dialog.cpp	
+
+indent: $(ALL_SOURCES)
+	indent $(ALL_SOURCES) -kr -i8
 
 epanet2csvw.exe: epanet2csvw.cpp
 	i586-mingw32msvc-windres ../data/icons/pump.rc pump.o

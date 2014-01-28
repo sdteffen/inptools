@@ -9,6 +9,7 @@
 			<year>2009</year>
 			<year>2011</year>
 			<year>2012</year>
+			<year>2014</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -18,7 +19,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>$Date 2012-03-06$</pubdate>
+		<pubdate>$Date 2014-01-28$</pubdate>
 		<legalnotice>
 			<para> Dieses Dokument wurde unter der GNU-Lizenz für freie
 				Dokumentation veröffentlicht.</para>
@@ -64,6 +65,22 @@
 					<primary>Neuigkeiten</primary>
 				</indexterm>
 				<para>Ein Zusammenfassung der Änderungen.</para>
+				<sect3 id="version_2_0_12_1">
+				    <title>Version 2.0.12.1</title>
+				    <itemizedlist>
+				        <listitem>
+				            <para>Explorer-Integration für inp2shp. Nutzen Sie
+				            das Explorer-Kontextmenü, um aus INP-Dateien Shapefiles
+				            zu erzeugen.</para>
+				        </listitem>
+				        <listitem>
+				            <para>Mehrerer Fehler in der inp2shp-Anwendung wurden behoben.</para>
+				        </listitem>
+				        <listitem>
+				           <para>Die ersten drei Zahlen der Versionsnummer entsprechen jetzt denen
+				           der im Windows-Installationspaket enthaltenen EPANET-Version.</para>
+				        </listitem>    
+				</sect3>
 				<sect3 id="version_1_0_1">
 					<title>Version 1.0.1</title>
 					<itemizedlist>
@@ -129,7 +146,7 @@
 				<primary>Voraussetzungen</primary>
 			</indexterm>
 			<para>
-				Linux oder Windows (7 oder besser) werden
+				Linux oder Windows (7, 8, 8.1 oder neuer) werden
 				benötigt, um die
 				Inptools-Software zu nutzen.
 			</para>
@@ -276,6 +293,20 @@
 					kann beispielsweise mit dem Kommandozeilenwerkzeug 
 					<command>epanet2csv</command> weiterverarbeitet werden.</para>
 				</sect3>
+				<sect3 id="create_shapefiles">
+				    <title>Shapefile erzeugens</title>
+				    <indexterm><primary>Shapefile</primary></indexterm>
+				    <indexterm><primary>inp2shp</primary></indexterm>
+				    <indexterm><primary>GHydraulics</primary</indexterm>
+				    <para>Wählen Sie <menuchoice><guimenu>Inptools</guimenu>
+				    <guimenuitem>Shapefiles erzeugen</guimenuitem></menuchoice>,
+				    um aus der gewählten INP-Datei mehrere Shapefiles (Knoten,
+				    Leitungen, Pumpen, Tanks, Reservoirs) zu erzeugen.</para>
+				    <para>Die erzeugten Shapefiles können mit entsprechender
+				    GIS-Software (wie beispielsweise QGIS) geöffnet werden.
+				    Falls Sie QGIS nutzen, könnte Sie das Plugin "GHydraulics"
+				    interessieren.</para>
+				</sect3> 
 			</sect2>
 			<sect2 id="commandline">
 				<title>Kommandozeile</title>

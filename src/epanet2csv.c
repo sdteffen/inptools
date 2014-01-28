@@ -132,11 +132,11 @@ int writeNodesFile(FILE * fileIn, char *strNodeFilename)
 				fread(&pressure, 4, 1, fileIn);
 				fseek(fileIn,
 				      offsetResults +
-				      ((3 * numNodes + j) * 4), SEEK_SET);	
+				      ((3 * numNodes + j) * 4), SEEK_SET);
 				fread(&quality, 4, 1, fileIn);
 				fprintf(fileOut, "%s,%f,%f,%f,%f,%d\n",
-					strNodeID, demand, head, pressure, quality,
-					i + 1);
+					strNodeID, demand, head, pressure,
+					quality, i + 1);
 			}
 			offsetResults += (16 * numNodes + 32 * numLinks);
 		}
@@ -196,28 +196,30 @@ int writeLinksFile(FILE * fileIn, char *strLinkFilename)
 				      ((2 * numLinks + j) * 4), SEEK_SET);
 				fread(&headloss, 4, 1, fileIn);
 				fseek(fileIn,
-							      offsetResults +
-							      ((3 * numLinks + j) * 4), SEEK_SET);
+				      offsetResults +
+				      ((3 * numLinks + j) * 4), SEEK_SET);
 				fread(&quality, 4, 1, fileIn);
 				fseek(fileIn,
-							      offsetResults +
-							      ((4 * numLinks + j) * 4), SEEK_SET);
+				      offsetResults +
+				      ((4 * numLinks + j) * 4), SEEK_SET);
 				fread(&status, 4, 1, fileIn);
 				fseek(fileIn,
-							      offsetResults +
-							      ((5 * numLinks + j) * 4), SEEK_SET);
+				      offsetResults +
+				      ((5 * numLinks + j) * 4), SEEK_SET);
 				fread(&setting, 4, 1, fileIn);
 				fseek(fileIn,
-							      offsetResults +
-							      ((6 * numLinks + j) * 4), SEEK_SET);
+				      offsetResults +
+				      ((6 * numLinks + j) * 4), SEEK_SET);
 				fread(&reaction, 4, 1, fileIn);
 				fseek(fileIn,
-							      offsetResults +
-							      ((7 * numLinks + j) * 4), SEEK_SET);
+				      offsetResults +
+				      ((7 * numLinks + j) * 4), SEEK_SET);
 				fread(&friction, 4, 1, fileIn);
-				fprintf(fileOut, "%s,%f,%f,%f,%f,%f,%f,%f,%f,%d\n",
+				fprintf(fileOut,
+					"%s,%f,%f,%f,%f,%f,%f,%f,%f,%d\n",
 					strLinkID, flow, velocity,
-					headloss, quality, status,setting,reaction,friction, i + 1);
+					headloss, quality, status, setting,
+					reaction, friction, i + 1);
 			}
 			offsetResults += (16 * numNodes + 32 * numLinks);
 		}

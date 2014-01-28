@@ -9,7 +9,8 @@
 			<year>2009</year>
 			<year>2011</year>
 	  		<year>2012</year>
-                        <year>2013</year>
+            <year>2013</year>
+            <year>2014</year>
 			<holder>Steffen Macke</holder>
 		</copyright>
 		<author>
@@ -19,7 +20,7 @@
 			</personname>
 			<email>sdteffen@sdteffen.de</email>
 		</author>
-		<pubdate>2013-06-10</pubdate>
+		<pubdate>2014-01-28</pubdate>
 		<legalnotice>
 			<para>
 				Permission is granted to copy, distribute and/or modify this
@@ -57,7 +58,7 @@
 			<para>
 				This manual describes
 				<citetitle>Inptools</citetitle>
-				version 1.0.1.
+				version 2.0.12.1.
 			</para>
 			<sect2 id="news">
 				<title>What's New?</title>
@@ -66,6 +67,23 @@
 				</indexterm>
 				<para>A summary of changes.
 				</para>
+				<sect3 id="version_2_0_12_1">
+				    <title>Version 2.0.12.1</title>
+				    <itemizedlist>
+				        <listitem>
+				            <para>Explorer integration for inp2shp. Use the
+				            Explorer context menu to generate Shapefiles from
+				            INP files.</para>
+				        </listitem>
+				        <listitem>
+				            <para>Several inp2shp bugs were fixed.</para>
+				        </listitem>
+				        <listitem>
+				           <para>First three digits of the version number now
+				           match version number of EPANET version included
+				           in Windows installer.</para>
+				        </listitem>    
+				</sect3>
 				<sect3 id="version_1_0_1">
 					<title>Version 1.0.1</title>
 					<itemizedlist>
@@ -128,7 +146,7 @@
 				<primary>requirements</primary>
 			</indexterm>
 			<para>
-				Linux or Windows (7 or higher) are required in
+				Linux or Windows (7, 8, 8.1 or higher) are required in
 				order to use the
 				<citetitle>Inptools</citetitle>.		.
 			</para>
@@ -142,8 +160,7 @@
 			</indexterm>
 			<para>
 				How to install
-				<citetitle>Inptools</citetitle>
-				.
+				<citetitle>Inptools</citetitle>.
 			</para>
 			<sect2 id="windows_installation">
 				<title>Windows Installation</title>
@@ -276,6 +293,19 @@
 					result file. This file can be further processed e.g. 
 					with the commandline tool <command>epanet2csv</command>.</para>
 				</sect3>
+				<sect3 id="create_shapefiles">
+				    <title>Create Shapefiles</title>
+				    <indexterm><primary>Shapefile</primary></indexterm>
+				    <indexterm><primary>inp2shp</primary></indexterm>
+				    <indexterm><primary>GHydraulics</primary</indexterm>
+				    <para>Choosing <menuchoice><guimenu>Inptools</guimenu>
+				    <guimenuitem>Create Shapefiles</guimenuitem></menuchoice>
+				    will create several shapefiles (junctions, pipes, pumps, tanks,
+				    reservoirs and valves) from the selected INP file.</para>
+				    <para>The generated Shapefiles can be used in GIS Software
+				    like QGIS (Have a look at the GHydraulics plugin, if you
+				    use QGIS.).</para>
+				</sect3>   
 			</sect2>
 			<sect2 id="commandline">
 				<title>Commandline Usage</title>

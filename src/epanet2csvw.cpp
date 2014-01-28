@@ -28,214 +28,210 @@
 
 using namespace std;
 
-DWORD run_process (char *szCommand, char *szArgs);
-string & str_replace_null (const string & search, string & subject);
-DWORD RunEpanet2csv (char *szBinaryFile, char *szNodesFile, char *szLinkFile);
-DWORD CreateCsvFile (char *szNodeFile, char *szLinkFile);
+DWORD run_process(char *szCommand, char *szArgs);
+string & str_replace_null(const string & search, string & subject);
+DWORD RunEpanet2csv(char *szBinaryFile, char *szNodesFile,
+		    char *szLinkFile);
+DWORD CreateCsvFile(char *szNodeFile, char *szLinkFile);
 
 /**
  * USAGE: epanet2csvw epanet2d epanet2csv inputfile filter1 filter2
  */
-int
-main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-  string params;
-  OPENFILENAME ofn;
-  char szOutFileNode[MAX_PATH] = "nodes.csv";
-  char szOutFileLink[MAX_PATH] = "links.csv";
-  DWORD return_value = 0;
-  DWORD dwBufSize = MAX_PATH;
-  char *szArgs;
-  TCHAR szReportFileName[MAX_PATH];
-  TCHAR szBinaryFileName[MAX_PATH];
-  TCHAR lpPathBuffer[MAX_PATH];
-  int param_count;
-  string pattern;
-  UINT uRetVal;
+	string params;
+	OPENFILENAME ofn;
+	char szOutFileNode[MAX_PATH] = "nodes.csv";
+	char szOutFileLink[MAX_PATH] = "links.csv";
+	DWORD return_value = 0;
+	DWORD dwBufSize = MAX_PATH;
+	char *szArgs;
+	TCHAR szReportFileName[MAX_PATH];
+	TCHAR szBinaryFileName[MAX_PATH];
+	TCHAR lpPathBuffer[MAX_PATH];
+	int param_count;
+	string pattern;
+	UINT uRetVal;
 
-  if (6 != argc)
-    {
-      MessageBox (NULL,
-		  "USAGE: epanet2csvw epanet2d epanet2csv inputfile filter1 filter2",
-		  "epanet2csvw", MB_ICONERROR);
-      return 1;
-    }
+	if (6 != argc) {
+		MessageBox(NULL,
+			   "USAGE: epanet2csvw epanet2d epanet2csv inputfile filter1 filter2",
+			   "epanet2csvw", MB_ICONERROR);
+		return 1;
+	}
 
  /**
   * Find temp folder
   */
-  return_value = GetTempPath (dwBufSize, lpPathBuffer);
-  if (return_value > dwBufSize || (return_value == 0))
-    {
-      MessageBox (NULL,
-		  _("Temp folder could not be obtained."),
-		  _("Inptools Shell Extension"), MB_ICONERROR);
-      return 1;
-    }
+	return_value = GetTempPath(dwBufSize, lpPathBuffer);
+	if (return_value > dwBufSize || (return_value == 0)) {
+		MessageBox(NULL,
+			   _("Temp folder could not be obtained."),
+			   _("Inptools Shell Extension"), MB_ICONERROR);
+		return 1;
+	}
 
     /**
      * Get temporary report file.
      */
-  uRetVal = GetTempFileName (lpPathBuffer, TEXT ("NEW"), 0, szReportFileName);
-  if (uRetVal == 0)
-    {
-      MessageBox (NULL,
-		  _("Temporary file name could not be obtained."),
-		  _("Inptools Shell Extension"), MB_ICONERROR);
-      return 1;
-    }
+	uRetVal =
+	    GetTempFileName(lpPathBuffer, TEXT("NEW"), 0,
+			    szReportFileName);
+	if (uRetVal == 0) {
+		MessageBox(NULL,
+			   _("Temporary file name could not be obtained."),
+			   _("Inptools Shell Extension"), MB_ICONERROR);
+		return 1;
+	}
 
     /**
      * Get temporary binary result file.
      */
-  uRetVal = GetTempFileName (lpPathBuffer, TEXT ("NEW"), 0, szBinaryFileName);
-  if (uRetVal == 0)
-    {
-      MessageBox (NULL,
-		  _("Temporary file name could not be obtained."),
-		  _("Inptools Shell Extension"), MB_ICONERROR);
-      return 1;
-    }
+	uRetVal =
+	    GetTempFileName(lpPathBuffer, TEXT("NEW"), 0,
+			    szBinaryFileName);
+	if (uRetVal == 0) {
+		MessageBox(NULL,
+			   _("Temporary file name could not be obtained."),
+			   _("Inptools Shell Extension"), MB_ICONERROR);
+		return 1;
+	}
 
-  params = "\"";
-  params.append (argv[3]);
-  params.append ("\" \"");
-  params.append (szReportFileName);
-  params.append ("\" ");
-  params.append (szBinaryFileName);
-  params.append ("\" ");
-  szArgs = (char *) params.c_str ();
-  run_process (argv[1], szArgs);
+	params = "\"";
+	params.append(argv[3]);
+	params.append("\" \"");
+	params.append(szReportFileName);
+	params.append("\" ");
+	params.append(szBinaryFileName);
+	params.append("\" ");
+	szArgs = (char *) params.c_str();
+	run_process(argv[1], szArgs);
 
   /**
    * Run epanet2csv
    */
-  params = "\"";
-  params.append (szBinaryFileName);
-  params.append ("\" ");
-  for (param_count = 4; param_count < argc; param_count++)
-    {
-      ZeroMemory (&ofn, sizeof (ofn));
-      ofn.lStructSize = sizeof (ofn);
-      ofn.hwndOwner = NULL;
+	params = "\"";
+	params.append(szBinaryFileName);
+	params.append("\" ");
+	for (param_count = 4; param_count < argc; param_count++) {
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
 
-      pattern = argv[param_count];
+		pattern = argv[param_count];
 
-      ofn.lpstrFilter = str_replace_null ("\\n", pattern).c_str ();
-      if(4 == param_count)
-        ofn.lpstrFile = szOutFileNode;
-      else
-	ofn.lpstrFile = szOutFileLink;
+		ofn.lpstrFilter = str_replace_null("\\n", pattern).c_str();
+		if (4 == param_count)
+			ofn.lpstrFile = szOutFileNode;
+		else
+			ofn.lpstrFile = szOutFileLink;
 
-      ofn.nMaxFile = MAX_PATH;
+		ofn.nMaxFile = MAX_PATH;
 
-      ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
+		ofn.Flags =
+		    OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
 
 	  /**
            * @todo Extract from pattern
            */
-      ofn.lpstrDefExt = "txt";
+		ofn.lpstrDefExt = "txt";
 
-      if (!GetSaveFileName (&ofn))
-	return 1;
+		if (!GetSaveFileName(&ofn))
+			return 1;
 
-      params.append ("\"");
-      if(4 == param_count)
-	params.append (szOutFileNode);
-      else
-	params.append (szOutFileLink);
-      params.append ("\" ");
-    }
-  szArgs = (char *) params.c_str ();
-  return_value = run_process (argv[2], szArgs);
+		params.append("\"");
+		if (4 == param_count)
+			params.append(szOutFileNode);
+		else
+			params.append(szOutFileLink);
+		params.append("\" ");
+	}
+	szArgs = (char *) params.c_str();
+	return_value = run_process(argv[2], szArgs);
 
-  return return_value;
+	return return_value;
 }
 
 /**
  * Replace \n with \0
  */
-string & str_replace_null (const string & search, string & subject)
+string & str_replace_null(const string & search, string & subject)
 {
-  string result = "";
-  int subject_length = subject.length ();
-  int i = 0;
-  int j = 0;
+	string result = "";
+	int subject_length = subject.length();
+	int i = 0;
+	int j = 0;
 
-  while (i != string::npos && i < subject_length)
-    {
-      j = subject.find (search, i);
-      if (string::npos == j)
-	result.append (subject.substr (i));
-      else
-	{
-	  result.append (subject.substr (i, j - i));
-	  result.push_back ('\0');
-	  j += search.length ();
+	while (i != string::npos && i < subject_length) {
+		j = subject.find(search, i);
+		if (string::npos == j)
+			result.append(subject.substr(i));
+		else {
+			result.append(subject.substr(i, j - i));
+			result.push_back('\0');
+			j += search.length();
+		}
+		i = j;
 	}
-      i = j;
-    }
 
-  subject = result;
-  return subject;
+	subject = result;
+	return subject;
 }
 
-DWORD
-run_process (char *szCommand, char *szArgs)
+DWORD run_process(char *szCommand, char *szArgs)
 {
 
-  STARTUPINFO si;
+	STARTUPINFO si;
 
-  PROCESS_INFORMATION pi;
+	PROCESS_INFORMATION pi;
 
-  char szCommandLine[4096];
+	char szCommandLine[4096];
 
-  char *szEnvCOMSPEC = NULL;
+	char *szEnvCOMSPEC = NULL;
 
-  char szDefaultCMD[] = "CMD.EXE";
+	char szDefaultCMD[] = "CMD.EXE";
 
-  ULONG uReturnCode;
+	ULONG uReturnCode;
 
-  ZeroMemory (&si, sizeof (STARTUPINFO));
+	ZeroMemory(&si, sizeof(STARTUPINFO));
 
-  si.cb = sizeof (STARTUPINFO);
+	si.cb = sizeof(STARTUPINFO);
 
-  si.wShowWindow = SW_HIDE;
+	si.wShowWindow = SW_HIDE;
 
-  si.dwFlags = STARTF_USESHOWWINDOW;
-
-
-  szCommandLine[0] = 0;
+	si.dwFlags = STARTF_USESHOWWINDOW;
 
 
-  strcat (szCommandLine, szCommand);
-
-  strcat (szCommandLine, " ");
-
-  strcat (szCommandLine, szArgs);
-
-  if (!CreateProcess
-      (NULL, szCommandLine, NULL, NULL, FALSE,
-       CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
-    {
-
-      return GetLastError ();
-
-    }
+	szCommandLine[0] = 0;
 
 
-  WaitForSingleObject (pi.hProcess, INFINITE);
+	strcat(szCommandLine, szCommand);
 
-  if (!GetExitCodeProcess (pi.hProcess, &uReturnCode))
+	strcat(szCommandLine, " ");
 
-    uReturnCode = 0;
+	strcat(szCommandLine, szArgs);
+
+	if (!CreateProcess
+	    (NULL, szCommandLine, NULL, NULL, FALSE,
+	     CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
+
+		return GetLastError();
+
+	}
 
 
-  CloseHandle (pi.hThread);
+	WaitForSingleObject(pi.hProcess, INFINITE);
 
-  CloseHandle (pi.hProcess);
+	if (!GetExitCodeProcess(pi.hProcess, &uReturnCode))
+
+		uReturnCode = 0;
 
 
-  return uReturnCode;
+	CloseHandle(pi.hThread);
+
+	CloseHandle(pi.hProcess);
+
+
+	return uReturnCode;
 
 }

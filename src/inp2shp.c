@@ -510,11 +510,11 @@ int write_virtual_lines()
 			break;
 		case EN_PUMP:
 			write_pump(i + 1);
-			write_virtual_line_parts(i +1);
+			write_virtual_line_parts(i + 1);
 			break;
 		default:
 			write_valve(i + 1);
-			write_virtual_line_parts(i +1);
+			write_virtual_line_parts(i + 1);
 			break;
 		}
 	}
@@ -555,8 +555,8 @@ int write_virtual_line_parts(int index)
 		exit_inp2shp(1);
 	}
 	DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_DC_ID, string);
-	DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_DC_ID, string);
-	DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_NODE1, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes + 1, PI_DC_ID, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes + 1, PI_NODE1, string);
 	DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_NODE2, string);
 	error = ENgetlinkvalue(index, EN_DIAMETER, &d);
 	if (0 != error) {
@@ -565,8 +565,10 @@ int write_virtual_line_parts(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	DBFWriteIntegerAttribute(hPipeDBF, num_pipes, PI_DIAMETER, (int) d);
-	DBFWriteIntegerAttribute(hPipeDBF, num_pipes+1, PI_DIAMETER, (int) d);
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes, PI_DIAMETER,
+				 (int) d);
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes + 1, PI_DIAMETER,
+				 (int) d);
 	error = ENgetlinkvalue(index, EN_LENGTH, &d);
 	if (0 != error) {
 		fprintf(stderr,
@@ -574,8 +576,10 @@ int write_virtual_line_parts(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	DBFWriteIntegerAttribute(hPipeDBF, num_pipes, PI_LENGTH, (int) d/2);
-	DBFWriteIntegerAttribute(hPipeDBF, num_pipes+1, PI_LENGTH, (int) d/2);
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes, PI_LENGTH,
+				 (int) d / 2);
+	DBFWriteIntegerAttribute(hPipeDBF, num_pipes + 1, PI_LENGTH,
+				 (int) d / 2);
 	error = ENgetlinknodes(index, &from_node, &to_node);
 	if (0 != error) {
 		fprintf(stderr,
@@ -593,7 +597,7 @@ int write_virtual_line_parts(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_NODE2, string);
+	DBFWriteStringAttribute(hPipeDBF, num_pipes + 1, PI_NODE2, string);
 
 	error = ENgetlinkvalue(index, EN_ROUGHNESS, &d);
 	if (0 != error) {
@@ -602,8 +606,10 @@ int write_virtual_line_parts(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	DBFWriteDoubleAttribute(hPipeDBF, num_pipes, PI_ROUGHNESS, (double) d);
-	DBFWriteDoubleAttribute(hPipeDBF, num_pipes+1, PI_ROUGHNESS, (double) d);
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes, PI_ROUGHNESS,
+				(double) d);
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes + 1, PI_ROUGHNESS,
+				(double) d);
 
 	error = ENgetlinkvalue(index, EN_MINORLOSS, &d);
 	if (0 != error) {
@@ -613,8 +619,10 @@ int write_virtual_line_parts(int index)
 		exit_inp2shp(1);
 	}
 
-	DBFWriteDoubleAttribute(hPipeDBF, num_pipes, PI_MINORLOSS, (double) d);
-	DBFWriteDoubleAttribute(hPipeDBF, num_pipes+1, PI_MINORLOSS, (double) d);
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes, PI_MINORLOSS,
+				(double) d);
+	DBFWriteDoubleAttribute(hPipeDBF, num_pipes + 1, PI_MINORLOSS,
+				(double) d);
 
 	error = ENgetlinkvalue(index, EN_INITSTATUS, &d);
 	if (0 != error) {
@@ -626,13 +634,13 @@ int write_virtual_line_parts(int index)
 	if (d == 1) {
 		DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_STATUS,
 					"OPEN");
-		DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_STATUS,
-							"OPEN");
+		DBFWriteStringAttribute(hPipeDBF, num_pipes + 1, PI_STATUS,
+					"OPEN");
 	} else {
 		DBFWriteStringAttribute(hPipeDBF, num_pipes, PI_STATUS,
 					"CLOSED");
 
-		DBFWriteStringAttribute(hPipeDBF, num_pipes+1, PI_STATUS,
+		DBFWriteStringAttribute(hPipeDBF, num_pipes + 1, PI_STATUS,
 					"CLOSED");
 	}
 	/**
@@ -640,10 +648,9 @@ int write_virtual_line_parts(int index)
 	 */
 	x[0] = node_x[from_node];
 	y[0] = node_y[from_node];
-	x[1] = (node_x[to_node] + node_x[from_node])/2;
-	y[1] = (node_y[to_node] + node_y[from_node])/2;
-	shape =
-	    SHPCreateSimpleObject(SHPT_ARC, 2, x, y, NULL);
+	x[1] = (node_x[to_node] + node_x[from_node]) / 2;
+	y[1] = (node_y[to_node] + node_y[from_node]) / 2;
+	shape = SHPCreateSimpleObject(SHPT_ARC, 2, x, y, NULL);
 	if (-1 == SHPWriteObject(hPipeSHP, -1, shape)) {
 		SHPDestroyObject(shape);
 		fprintf(stderr,
@@ -658,8 +665,7 @@ int write_virtual_line_parts(int index)
 	y[0] = y[1];
 	x[1] = node_x[to_node];
 	y[1] = node_y[to_node];
-	shape =
-	    SHPCreateSimpleObject(SHPT_ARC, 2, x, y, NULL);
+	shape = SHPCreateSimpleObject(SHPT_ARC, 2, x, y, NULL);
 	if (-1 == SHPWriteObject(hPipeSHP, -1, shape)) {
 		SHPDestroyObject(shape);
 		fprintf(stderr,
@@ -669,7 +675,7 @@ int write_virtual_line_parts(int index)
 	SHPDestroyObject(shape);
 
 	num_pipes += 2;
-	return 0;	
+	return 0;
 }
 
 
@@ -703,8 +709,8 @@ int write_pump(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	x = (node_x[from_node]+node_x[to_node])/2;
-	y = (node_y[from_node]+node_y[to_node])/2;
+	x = (node_x[from_node] + node_x[to_node]) / 2;
+	y = (node_y[from_node] + node_y[to_node]) / 2;
 	shape = SHPCreateSimpleObject(SHPT_POINT, 1, &x, &y, NULL);
 	error = SHPWriteObject(hPumpSHP, -1, shape);
 	SHPDestroyObject(shape);
@@ -738,42 +744,42 @@ int write_pump(int index)
 	}
 	strcpy(Tok[0], "");
 	switch (type) {
-		case EN_CONST_HP:
-			error = ENgetlinkvalue(index, EN_MINORLOSS, &power);
-			if (0 != error) {
-				fprintf(stderr,
-					"FATAL ERROR: ENgetlinkvalue(%d, EN_MINORLOSS) returned error %d in write_pump().\n",
-					index, error);
-				exit_inp2shp(1);
-			}
-			sprintf(Tok[0], "POWER %f SPEED %f", power, d);
-			break;
-		case EN_POWER_FUNC:
-		case EN_CUSTOM:
-			error = ENgetheadcurve(index, string);
-			if (0 != error) {
-				fprintf(stderr,
-					"FATAL ERROR: ENgetheadcurve(%d) returned error %d in write_pump().\n",
-					index, error);
-				exit_inp2shp(1);
-			}
-			sprintf(Tok[0], "HEAD %s SPEED %f", string, d);
-			break;
+	case EN_CONST_HP:
+		error = ENgetlinkvalue(index, EN_MINORLOSS, &power);
+		if (0 != error) {
+			fprintf(stderr,
+				"FATAL ERROR: ENgetlinkvalue(%d, EN_MINORLOSS) returned error %d in write_pump().\n",
+				index, error);
+			exit_inp2shp(1);
+		}
+		sprintf(Tok[0], "POWER %f SPEED %f", power, d);
+		break;
+	case EN_POWER_FUNC:
+	case EN_CUSTOM:
+		error = ENgetheadcurve(index, string);
+		if (0 != error) {
+			fprintf(stderr,
+				"FATAL ERROR: ENgetheadcurve(%d) returned error %d in write_pump().\n",
+				index, error);
+			exit_inp2shp(1);
+		}
+		sprintf(Tok[0], "HEAD %s SPEED %f", string, d);
+		break;
 	}
 
 	error = ENgetlinkvalue(index, EN_LINKPATTERN, &pattern);
 	if (0 != error) {
 		fprintf(stderr,
-				"FATAL ERROR: ENgetlinkvalue(%d, EN_LINKPATTERN returned error %d in write_pump().\n",
-				index, error);
+			"FATAL ERROR: ENgetlinkvalue(%d, EN_LINKPATTERN returned error %d in write_pump().\n",
+			index, error);
 		exit_inp2shp(1);
 	}
-	if (0.0 < pattern)
-	{
-		error = ENgetpatternid((int)pattern, string);
+	if (0.0 < pattern) {
+		error = ENgetpatternid((int) pattern, string);
 		if (0 != error) {
 			fprintf(stderr,
-					"FATAL ERROR: ENgetpatternid(%d) returned error %d in write_pump().\n", (int)pattern, error);
+				"FATAL ERROR: ENgetpatternid(%d) returned error %d in write_pump().\n",
+				(int) pattern, error);
 			exit_inp2shp(1);
 		}
 		sprintf(Tok[strlen(Tok[0])], " PATTERN %s", string);
@@ -815,8 +821,8 @@ int write_valve(int index)
 			index, error);
 		exit_inp2shp(1);
 	}
-	x = (node_x[from_node]+node_x[to_node])/2;
-	y = (node_y[from_node]+node_y[to_node])/2;
+	x = (node_x[from_node] + node_x[to_node]) / 2;
+	y = (node_y[from_node] + node_y[to_node]) / 2;
 	shape = SHPCreateSimpleObject(SHPT_POINT, 1, &x, &y, NULL);
 	error = SHPWriteObject(hValveSHP, -1, shape);
 	SHPDestroyObject(shape);
@@ -1817,7 +1823,7 @@ void remove_shp(char *shapefilename)
 /**
   * Function copied from EPANET sources
   */
-int  en_findmatch(char *line, char *keyword[])
+int en_findmatch(char *line, char *keyword[])
 /*
 **--------------------------------------------------------------
 **  Input:   *line      = line from input file
@@ -1828,19 +1834,19 @@ int  en_findmatch(char *line, char *keyword[])
 **--------------------------------------------------------------
 */
 {
-   int i = 0;
-   while (keyword[i] != NULL)
-   {
-      if (en_match(line,keyword[i])) return(i);
-      i++;
-   }
-   return(-1);
-}                        /* end of findmatch */
+	int i = 0;
+	while (keyword[i] != NULL) {
+		if (en_match(line, keyword[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
+}				/* end of findmatch */
 
 /**
  * Copied from EPANET sources
  */
-int  en_gettokens(char *s)
+int en_gettokens(char *s)
 /*
 **--------------------------------------------------------------
 **  Input:   *s = string to be tokenized
@@ -1854,45 +1860,45 @@ int  en_gettokens(char *s)
 **--------------------------------------------------------------
 */
 {
-   int  len, m, n;
-   char *c;
+	int len, m, n;
+	char *c;
 
 /* Begin with no tokens */
-   for (n=0; n<MAXTOKS; n++) Tok[n] = NULL;
-   n = 0;
+	for (n = 0; n < MAXTOKS; n++)
+		Tok[n] = NULL;
+	n = 0;
 
 /* Truncate s at start of comment */
-   c = strchr(s,';');
-   if (c) *c = '\0';
-   len = strlen(s);
+	c = strchr(s, ';');
+	if (c)
+		*c = '\0';
+	len = strlen(s);
 
 /* Scan s for tokens until nothing left */
-   while (len > 0 && n < MAXTOKS)
-   {
-       m = strcspn(s,SEPSTR);          /* Find token length */
-       len -= m+1;                     /* Update length of s */
-       if (m == 0) s++;                /* No token found */
-       else
-       {
-          if (*s == '"')               /* Token begins with quote */
-          {
-             s++;                      /* Start token after quote */
-             m = strcspn(s,"\"\n\r");  /* Find end quote (or EOL) */
-          }                            
-          s[m] = '\0';                 /* Null-terminate the token */
-          Tok[n] = s;                  /* Save pointer to token */
-          n++;                         /* Update token count */
-          s += m+1;                    /* Begin next token */
-       }
-   }
-   return(n);
-}                        /* End of gettokens */
+	while (len > 0 && n < MAXTOKS) {
+		m = strcspn(s, SEPSTR);	/* Find token length */
+		len -= m + 1;	/* Update length of s */
+		if (m == 0)
+			s++;	/* No token found */
+		else {
+			if (*s == '"') {	/* Token begins with quote */
+				s++;	/* Start token after quote */
+				m = strcspn(s, "\"\n\r");	/* Find end quote (or EOL) */
+			}
+			s[m] = '\0';	/* Null-terminate the token */
+			Tok[n] = s;	/* Save pointer to token */
+			n++;	/* Update token count */
+			s += m + 1;	/* Begin next token */
+		}
+	}
+	return (n);
+}				/* End of gettokens */
 
 
 /**
  * Copied from EPANET sources.
  */
-int  en_match(char *str, char *substr)
+int en_match(char *str, char *substr)
 /*
 **--------------------------------------------------------------
 **  Input:   *str    = string being searched
@@ -1904,19 +1910,21 @@ int  en_match(char *str, char *substr)
 **--------------------------------------------------------------
 */
 {
-   int i,j;
+	int i, j;
 
 /*** Updated 9/7/00 ***/
 /* Fail if substring is empty */
-   if (!substr[0]) return(0);
+	if (!substr[0])
+		return (0);
 
 /* Skip leading blanks of str. */
-   for (i=0; str[i]; i++)
-     if (str[i] != ' ') break;
+	for (i = 0; str[i]; i++)
+		if (str[i] != ' ')
+			break;
 
 /* Check if substr matches remainder of str. */
-   for (i=i,j=0; substr[j]; i++,j++)
-      if (!str[i] || UCHAR(str[i]) != UCHAR(substr[j]))
-         return(0);
-   return(1);
-}                        /* end of match */
+	for (i = i, j = 0; substr[j]; i++, j++)
+		if (!str[i] || UCHAR(str[i]) != UCHAR(substr[j]))
+			return (0);
+	return (1);
+}				/* end of match */

@@ -32,8 +32,8 @@
 using namespace std;
 
 int file_exists(TCHAR * file);
-DWORD run_process (char *szCommand, char *szArgs);
-string & str_replace_null (const string & search, string & subject);
+DWORD run_process(char *szCommand, char *szArgs);
+string & str_replace_null(const string & search, string & subject);
 
 HANDLE g_hStdOutRd = NULL;
 HANDLE g_hStdOutWr = NULL;
@@ -42,249 +42,252 @@ string title = _("inp2shpw");
 /**
  * USAGE: inp2shpw inp2shp inputfile
  */
-int
-main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-  string params;
-  OPENFILENAME ofn;
-  DWORD return_value = 0;
-  DWORD dwBufSize = MAX_PATH;
-  TCHAR szReportFileName[MAX_PATH];
-  TCHAR lpPathBuffer[MAX_PATH];
-  int param_count, partCount;
-  string pattern;
-  UINT uRetVal;
+	string params;
+	OPENFILENAME ofn;
+	DWORD return_value = 0;
+	DWORD dwBufSize = MAX_PATH;
+	TCHAR szReportFileName[MAX_PATH];
+	TCHAR lpPathBuffer[MAX_PATH];
+	int param_count, partCount;
+	string pattern;
+	UINT uRetVal;
 
-  LPITEMIDLIST pidl     = NULL;
-  BROWSEINFO   bi       = { 0 };
-  BOOL         bResult  = FALSE;
-  TCHAR szDir[MAX_PATH];
-  string shapefilepath, question;
+	LPITEMIDLIST pidl = NULL;
+	BROWSEINFO bi = { 0 };
+	BOOL bResult = FALSE;
+	TCHAR szDir[MAX_PATH];
+	string shapefilepath, question;
 
   /**
    * The shapefiles that will be generated.
    */
-  string shapefiles[] = { "junctions", "pipes", "pumps", "reservoirs", "tanks",
-  	"valves"
-  };
-  const int SHAPEFILECOUNT = 6;
+	string shapefiles[] =
+	    { "junctions", "pipes", "pumps", "reservoirs", "tanks",
+		"valves"
+	};
+	const int SHAPEFILECOUNT = 6;
 
   /**
    * The different files that belong to a shapefile
    */
-  string shapeparts[] = {"shp", "dbf", "shx"};
-  const int SHAPEPARTCOUNT = 3;
+	string shapeparts[] = { "shp", "dbf", "shx" };
+	const int SHAPEPARTCOUNT = 3;
 
-  if (3 != argc)
-    {
-      MessageBox (NULL,
-		  _("USAGE: inp2shpw inp2shp inputfile"),
-		  title.c_str(), MB_ICONERROR);
-      return 1;
-    }
+	if (3 != argc) {
+		MessageBox(NULL,
+			   _("USAGE: inp2shpw inp2shp inputfile"),
+			   title.c_str(), MB_ICONERROR);
+		return 1;
+	}
 
-  for (param_count = 1; param_count < 3; param_count++)
-  {
-	  if (!file_exists(argv[param_count]))
-	  {
-		  question = "File not found: \"";
-		  question.append(argv[param_count]);
-		  question.append("\"");
-		  MessageBox (NULL,
-				  question.c_str(), title.c_str(), MB_ICONERROR);
-		  return 1;
-	  }
-  }
+	for (param_count = 1; param_count < 3; param_count++) {
+		if (!file_exists(argv[param_count])) {
+			question = "File not found: \"";
+			question.append(argv[param_count]);
+			question.append("\"");
+			MessageBox(NULL,
+				   question.c_str(), title.c_str(),
+				   MB_ICONERROR);
+			return 1;
+		}
+	}
 
  /**
   * Find temp folder
   */
-  return_value = GetTempPath (dwBufSize, lpPathBuffer);
-  if (return_value > dwBufSize || (return_value == 0))
-    {
-      MessageBox (NULL,
-		  _("Temp folder could not be obtained."),
-		  title.c_str(), MB_ICONERROR);
-      return 1;
-    }
+	return_value = GetTempPath(dwBufSize, lpPathBuffer);
+	if (return_value > dwBufSize || (return_value == 0)) {
+		MessageBox(NULL,
+			   _("Temp folder could not be obtained."),
+			   title.c_str(), MB_ICONERROR);
+		return 1;
+	}
 
     /**
      * Get temporary report file.
      */
-  uRetVal = GetTempFileName (lpPathBuffer, TEXT ("NEW"), 0, szReportFileName);
-  if (uRetVal == 0)
-    {
-      MessageBox (NULL,
-		  _("Temporary file name could not be obtained."),
-		  title.c_str(), MB_ICONERROR);
-      return 1;
-    }
+	uRetVal =
+	    GetTempFileName(lpPathBuffer, TEXT("NEW"), 0,
+			    szReportFileName);
+	if (uRetVal == 0) {
+		MessageBox(NULL,
+			   _("Temporary file name could not be obtained."),
+			   title.c_str(), MB_ICONERROR);
+		return 1;
+	}
 
     /**
      * Get the folder.
      */
-    if(S_OK != CoInitialize(NULL))
-    {
-    	MessageBox (NULL, _("CoInitialize() failed."),
-    			title.c_str(), MB_ICONERROR);
-    	return 1;
-    }
-  	bi.hwndOwner      = NULL;
-  	bi.pszDisplayName = szDir;
-  	bi.pidlRoot       = NULL;
-  	bi.lpszTitle      = _("Please select a folder to store the shape files.");
-  	bi.ulFlags        = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
-  	bi.ulFlags = 0;
-  	bi.lpfn = NULL;
-  	bi.lParam = 0;
-  	bi.iImage = -1;
-  	/**
+	if (S_OK != CoInitialize(NULL)) {
+		MessageBox(NULL, _("CoInitialize() failed."),
+			   title.c_str(), MB_ICONERROR);
+		return 1;
+	}
+	bi.hwndOwner = NULL;
+	bi.pszDisplayName = szDir;
+	bi.pidlRoot = NULL;
+	bi.lpszTitle =
+	    _("Please select a folder to store the shape files.");
+	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+	bi.ulFlags = 0;
+	bi.lpfn = NULL;
+	bi.lParam = 0;
+	bi.iImage = -1;
+	/**
   	 * TODO: Replace with IFileDialog
   	 */
-  	if ((pidl = SHBrowseForFolder(&bi)) != NULL)
-  	{
-  		bResult = SHGetPathFromIDList(pidl, szDir);
-  		CoTaskMemFree(pidl);
-  	}
-  	CoUninitialize();
-  	if (FALSE == bResult)
-  		return 0;
+	if ((pidl = SHBrowseForFolder(&bi)) != NULL) {
+		bResult = SHGetPathFromIDList(pidl, szDir);
+		CoTaskMemFree(pidl);
+	}
+	CoUninitialize();
+	if (FALSE == bResult)
+		return 0;
 
   /**
    * Build the inp2shp command line.
    */
-  params = "\"";
-  params.append (argv[2]);
-  params.append ("\" \"");
-  params.append (szReportFileName);
-  params.append ("\"");
+	params = "\"";
+	params.append(argv[2]);
+	params.append("\" \"");
+	params.append(szReportFileName);
+	params.append("\"");
   /**
    * Loop over all shapefiles
    */
-  for (param_count = 0; param_count < SHAPEFILECOUNT; param_count++)
-  {
-	  for (partCount = 0; partCount < SHAPEPARTCOUNT; partCount++)
-	  {
-		  shapefilepath = "";
-		  shapefilepath.append(szDir);
-		  shapefilepath.append("\\");
-		  shapefilepath.append(shapefiles[param_count]);
-		  shapefilepath.append(".");
-		  shapefilepath.append(shapeparts[partCount]);
-		  if (file_exists((TCHAR *)(shapefilepath.c_str()))) {
-			  question = "Do you want to overwrite \"";
-			  question.append(shapefilepath);
-			  question.append("\"?");
-			  if (IDYES == MessageBox(NULL, question.c_str(), title.c_str(), MB_ICONQUESTION | MB_YESNO))
-				  break;
-			  shapefilepath.erase(shapefilepath.end()-3,shapefilepath.end());
-			  shapefilepath.append("shp");
-			  strncpy(lpPathBuffer, shapefilepath.c_str(), shapefilepath.length());
-			  ZeroMemory (&ofn, sizeof (ofn));
-			   ofn.lStructSize = sizeof (ofn);
-			   ofn.hwndOwner = NULL;
-			   ofn.lpstrFilter = "Shapefiles (*.shp)\0*.shp\0\0";
-			   ofn.lpstrFile = lpPathBuffer;
-			   ofn.nMaxFile = MAX_PATH;
-			   ofn.Flags = OFN_EXPLORER | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY;
-			   ofn.lpstrDefExt = "shp";
+	for (param_count = 0; param_count < SHAPEFILECOUNT; param_count++) {
+		for (partCount = 0; partCount < SHAPEPARTCOUNT;
+		     partCount++) {
+			shapefilepath = "";
+			shapefilepath.append(szDir);
+			shapefilepath.append("\\");
+			shapefilepath.append(shapefiles[param_count]);
+			shapefilepath.append(".");
+			shapefilepath.append(shapeparts[partCount]);
+			if (file_exists((TCHAR *) (shapefilepath.c_str()))) {
+				question = "Do you want to overwrite \"";
+				question.append(shapefilepath);
+				question.append("\"?");
+				if (IDYES ==
+				    MessageBox(NULL, question.c_str(),
+					       title.c_str(),
+					       MB_ICONQUESTION | MB_YESNO))
+					break;
+				shapefilepath.erase(shapefilepath.end() -
+						    3,
+						    shapefilepath.end());
+				shapefilepath.append("shp");
+				strncpy(lpPathBuffer,
+					shapefilepath.c_str(),
+					shapefilepath.length());
+				ZeroMemory(&ofn, sizeof(ofn));
+				ofn.lStructSize = sizeof(ofn);
+				ofn.hwndOwner = NULL;
+				ofn.lpstrFilter =
+				    "Shapefiles (*.shp)\0*.shp\0\0";
+				ofn.lpstrFile = lpPathBuffer;
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags =
+				    OFN_EXPLORER | OFN_OVERWRITEPROMPT |
+				    OFN_HIDEREADONLY;
+				ofn.lpstrDefExt = "shp";
 
-			   if (!GetSaveFileName (&ofn))
-				   return 1;
-			   shapefilepath = lpPathBuffer;
-		  }
-	  }
-	  shapefilepath.erase(shapefilepath.end()-3,shapefilepath.end());
-	  shapefilepath.append("shp");
+				if (!GetSaveFileName(&ofn))
+					return 1;
+				shapefilepath = lpPathBuffer;
+			}
+		}
+		shapefilepath.erase(shapefilepath.end() - 3,
+				    shapefilepath.end());
+		shapefilepath.append("shp");
 
-	  params.append(" \"");
-	  params.append(shapefilepath);
-	  params.append("\"");
-  }
+		params.append(" \"");
+		params.append(shapefilepath);
+		params.append("\"");
+	}
   /**
    * Run inp2shp
    */
-  return run_process (argv[1], (char *)params.c_str());
+	return run_process(argv[1], (char *) params.c_str());
 }
 
-DWORD
-run_process (char *szCommand, char *szArgs)
+DWORD run_process(char *szCommand, char *szArgs)
 {
-  STARTUPINFO si;
-  PROCESS_INFORMATION pi;
-  char szCommandLine[4096];
-  char *szEnvCOMSPEC = NULL;
-  char szDefaultCMD[] = "CMD.EXE";
-  ULONG uReturnCode;
-  SECURITY_ATTRIBUTES saAttr;
-  const int BUFSIZE = 4096;
-  CHAR chBuf[BUFSIZE];
-  DWORD dwRead;
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+	char szCommandLine[4096];
+	char *szEnvCOMSPEC = NULL;
+	char szDefaultCMD[] = "CMD.EXE";
+	ULONG uReturnCode;
+	SECURITY_ATTRIBUTES saAttr;
+	const int BUFSIZE = 4096;
+	CHAR chBuf[BUFSIZE];
+	DWORD dwRead;
 
-  saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
-  saAttr.bInheritHandle = TRUE;
-  saAttr.lpSecurityDescriptor = NULL;
+	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+	saAttr.bInheritHandle = TRUE;
+	saAttr.lpSecurityDescriptor = NULL;
 
-  if (!CreatePipe(&g_hStdOutRd, &g_hStdOutWr, &saAttr, 0))
-  {
-	  MessageBox(NULL,
-			  _("CreatePipe() failed."), title.c_str(), MB_ICONERROR);
-      exit(1);
-  }
+	if (!CreatePipe(&g_hStdOutRd, &g_hStdOutWr, &saAttr, 0)) {
+		MessageBox(NULL,
+			   _("CreatePipe() failed."), title.c_str(),
+			   MB_ICONERROR);
+		exit(1);
+	}
 
-  if (!SetHandleInformation(g_hStdOutRd, HANDLE_FLAG_INHERIT, 0))
-  {
-	  MessageBox(NULL,
-			  _("SetHandleInformation() failed."),
-			  title.c_str(), MB_ICONERROR);
-	  exit(1);
-  }
+	if (!SetHandleInformation(g_hStdOutRd, HANDLE_FLAG_INHERIT, 0)) {
+		MessageBox(NULL,
+			   _("SetHandleInformation() failed."),
+			   title.c_str(), MB_ICONERROR);
+		exit(1);
+	}
 
-  ZeroMemory (&si, sizeof (STARTUPINFO));
+	ZeroMemory(&si, sizeof(STARTUPINFO));
 
-  si.cb = sizeof (STARTUPINFO);
+	si.cb = sizeof(STARTUPINFO);
 
-  si.wShowWindow = SW_SHOW;
+	si.wShowWindow = SW_SHOW;
 
-  si.dwFlags = STARTF_USESHOWWINDOW|STARTF_USESTDHANDLES;
-  si.hStdOutput = g_hStdOutWr;
-  si.hStdError = g_hStdOutWr;
-
-
-  szCommandLine[0] = 0;
+	si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+	si.hStdOutput = g_hStdOutWr;
+	si.hStdError = g_hStdOutWr;
 
 
-  strcat (szCommandLine, szCommand);
-
-  strcat (szCommandLine, " ");
-
-  strcat (szCommandLine, szArgs);
-
-  if (!CreateProcess
-      (NULL, szCommandLine, NULL, NULL, TRUE,
-       0, NULL, NULL, &si, &pi))
-    {
-
-      return GetLastError ();
-
-    }
+	szCommandLine[0] = 0;
 
 
-  WaitForSingleObject (pi.hProcess, INFINITE);
+	strcat(szCommandLine, szCommand);
 
-  if (!GetExitCodeProcess (pi.hProcess, &uReturnCode))
+	strcat(szCommandLine, " ");
 
-    uReturnCode = 0;
+	strcat(szCommandLine, szArgs);
 
-  CloseHandle (pi.hThread);
+	if (!CreateProcess
+	    (NULL, szCommandLine, NULL, NULL, TRUE,
+	     0, NULL, NULL, &si, &pi)) {
 
-  CloseHandle (pi.hProcess);
+		return GetLastError();
 
-  if(ReadFile(g_hStdOutRd, chBuf, BUFSIZE, &dwRead, NULL))
-	  MessageBox (NULL,
-			  chBuf, title.c_str(), MB_ICONINFORMATION);
+	}
 
-  return uReturnCode;
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	if (!GetExitCodeProcess(pi.hProcess, &uReturnCode))
+
+		uReturnCode = 0;
+
+	CloseHandle(pi.hThread);
+
+	CloseHandle(pi.hProcess);
+
+	if (ReadFile(g_hStdOutRd, chBuf, BUFSIZE, &dwRead, NULL))
+		MessageBox(NULL, chBuf, title.c_str(), MB_ICONINFORMATION);
+
+	return uReturnCode;
 
 }
 
@@ -293,10 +296,10 @@ run_process (char *szCommand, char *szArgs)
  */
 int file_exists(TCHAR * file)
 {
-   WIN32_FIND_DATA FindFileData;
-   HANDLE handle = FindFirstFile(file, &FindFileData) ;
-   int found = handle != INVALID_HANDLE_VALUE;
-   if(found)
-       FindClose(handle);
-   return found;
+	WIN32_FIND_DATA FindFileData;
+	HANDLE handle = FindFirstFile(file, &FindFileData);
+	int found = handle != INVALID_HANDLE_VALUE;
+	if (found)
+		FindClose(handle);
+	return found;
 }
