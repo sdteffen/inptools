@@ -92,17 +92,17 @@ Section -Main SEC0000
     SetOverwrite on
 	File ..\..\build\win32\bin\inptools-about.exe
 	File ..\..\build\win32\bin\inptools-file-dialog.exe
-	File ..\..\src\Release\inp2shp.exe
-	File ..\..\src\Release\inp2shpw.exe
-    File ..\..\src\Release\inpproj.exe
-    File ..\..\src\Release\epanet2csv.exe
+	File ..\..\build\win32bin\inp2shp.exe
+	File ..\..\build\win32\bin\inp2shpw.exe
+    File ..\..\build\win32\bin\inpproj.exe
+    File ..\..\build\win32\bin\epanet2csv.exe
 	File ..\..\build\win32\bin\epanetl.exe
 	File ..\..\build\win32\bin\intl.dll
 	File ..\..\build\win32\bin\epanet2.dll
 	File ..\..\build\win32\bin\epanet2d.exe
 	File ..\..\build\win32\bin\epanet2w.exe
 	File ..\..\build\win32\bin\epanet2csvw.exe
-	File ..\..\src\Release\epanet2i.dll
+	File ..\..\build\win32\bin\epanet2i.dll
 
 	IntCmp $LANGUAGE ${LANG_GERMAN} install_german_locale no_locale_install no_locale_install
 	install_german_locale:
