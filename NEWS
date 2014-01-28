@@ -1,3 +1,8 @@
+2014-01-28 inptools 2.0.12.1
+
+	Windows GUI for inp2shp (inp2shpw)
+	Several inp2shp bugs fixed
+	
 2012-06-02 inptools 1.0.2
 
 	Bugfix release: Fixed Ubuntu/Debian build
