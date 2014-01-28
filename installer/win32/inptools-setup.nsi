@@ -92,7 +92,7 @@ Section -Main SEC0000
     SetOverwrite on
 	File ..\..\build\win32\bin\inptools-about.exe
 	File ..\..\build\win32\bin\inptools-file-dialog.exe
-	File ..\..\build\win32bin\inp2shp.exe
+	File ..\..\build\win32\bin\inp2shp.exe
 	File ..\..\build\win32\bin\inp2shpw.exe
     File ..\..\build\win32\bin\inpproj.exe
     File ..\..\build\win32\bin\epanet2csv.exe
