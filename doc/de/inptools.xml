@@ -295,7 +295,7 @@
 					<command>epanet2csv</command> weiterverarbeitet werden.</para>
 				</sect3>
 				<sect3 id="create_shapefiles">
-				    <title>Shapefile erzeugens</title>
+				    <title>Shapefiles erzeugen</title>
 				    <indexterm><primary>Shapefile</primary></indexterm>
 				    <indexterm><primary>inp2shp</primary></indexterm>
 				    <indexterm><primary>GHydraulics</primary></indexterm>

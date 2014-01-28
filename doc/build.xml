@@ -11,9 +11,9 @@
 	<property name="fo.stylesheet" value="${docbook.xsl.dir}/docbook_pdf.xsl" />
 	<property name="chm.stylesheet" value="${docbook.xsl.dir}/docbook_chm.xsl" />
 	<property name="inptools.epanet.de.stylesheet" value="${docbook.xsl.dir}/docbook_inptools.epanet.de.xsl" />
-	<property name="xalan.lib.dir" value="${basedir}/../../../lib/xalan-j" />
-	<property name="fop.home" value="../../../lib/fop" />
-	<property name="docbook.home" value="${basedir}/../../../lib/docbook-xsl" />
+	<property name="xalan.lib.dir" value="${basedir}/../../xalan-j" />
+	<property name="fop.home" value="../../fop" />
+	<property name="docbook.home" value="${basedir}/../../docbook-xsl" />
 	<property name="hhc.exe" value="c:/program files (x86)/HTML Help Workshop/hhc.exe" />
 
 	<path id="xalan.classpath">
@@ -34,6 +34,8 @@
 
 	<target name="depends">
 		<mkdir dir="${doc.dir}" />
+		<mkdir dir="${doc.dir}/figure" />
+		<mkdir dir="${doc.dir}/chm" />
 	</target>
 
 	<target name="copy-images" description="Helper target to copy figures and docbook images.">
