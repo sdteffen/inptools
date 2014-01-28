@@ -214,6 +214,7 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
+    Delete /REBOOTOK $INSTDIR\COPYING
 	Delete /REBOOTOK $INSTDIR\bin\inptools-about.exe
 	Delete /REBOOTOK $INSTDIR\bin\inptools-file-dialog.exe
     Delete /REBOOTOK $INSTDIR\bin\inpproj.exe
@@ -227,6 +228,8 @@ Section /o -un.Main UNSEC0000
 	Delete /REBOOTOK $INSTDIR\bin\epanet2csv.exe
 	Delete /REBOOTOK $INSTDIR\bin\epanet2csvw.exe
 	Delete /REBOOTOK $INSTDIR\bin\intl.dll
+	Delete /REBOOTOK $INSTDIR\bin\epanetl.exe
+	Delete /REBOOTOK $INSTDIR\bin\InpToolsExt.dll
 
 	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\epanetl.mo
 	Delete /REBOOTOK $INSTDIR\locale\de\LC_MESSAGES\inptools.mo
