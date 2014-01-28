@@ -19,5 +19,5 @@ Documentation was built using Eclipse/ANT using doc/build.xml with
 * FOP 0.95 installed to inptools/../../lib/fop
 * XALAN-J 2.7.1 installed to inptools/../../lib/xalan-j
 
-Build the installer using NSIS.
+Build the installer using the Unicode version of NSIS.
 
